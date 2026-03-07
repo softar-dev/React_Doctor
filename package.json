@@ -1,0 +1,31 @@
+{
+  "name": "react-tool",
+  "version": "1.0.0",
+  "workspaces": [
+    "cli",
+    "core",
+    "backend",
+    "dashboard",
+    "shared"
+  ],
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@babel/parser": "^7.29.0",
+    "@babel/traverse": "^7.29.0",
+    "@babel/types": "^7.29.0",
+    "glob": "^13.0.6"
+  },
+  "devDependencies": {
+    "@types/babel__traverse": "^7.28.0",
+    "@types/node": "^25.3.3",
+    "ts-node": "^10.9.2"
+  }
+}

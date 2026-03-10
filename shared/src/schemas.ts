@@ -22,7 +22,6 @@ export const ComponentIssueSchema = v.object({
 export const StaticReportSchema = v.object({
   timestamp: v.string(),
   issues: v.array(ComponentIssueSchema),
-  bundleSize: v.number(),
   componentCount: v.number(),
 });
 

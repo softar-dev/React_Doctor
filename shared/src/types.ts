@@ -27,10 +27,12 @@ export interface StaticReport {
 }
 
 export interface RuntimeReport {
-    timestamp: string;
-    metrics: WebVitals;
-    rerenders: Record<string, number>;
-    commitDurations: number[];
+  timestamp: string;
+  metrics: WebVitals;
+  url: string;                           // URL that was tested
+  deviceType: 'mobile' | 'desktop';      // Device simulation
+  rerenders?: Record<string, number>;    // Component re-render counts (optional)
+  commitDurations?: number[];            // React commit times (optional)
 }
 
 export interface Suggestion {

@@ -84,13 +84,24 @@ export class StaticAnalyzer {
   /**
    * Persistence: Saves the results to static-report.json
    */
-  saveReport(report: StaticReport, outputDir: string = process.cwd()): string {
-    const filePath = path.join(outputDir, 'staticreport.json');
+ saveReport(report: StaticReport): string {
+    // 📍 __dirname gives the directory of this current file.
+    // We go up two levels to reach the 'react_doctor' root, then into 'reports'.
+    const reportDir = path.resolve(__dirname, '../../reports'); 
+    
+    // 📁 Ensure the directory exists (create it if missing)
+    if (!fs.existsSync(reportDir)) {
+      fs.mkdirSync(reportDir, { recursive: true });
+    }
+
+    const filePath = path.join(reportDir, 'staticreport.json');
+
     try {
       fs.writeFileSync(filePath, JSON.stringify(report, null, 2), 'utf-8');
+      console.log(`\n📄 Static Report saved to: ${filePath}`);
       return filePath;
     } catch (error) {
-      throw new Error(`Failed to save JSON report: ${error}`);
+      throw new Error(`Failed to save Static JSON report: ${error}`);
     }
   }
 

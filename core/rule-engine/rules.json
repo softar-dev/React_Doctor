@@ -1,0 +1,304 @@
+[
+  {
+    "id": "slow-lcp",
+    "category": "runtime",
+    "severity": "critical",
+    "title": "LCP is too slow",
+    "condition": {
+      "runtime": "metrics.lcp > 2500"
+    },
+    "message": "Your Largest Contentful Paint is {metrics.lcp}ms. Users see a blank screen for too long. The LCP element (usually a hero image or heading) takes over 2.5 seconds to appear.",
+    "fix": "1. Add loading='lazy' to images that are NOT above the fold.\n2. Preload your hero image with <link rel='preload' as='image'>.\n3. Reduce the size of your largest image using WebP format.\n4. If the LCP element is text, ensure your font loads quickly."
+  },
+
+  {
+    "id": "slow-fcp",
+    "category": "runtime",
+    "severity": "warning",
+    "title": "First Contentful Paint is slow",
+    "condition": {
+      "runtime": "metrics.fcp > 1800"
+    },
+    "message": "Your First Contentful Paint is {metrics.fcp}ms. Users see nothing for over 1.8 seconds. The page feels unresponsive before anything appears.",
+    "fix": "1. Eliminate render-blocking resources (large CSS or JS in <head>).\n2. Inline critical CSS so the first paint doesn't wait for a network request.\n3. Enable server-side rendering (SSR) if using a static SPA."
+  },
+
+  {
+    "id": "slow-ttfb",
+    "category": "runtime",
+    "severity": "warning",
+    "title": "Server response is slow (TTFB)",
+    "condition": {
+      "runtime": "metrics.ttfb > 800"
+    },
+    "message": "Your Time to First Byte is {metrics.ttfb}ms. The server takes over 800ms just to start sending data. This delays everything else.",
+    "fix": "1. Check your backend API response times.\n2. Add server-side caching (Redis, CDN).\n3. Move your server closer to your users with edge deployment."
+  },
+
+  {
+    "id": "layout-shift",
+    "category": "runtime",
+    "severity": "warning",
+    "title": "Page has layout shift (CLS)",
+    "condition": {
+      "runtime": "metrics.cls > 0.1"
+    },
+    "message": "Your Cumulative Layout Shift score is {metrics.cls}. Elements on the page are jumping around while it loads, which causes accidental clicks and a frustrating experience.",
+    "fix": "1. Add explicit width and height attributes to all images and videos.\n2. Reserve space for ads and dynamically injected content.\n3. Avoid inserting content above existing content after load."
+  },
+
+  {
+    "id": "slow-inp",
+    "category": "runtime",
+    "severity": "warning",
+    "title": "Page is slow to respond to clicks (INP)",
+    "condition": {
+      "runtime": "metrics.inp > 200"
+    },
+    "message": "Your Interaction to Next Paint is {metrics.inp}ms. When users click, the page takes too long to visually respond.",
+    "fix": "1. Break up long JavaScript tasks (anything over 50ms).\n2. Use Web Workers for heavy computation.\n3. Debounce expensive event handlers.\n4. Reduce the amount of work React does on each state update."
+  },
+
+  {
+    "id": "slow-render-time",
+    "category": "runtime",
+    "severity": "critical",
+    "title": "Page takes too long to become interactive",
+    "condition": {
+      "runtime": "renderTime > 4000"
+    },
+    "message": "Your page takes {renderTime}ms to fully load. Users on slower connections will abandon the page before it finishes.",
+    "fix": "1. Use React.lazy() and Suspense for route-level code splitting.\n2. Remove unused npm packages to reduce bundle size.\n3. Enable gzip or Brotli compression on your server.\n4. Move large data fetches out of the initial render path."
+  },
+
+  {
+    "id": "slow-react-commit",
+    "category": "runtime",
+    "severity": "warning",
+    "title": "React commits are exceeding 16ms budget",
+    "condition": {
+      "runtime": "slowCommitCount > 0"
+    },
+    "message": "React had {slowCommitCount} commit(s) that took over 16ms (the 60fps budget). The slowest was {commitDuration}ms. This causes visible frame drops and janky animations.",
+    "fix": "1. Use React.memo() on components that receive the same props often.\n2. Use useMemo() for expensive calculations in render.\n3. Use useCallback() to stabilize function references passed as props.\n4. Avoid creating new objects or arrays directly in JSX."
+  },
+
+  {
+    "id": "excessive-rerenders",
+    "category": "runtime",
+    "severity": "warning",
+    "title": "Components are re-rendering too many times",
+    "condition": {
+      "runtime": "topRerenderCount >= 5"
+    },
+    "message": "The component '{component}' re-rendered {rerenders} times during page load. This is unnecessary work that slows down the UI.",
+    "fix": "1. Wrap '{component}' in React.memo() to skip re-renders when props haven't changed.\n2. Check if the parent component is creating new object/array references on every render.\n3. Use the React DevTools Profiler tab to see what triggered each re-render."
+  },
+
+  {
+    "id": "high-dom-nodes",
+    "category": "runtime",
+    "severity": "warning",
+    "title": "Too many DOM nodes",
+    "condition": {
+      "runtime": "domNodes > 1500"
+    },
+    "message": "Your page has {domNodes} DOM elements. Large DOMs slow down style calculations, layout, and garbage collection.",
+    "fix": "1. Use virtualization (react-window or react-virtual) for long lists.\n2. Remove hidden elements from the DOM instead of using display:none.\n3. Split complex pages into multiple routes."
+  },
+
+  {
+    "id": "heavy-payload",
+    "category": "runtime",
+    "severity": "warning",
+    "title": "Page payload is too heavy",
+    "condition": {
+      "runtime": "payloadMB > 3"
+    },
+    "message": "Your page downloads {payloadMB}MB of assets. On a 3G connection this would take over 15 seconds.",
+    "fix": "1. Enable code splitting with React.lazy().\n2. Compress images and use WebP/AVIF formats.\n3. Remove unused npm dependencies.\n4. Audit your bundle with a tool like webpack-bundle-analyzer."
+  },
+
+  {
+    "id": "js-errors-detected",
+    "category": "runtime",
+    "severity": "critical",
+    "title": "JavaScript errors during page load",
+    "condition": {
+      "runtime": "errorCount > 0"
+    },
+    "message": "React Doctor detected {errorCount} JavaScript error(s) while loading the page. These errors can break functionality for real users.",
+    "fix": "Open your browser DevTools console and fix all red error messages before optimizing performance. Errors are more important than performance metrics."
+  },
+
+  {
+    "id": "console-logs-in-production",
+    "category": "static",
+    "severity": "warning",
+    "title": "console.log statements left in code",
+    "condition": {
+      "static": "hasIssue('console-log')"
+    },
+    "message": "console.log statements were found in your components. These clutter the browser console in production and can expose sensitive data.",
+    "fix": "Remove all console.log() calls or replace them with a proper logging library that can be disabled in production."
+  },
+
+  {
+    "id": "missing-list-keys",
+    "category": "static",
+    "severity": "critical",
+    "title": "Missing key props in lists",
+    "condition": {
+      "static": "hasIssue('missing-key')"
+    },
+    "message": "Components are rendering lists without key props. React uses keys to track which items changed — without them, React re-renders the entire list on every update.",
+    "fix": "Add a unique key prop to every element inside a .map() call. Use the item's ID, not its index: key={item.id} not key={index}."
+  },
+
+  {
+    "id": "inline-styles-detected",
+    "category": "static",
+    "severity": "info",
+    "title": "Inline styles in components",
+    "condition": {
+      "static": "hasIssue('inline-style')"
+    },
+    "message": "Components are using inline style objects. Every render creates a new object reference, which prevents React from skipping re-renders even when nothing visually changed.",
+    "fix": "Move styles to a CSS file, CSS module, or define them outside the component so the reference stays stable between renders."
+  },
+
+  {
+    "id": "prop-drilling-detected",
+    "category": "static",
+    "severity": "warning",
+    "title": "Deep prop drilling detected",
+    "condition": {
+      "static": "hasIssue('prop-drilling')"
+    },
+    "message": "Props are being passed through multiple component layers to reach their destination. This makes components tightly coupled and hard to refactor.",
+    "fix": "Use React Context for data that many components need (theme, user, settings). For complex state, consider Zustand or Redux Toolkit."
+  },
+
+  {
+    "id": "dead-code-detected",
+    "category": "static",
+    "severity": "info",
+    "title": "Dead code found",
+    "condition": {
+      "static": "hasIssue('dead-code')"
+    },
+    "message": "Unused variables or imports were found in your components. These add to your bundle size for no benefit.",
+    "fix": "Remove unused imports and variables. Enable ESLint's no-unused-vars rule to catch these automatically."
+  },
+
+  {
+    "id": "effect-loop-risk",
+    "category": "static",
+    "severity": "critical",
+    "title": "Potential infinite loop in useEffect",
+    "condition": {
+      "static": "hasIssue('effect-loop')"
+    },
+    "message": "A useEffect hook has a dependency that it also modifies, which can cause an infinite re-render loop. This crashes the browser tab.",
+    "fix": "Check your useEffect dependency arrays. If the effect sets state, make sure that state is not also in the dependency array — or use a ref instead."
+  },
+
+  {
+    "id": "missing-memo-with-rerenders",
+    "category": "cross",
+    "severity": "critical",
+    "title": "Unmemoized component is re-rendering excessively",
+    "condition": {
+      "static": "hasIssue('missing-memo')",
+      "runtime": "topRerenderCount >= 5"
+    },
+    "message": "The static analyzer found a component without React.memo(), AND the profiler measured that '{component}' re-rendered {rerenders} times. Without memoization, every parent render forces this component to re-render unnecessarily.",
+    "fix": "Wrap '{component}' in React.memo():\n\nexport default React.memo(function {component}(props) {\n  // your existing component code\n});\n\nThis tells React to skip re-rendering if props haven't changed."
+  },
+
+  {
+    "id": "large-component-with-slow-commit",
+    "category": "cross",
+    "severity": "critical",
+    "title": "Large component is causing slow React commits",
+    "condition": {
+      "static": "hasIssue('large-component')",
+      "runtime": "slowestCommit > 50"
+    },
+    "message": "The static analyzer found a large component (over 300 lines), AND the profiler measured a React commit taking {commitDuration}ms — over 3x the 16ms budget. Large components force React to re-evaluate more code per commit.",
+    "fix": "Split your largest component into smaller ones and use React.lazy() to load them on demand:\n\nconst HeavySection = React.lazy(() => import('./HeavySection'));\n\n<Suspense fallback={<Loading />}>\n  <HeavySection />\n</Suspense>"
+  },
+
+  {
+    "id": "inline-functions-with-high-rerenders",
+    "category": "cross",
+    "severity": "warning",
+    "title": "Inline functions are causing unnecessary re-renders",
+    "condition": {
+      "static": "hasIssue('inline-function')",
+      "runtime": "topRerenderCount >= 3"
+    },
+    "message": "Inline functions were found in JSX, AND '{component}' re-rendered {rerenders} times. Inline functions create a new reference on every render, which breaks React.memo() and triggers child re-renders.",
+    "fix": "Move event handlers outside of JSX and wrap them in useCallback:\n\nconst handleClick = useCallback(() => {\n  // your handler code\n}, [dependency]);\n\n// Then use: <Button onClick={handleClick} />"
+  },
+
+  {
+    "id": "missing-memo-with-slow-commit",
+    "category": "cross",
+    "severity": "warning",
+    "title": "Missing memoization is slowing React commits",
+    "condition": {
+      "static": "hasIssue('missing-memo')",
+      "runtime": "avgCommit > 16"
+    },
+    "message": "Components are missing React.memo(), AND React commits are averaging {avgCommit}ms — above the 16ms 60fps budget. Without memoization, React re-renders everything on every update.",
+    "fix": "Add React.memo() to pure functional components that receive stable props. Also review useMemo() for expensive computations inside render."
+  },
+
+  {
+    "id": "prop-drilling-with-rerenders",
+    "category": "cross",
+    "severity": "warning",
+    "title": "Prop drilling is causing cascade re-renders",
+    "condition": {
+      "static": "hasIssue('prop-drilling')",
+      "runtime": "topRerenderCount >= 5"
+    },
+    "message": "Deep prop drilling was detected in the code, AND components are re-rendering {rerenders} times. When a top-level prop changes, every component in the drilling chain re-renders.",
+    "fix": "Replace prop drilling with React Context or a state management library (Zustand). This breaks the re-render cascade by letting only subscribed components update."
+  },
+
+  {
+    "id": "js-errors-with-slow-lcp",
+    "category": "runtime",
+    "severity": "critical",
+    "title": "JavaScript errors are blocking page rendering",
+    "condition": {
+      "runtime": "errorCount > 0 && metrics.lcp > 2500"
+    },
+    "message": "JavaScript errors were detected during load AND your LCP is {metrics.lcp}ms. JS errors can interrupt the render cycle, delaying when the largest element appears.",
+    "fix": "Fix all JavaScript errors first — they are blocking your render path. After fixing errors, re-run React Doctor to get accurate performance measurements."
+  },
+  {
+    "id": "inline-functions-detected",
+    "category": "static",
+    "severity": "info",
+    "title": "Inline functions found in JSX props",
+    "condition": {
+      "static": "hasIssue('inline-function')"
+    },
+    "message": "Inline arrow functions were found directly inside JSX props. Every render creates a brand new function reference, which prevents React.memo() from working correctly on child components and can trigger unnecessary re-renders.",
+    "fix": "Move event handlers outside the JSX and wrap them with useCallback:\n\nconst handleClick = useCallback(() => {\n  // your handler\n}, [dependency]);\n\n// Then use:\n<Button onClick={handleClick} />"
+  },
+  {
+    "id": "low-performance-score",
+    "category": "runtime",
+    "severity": "warning",
+    "title": "Overall performance score is low",
+    "condition": {
+      "runtime": "performanceScore < 50"
+    },
+    "message": "Your overall performance score is {performanceScore}/100. Multiple metrics are underperforming simultaneously. A score below 50 means users are experiencing a noticeably slow and frustrating experience.",
+    "fix": "Review all other suggestions in this report and fix critical issues first. Start with JS errors, then LCP, then React commit durations. Re-run React Doctor after each fix to track your progress."
+  }
+]

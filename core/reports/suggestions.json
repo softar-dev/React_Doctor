@@ -1,0 +1,216 @@
+[
+  {
+    "timestamp": "2026-03-20T09:24:37.916Z",
+    "route": "/",
+    "device": "desktop",
+    "suggestions": [
+      {
+        "id": "slow-render-time",
+        "title": "Page takes too long to become interactive",
+        "description": "Your page takes 12768ms to fully load. Users on slower connections will abandon the page before it finishes.",
+        "severity": "critical",
+        "fix": "1. Use React.lazy() and Suspense for route-level code splitting.\n2. Remove unused npm packages to reduce bundle size.\n3. Enable gzip or Brotli compression on your server.\n4. Move large data fetches out of the initial render path."
+      },
+      {
+        "id": "js-errors-detected",
+        "title": "JavaScript errors during page load",
+        "description": "React Doctor detected 1 JavaScript error(s) while loading the page. These errors can break functionality for real users.",
+        "severity": "critical",
+        "fix": "Open your browser DevTools console and fix all red error messages before optimizing performance. Errors are more important than performance metrics."
+      },
+      {
+        "id": "missing-list-keys",
+        "title": "Missing key props in lists",
+        "description": "Components are rendering lists without key props. React uses keys to track which items changed — without them, React re-renders the entire list on every update.",
+        "severity": "critical",
+        "fix": "Add a unique key prop to every element inside a .map() call. Use the item's ID, not its index: key={item.id} not key={index}.",
+        "affectedComponent": "staticList"
+      },
+      {
+        "id": "missing-memo-with-rerenders",
+        "title": "Unmemoized component is re-rendering excessively",
+        "description": "The static analyzer found a component without React.memo(), AND the profiler measured that 'Divider' re-rendered 5 times. Without memoization, every parent render forces this component to re-render unnecessarily.",
+        "severity": "critical",
+        "fix": "Wrap 'Divider' in React.memo():\n\nexport default React.memo(function Divider(props) {\n  // your existing component code\n});\n\nThis tells React to skip re-rendering if props haven't changed.",
+        "affectedComponent": "Divider"
+      },
+      {
+        "id": "slow-react-commit",
+        "title": "React commits are exceeding 16ms budget",
+        "description": "React had 1 commit(s) that took over 16ms (the 60fps budget). The slowest was 45.9ms. This causes visible frame drops and janky animations.",
+        "severity": "warning",
+        "fix": "1. Use React.memo() on components that receive the same props often.\n2. Use useMemo() for expensive calculations in render.\n3. Use useCallback() to stabilize function references passed as props.\n4. Avoid creating new objects or arrays directly in JSX."
+      },
+      {
+        "id": "excessive-rerenders",
+        "title": "Components are re-rendering too many times",
+        "description": "The component 'Divider' re-rendered 5 times during page load. This is unnecessary work that slows down the UI.",
+        "severity": "warning",
+        "fix": "1. Wrap 'Divider' in React.memo() to skip re-renders when props haven't changed.\n2. Check if the parent component is creating new object/array references on every render.\n3. Use the React DevTools Profiler tab to see what triggered each re-render.",
+        "affectedComponent": "Divider"
+      },
+      {
+        "id": "prop-drilling-detected",
+        "title": "Deep prop drilling detected",
+        "description": "Props are being passed through multiple component layers to reach their destination. This makes components tightly coupled and hard to refactor.",
+        "severity": "warning",
+        "fix": "Use React Context for data that many components need (theme, user, settings). For complex state, consider Zustand or Redux Toolkit.",
+        "affectedComponent": "UserDashboard"
+      },
+      {
+        "id": "inline-functions-with-high-rerenders",
+        "title": "Inline functions are causing unnecessary re-renders",
+        "description": "Inline functions were found in JSX, AND 'Divider' re-rendered 5 times. Inline functions create a new reference on every render, which breaks React.memo() and triggers child re-renders.",
+        "severity": "warning",
+        "fix": "Move event handlers outside of JSX and wrap them in useCallback:\n\nconst handleClick = useCallback(() => {\n  // your handler code\n}, [dependency]);\n\n// Then use: <Button onClick={handleClick} />",
+        "affectedComponent": "Divider"
+      },
+      {
+        "id": "missing-memo-with-slow-commit",
+        "title": "Missing memoization is slowing React commits",
+        "description": "Components are missing React.memo(), AND React commits are averaging 45.9ms — above the 16ms 60fps budget. Without memoization, React re-renders everything on every update.",
+        "severity": "warning",
+        "fix": "Add React.memo() to pure functional components that receive stable props. Also review useMemo() for expensive computations inside render.",
+        "affectedComponent": "Divider"
+      },
+      {
+        "id": "prop-drilling-with-rerenders",
+        "title": "Prop drilling is causing cascade re-renders",
+        "description": "Deep prop drilling was detected in the code, AND components are re-rendering 5 times. When a top-level prop changes, every component in the drilling chain re-renders.",
+        "severity": "warning",
+        "fix": "Replace prop drilling with React Context or a state management library (Zustand). This breaks the re-render cascade by letting only subscribed components update.",
+        "affectedComponent": "UserDashboard"
+      },
+      {
+        "id": "inline-styles-detected",
+        "title": "Inline styles in components",
+        "description": "Components are using inline style objects. Every render creates a new object reference, which prevents React from skipping re-renders even when nothing visually changed.",
+        "severity": "info",
+        "fix": "Move styles to a CSS file, CSS module, or define them outside the component so the reference stays stable between renders.",
+        "affectedComponent": "Content"
+      },
+      {
+        "id": "dead-code-detected",
+        "title": "Dead code found",
+        "description": "Unused variables or imports were found in your components. These add to your bundle size for no benefit.",
+        "severity": "info",
+        "fix": "Remove unused imports and variables. Enable ESLint's no-unused-vars rule to catch these automatically.",
+        "affectedComponent": "Global/Module"
+      },
+      {
+        "id": "inline-functions-detected",
+        "title": "Inline functions found in JSX props",
+        "description": "Inline arrow functions were found directly inside JSX props. Every render creates a brand new function reference, which prevents React.memo() from working correctly on child components and can trigger unnecessary re-renders.",
+        "severity": "info",
+        "fix": "Move event handlers outside the JSX and wrap them with useCallback:\n\nconst handleClick = useCallback(() => {\n  // your handler\n}, [dependency]);\n\n// Then use:\n<Button onClick={handleClick} />",
+        "affectedComponent": "App"
+      }
+    ],
+    "summary": {
+      "critical": 4,
+      "warning": 6,
+      "info": 3,
+      "total": 13
+    }
+  },
+  {
+    "timestamp": "2026-03-20T09:24:37.920Z",
+    "route": "/",
+    "device": "mobile",
+    "suggestions": [
+      {
+        "id": "missing-list-keys",
+        "title": "Missing key props in lists",
+        "description": "Components are rendering lists without key props. React uses keys to track which items changed — without them, React re-renders the entire list on every update.",
+        "severity": "critical",
+        "fix": "Add a unique key prop to every element inside a .map() call. Use the item's ID, not its index: key={item.id} not key={index}.",
+        "affectedComponent": "staticList"
+      },
+      {
+        "id": "missing-memo-with-rerenders",
+        "title": "Unmemoized component is re-rendering excessively",
+        "description": "The static analyzer found a component without React.memo(), AND the profiler measured that 'Divider' re-rendered 5 times. Without memoization, every parent render forces this component to re-render unnecessarily.",
+        "severity": "critical",
+        "fix": "Wrap 'Divider' in React.memo():\n\nexport default React.memo(function Divider(props) {\n  // your existing component code\n});\n\nThis tells React to skip re-rendering if props haven't changed.",
+        "affectedComponent": "Divider"
+      },
+      {
+        "id": "slow-react-commit",
+        "title": "React commits are exceeding 16ms budget",
+        "description": "React had 1 commit(s) that took over 16ms (the 60fps budget). The slowest was 53.5ms. This causes visible frame drops and janky animations.",
+        "severity": "warning",
+        "fix": "1. Use React.memo() on components that receive the same props often.\n2. Use useMemo() for expensive calculations in render.\n3. Use useCallback() to stabilize function references passed as props.\n4. Avoid creating new objects or arrays directly in JSX."
+      },
+      {
+        "id": "excessive-rerenders",
+        "title": "Components are re-rendering too many times",
+        "description": "The component 'Divider' re-rendered 5 times during page load. This is unnecessary work that slows down the UI.",
+        "severity": "warning",
+        "fix": "1. Wrap 'Divider' in React.memo() to skip re-renders when props haven't changed.\n2. Check if the parent component is creating new object/array references on every render.\n3. Use the React DevTools Profiler tab to see what triggered each re-render.",
+        "affectedComponent": "Divider"
+      },
+      {
+        "id": "prop-drilling-detected",
+        "title": "Deep prop drilling detected",
+        "description": "Props are being passed through multiple component layers to reach their destination. This makes components tightly coupled and hard to refactor.",
+        "severity": "warning",
+        "fix": "Use React Context for data that many components need (theme, user, settings). For complex state, consider Zustand or Redux Toolkit.",
+        "affectedComponent": "UserDashboard"
+      },
+      {
+        "id": "inline-functions-with-high-rerenders",
+        "title": "Inline functions are causing unnecessary re-renders",
+        "description": "Inline functions were found in JSX, AND 'Divider' re-rendered 5 times. Inline functions create a new reference on every render, which breaks React.memo() and triggers child re-renders.",
+        "severity": "warning",
+        "fix": "Move event handlers outside of JSX and wrap them in useCallback:\n\nconst handleClick = useCallback(() => {\n  // your handler code\n}, [dependency]);\n\n// Then use: <Button onClick={handleClick} />",
+        "affectedComponent": "Divider"
+      },
+      {
+        "id": "missing-memo-with-slow-commit",
+        "title": "Missing memoization is slowing React commits",
+        "description": "Components are missing React.memo(), AND React commits are averaging 53.5ms — above the 16ms 60fps budget. Without memoization, React re-renders everything on every update.",
+        "severity": "warning",
+        "fix": "Add React.memo() to pure functional components that receive stable props. Also review useMemo() for expensive computations inside render.",
+        "affectedComponent": "Divider"
+      },
+      {
+        "id": "prop-drilling-with-rerenders",
+        "title": "Prop drilling is causing cascade re-renders",
+        "description": "Deep prop drilling was detected in the code, AND components are re-rendering 5 times. When a top-level prop changes, every component in the drilling chain re-renders.",
+        "severity": "warning",
+        "fix": "Replace prop drilling with React Context or a state management library (Zustand). This breaks the re-render cascade by letting only subscribed components update.",
+        "affectedComponent": "UserDashboard"
+      },
+      {
+        "id": "inline-styles-detected",
+        "title": "Inline styles in components",
+        "description": "Components are using inline style objects. Every render creates a new object reference, which prevents React from skipping re-renders even when nothing visually changed.",
+        "severity": "info",
+        "fix": "Move styles to a CSS file, CSS module, or define them outside the component so the reference stays stable between renders.",
+        "affectedComponent": "Content"
+      },
+      {
+        "id": "dead-code-detected",
+        "title": "Dead code found",
+        "description": "Unused variables or imports were found in your components. These add to your bundle size for no benefit.",
+        "severity": "info",
+        "fix": "Remove unused imports and variables. Enable ESLint's no-unused-vars rule to catch these automatically.",
+        "affectedComponent": "Global/Module"
+      },
+      {
+        "id": "inline-functions-detected",
+        "title": "Inline functions found in JSX props",
+        "description": "Inline arrow functions were found directly inside JSX props. Every render creates a brand new function reference, which prevents React.memo() from working correctly on child components and can trigger unnecessary re-renders.",
+        "severity": "info",
+        "fix": "Move event handlers outside the JSX and wrap them with useCallback:\n\nconst handleClick = useCallback(() => {\n  // your handler\n}, [dependency]);\n\n// Then use:\n<Button onClick={handleClick} />",
+        "affectedComponent": "App"
+      }
+    ],
+    "summary": {
+      "critical": 2,
+      "warning": 6,
+      "info": 3,
+      "total": 11
+    }
+  }
+]

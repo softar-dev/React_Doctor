@@ -2,7 +2,7 @@ import { FileScanner } from './static/scanner';
 import { StaticAnalyzer } from './static/analyzer';
 import path from 'path';
 
-async function testCompleteAnalysis() {
+export async function testCompleteAnalysis() {
   console.log("\n" + "=".repeat(70));
   console.log("🩺 React Doctor - Complete Static Analysis Test");
   console.log("=".repeat(70));

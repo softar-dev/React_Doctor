@@ -1,17 +1,10 @@
 {
   "name": "react-tool",
   "version": "1.0.0",
-  "workspaces": [
-    "cli",
-    "core",
-    "backend",
-    "dashboard",
-    "shared"
-  ],
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepare": "npm run build --prefix cli"
   },
   "keywords": [],
   "author": "",
@@ -23,13 +16,14 @@
     "@babel/types": "^7.29.0",
     "fs-extra": "^11.3.4",
     "glob": "^13.0.6",
-    "puppeteer": "^24.38.0",
+    "puppeteer-core": "^22.0.0",
     "web-vitals": "^5.1.0"
   },
   "devDependencies": {
     "@types/babel__traverse": "^7.28.0",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^25.3.3",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.0.0"
   }
 }

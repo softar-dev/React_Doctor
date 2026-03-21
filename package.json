@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prepare": "npm run build --prefix cli"
+    "prepare": "cd cli && npx tsc"
   },
   "keywords": [],
   "author": "",

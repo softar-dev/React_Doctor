@@ -92,16 +92,50 @@ export class ReportCompiler {
    * @throws If any required report file is missing — the caller
    *         should run the analyzer/profiler/rule-engine first.
    */
-  async compile(projectName: string): Promise<FinalReport> {
+  /**
+   * Overloads:
+   *   compile(projectName)
+   *     — reads all three reports from disk (standalone / test use)
+   *
+   *   compile(staticReport, runtimeReports, ruleResults)
+   *     — receives data directly from the CLI pipeline in memory
+   *       (no disk read needed — faster and no stale-file issues)
+   *
+   * The CLI always passes data directly. The standalone test runner
+   * calls compile(projectName) which reads from core/reports/.
+   */
+  async compile(
+    staticReportOrName:  StaticReport | string | null,
+    runtimeReportsArg?:  Record<string, RuntimeReport>,
+    ruleResultsArg?:     any[],
+  ): Promise<FinalReport> {
     console.log("\n📦 Report Compiler starting...");
 
-    // ── Step 1: Load all three input files ────────────────────
-    const staticReport   = this.loadStaticReport();
-    const runtimeReports = this.loadRuntimeReports();
-    const ruleResults    = this.loadSuggestions();
+    let staticReport:   StaticReport;
+    let runtimeReports: Record<string, RuntimeReport>;
+    let ruleResults:    any[];
+    let projectName:    string;
+
+    // ── Determine call mode ────────────────────────────────────
+    if (typeof staticReportOrName === "string" || staticReportOrName === null) {
+      // Called as compile(projectName) — read from disk
+      projectName  = (staticReportOrName as string) ?? "react-app";
+      staticReport   = this.loadStaticReport();
+      runtimeReports = this.loadRuntimeReports();
+      ruleResults    = this.loadSuggestions();
+    } else {
+      // Called as compile(staticReport, runtimeReports, ruleResults)
+      // — data passed directly from the CLI pipeline
+      staticReport   = staticReportOrName;
+      runtimeReports = runtimeReportsArg ?? {};
+      ruleResults    = ruleResultsArg    ?? [];
+      // Derive project name from the runtime report URL if available
+      const firstUrl = Object.values(runtimeReports)[0]?.url ?? "";
+      projectName    = firstUrl ? new URL(firstUrl).hostname : "react-app";
+    }
 
     // Print a quick summary of what was loaded
-    console.log(`   Static report:   ${staticReport.issues.length} issue(s) — grade ${staticReport.grade}`);
+    console.log(`   Static report:   ${staticReport?.issues?.length ?? 0} issue(s)`);
     console.log(`   Runtime report:  ${Object.keys(runtimeReports).length} route+device entry(s)`);
     console.log(`   Rule results:    ${ruleResults.length} route+device entry(s)`);
 

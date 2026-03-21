@@ -21,10 +21,14 @@
     "@babel/parser": "^7.29.0",
     "@babel/traverse": "^7.29.0",
     "@babel/types": "^7.29.0",
-    "glob": "^13.0.6"
+    "fs-extra": "^11.3.4",
+    "glob": "^13.0.6",
+    "puppeteer": "^24.38.0",
+    "web-vitals": "^5.1.0"
   },
   "devDependencies": {
     "@types/babel__traverse": "^7.28.0",
+    "@types/fs-extra": "^11.0.4",
     "@types/node": "^25.3.3",
     "ts-node": "^10.9.2"
   }

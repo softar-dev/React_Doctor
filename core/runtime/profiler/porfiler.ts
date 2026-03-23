@@ -11,7 +11,8 @@ import os from "os";
 import path from "path";
 import fs from "fs-extra";
 import * as parser from "@babel/parser";
-import traverse from "@babel/traverse";
+import * as traverseLib from "@babel/traverse";
+const traverse: Function = (traverseLib as any).default ?? (traverseLib as any);
 
 // ─────────────────────────────────────────────────────────────
 // TYPES
@@ -23,7 +24,7 @@ export interface ReactProfilerData {
   renderTime: number;
 }
 
-export type DeviceType    = "desktop" | "mobile";
+export type DeviceType = "desktop" | "mobile";
 export type ThrottlePreset = "none" | "slow4g" | "3g";
 
 /**
@@ -54,12 +55,12 @@ const NETWORK_PRESETS = {
   none: null,
   slow4g: {
     downloadThroughput: (9 * 1024 * 1024) / 8,
-    uploadThroughput:   (750 * 1024) / 8,
+    uploadThroughput: (750 * 1024) / 8,
     latency: 170,
   },
   "3g": {
     downloadThroughput: (1.5 * 1024 * 1024) / 8,
-    uploadThroughput:   (750 * 1024) / 8,
+    uploadThroughput: (750 * 1024) / 8,
     latency: 300,
   },
 } as const;
@@ -69,19 +70,19 @@ const NETWORK_PRESETS = {
 // ─────────────────────────────────────────────────────────────
 const DEVICE_PRESETS = {
   desktop: {
-    viewport:  { width: 1280, height: 720 },
+    viewport: { width: 1280, height: 720 },
     userAgent: null,
-    hasTouch:  false,
-    isMobile:  false,
+    hasTouch: false,
+    isMobile: false,
   },
   mobile: {
-    viewport:  { width: 390, height: 844 },
+    viewport: { width: 390, height: 844 },
     userAgent:
       "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) " +
       "AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 " +
       "Mobile/15E148 Safari/604.1",
-    hasTouch:  true,
-    isMobile:  true,
+    hasTouch: true,
+    isMobile: true,
   },
 } as const;
 
@@ -127,26 +128,27 @@ export function calculatePerformanceScore(
     return Math.round(100 * (1 - (value - good) / (poor - good)));
   }
 
-  const avgCommit = commitDurations.length > 0
-    ? commitDurations.reduce((a, b) => a + b, 0) / commitDurations.length
-    : 0;
+  const avgCommit =
+    commitDurations.length > 0
+      ? commitDurations.reduce((a, b) => a + b, 0) / commitDurations.length
+      : 0;
 
   const scores = {
-    lcp:        normalize(vitals.lcp,    2500, 4000)  * 0.30,
-    renderTime: normalize(renderTime,    2000, 5000)  * 0.20,
-    fcp:        normalize(vitals.fcp,    1800, 3000)  * 0.15,
-    commitAvg:  normalize(avgCommit,     16,   100)   * 0.15,
-    ttfb:       normalize(vitals.ttfb,   800,  1800)  * 0.10,
-    cls:        normalize(vitals.cls,    0.1,  0.25)  * 0.05,
-    inp:        normalize(vitals.inp,    200,  500)   * 0.05,
+    lcp: normalize(vitals.lcp, 2500, 4000) * 0.3,
+    renderTime: normalize(renderTime, 2000, 5000) * 0.2,
+    fcp: normalize(vitals.fcp, 1800, 3000) * 0.15,
+    commitAvg: normalize(avgCommit, 16, 100) * 0.15,
+    ttfb: normalize(vitals.ttfb, 800, 1800) * 0.1,
+    cls: normalize(vitals.cls, 0.1, 0.25) * 0.05,
+    inp: normalize(vitals.inp, 200, 500) * 0.05,
   };
 
   let score = Object.values(scores).reduce((a, b) => a + b, 0);
 
   // Penalize for errors and warnings
-  const errorCount   = errors.filter(e => e.type === "error").length;
-  const warningCount = errors.filter(e => e.type === "warning").length;
-  score -= Math.min(errorCount   * 5, 20);
+  const errorCount = errors.filter((e) => e.type === "error").length;
+  const warningCount = errors.filter((e) => e.type === "warning").length;
+  score -= Math.min(errorCount * 5, 20);
   score -= Math.min(warningCount * 2, 10);
 
   return Math.max(0, Math.min(100, Math.round(score)));
@@ -171,12 +173,12 @@ class RouteScanner {
       if (!fs.existsSync(filePath)) continue;
       try {
         const code = await fs.readFile(filePath, "utf-8");
-        const ast  = parser.parse(code, {
+        const ast = parser.parse(code, {
           sourceType: "module",
           plugins: ["jsx", "typescript"],
         });
         traverse(ast, {
-          JSXOpeningElement(p) {
+          JSXOpeningElement(p: { node: { name: any; attributes: any[] } }) {
             const isRoute = (p.node.name as any).name === "Route";
             if (isRoute) {
               const pathAttr = p.node.attributes.find(
@@ -197,7 +199,8 @@ class RouteScanner {
       }
     }
 
-    return [...new Set(routes)];
+    const result = [...new Set(routes)];
+    return result.length > 0 ? result : ["/"];
   }
 }
 
@@ -213,10 +216,10 @@ export class RuntimeProfiler {
   private screenshotDir: string;
 
   constructor(projectPath: string) {
-    this.projectPath  = path.resolve(projectPath);
+    this.projectPath = path.resolve(projectPath);
     // __dirname = core/runtime/profiler/
     // 2 levels up (.., ..) = core/  ← reports folder lives here
-    this.reportDir    = path.resolve(__dirname, "..", "..", "reports");
+    this.reportDir = path.resolve(__dirname, "..", "..", "reports");
     this.screenshotDir = path.join(this.reportDir, "screenshots");
     fs.ensureDirSync(this.reportDir);
     fs.ensureDirSync(this.screenshotDir);
@@ -246,27 +249,33 @@ export class RuntimeProfiler {
     manualRoutes: string[] = [],
     options: ProfileOptions = {},
   ): Promise<Record<string, RuntimeReport>> {
-    const throttle    = options.throttle    ?? "none";
+    const throttle = options.throttle ?? "none";
     const cpuThrottle = options.cpuThrottle ?? 1;
 
     const rawDevice = options.device ?? "desktop";
-    const devices: DeviceType[] = Array.isArray(rawDevice) ? rawDevice : [rawDevice];
+    const devices: DeviceType[] = Array.isArray(rawDevice)
+      ? rawDevice
+      : [rawDevice];
     const multiDevice = devices.length > 1;
 
     console.log("🚀 Starting React Doctor Analysis...");
-    console.log(`   Devices:  ${devices.join(", ")} | Network: ${throttle} | CPU: ${cpuThrottle}x`);
+    console.log(
+      `   Devices:  ${devices.join(", ")} | Network: ${throttle} | CPU: ${cpuThrottle}x`,
+    );
 
     const masterReport: Record<string, RuntimeReport> = {};
 
     try {
-      const port    = await this.startDevServer();
+      const port = await this.startDevServer();
       const baseUrl = `http://localhost:${port}`;
 
       let targetRoutes = manualRoutes;
       if (targetRoutes.length === 0) {
         console.log("🔍 Smart Scanning source code for routes...");
         targetRoutes = await RouteScanner.scanForRoutes(this.projectPath);
-        console.log(`🎯 Discovered ${targetRoutes.length} route(s): ${targetRoutes.join(", ")}`);
+        console.log(
+          `🎯 Discovered ${targetRoutes.length} route(s): ${targetRoutes.join(", ")}`,
+        );
       }
 
       for (const device of devices) {
@@ -329,9 +338,34 @@ export class RuntimeProfiler {
 
     const candidates: string[] = [
       // __dirname = react-tool/core/runtime/profiler/ → 3 levels up = react-tool/
-      path.resolve(__dirname, "..", "..", "..", "node_modules", "web-vitals", "dist", filename),
-      path.resolve(__dirname, "..", "..", "..", "..", "node_modules", "web-vitals", "dist", filename),
-      path.join(this.projectPath, "node_modules", "web-vitals", "dist", filename),
+      path.resolve(
+        __dirname,
+        "..",
+        "..",
+        "..",
+        "node_modules",
+        "web-vitals",
+        "dist",
+        filename,
+      ),
+      path.resolve(
+        __dirname,
+        "..",
+        "..",
+        "..",
+        "..",
+        "node_modules",
+        "web-vitals",
+        "dist",
+        filename,
+      ),
+      path.join(
+        this.projectPath,
+        "node_modules",
+        "web-vitals",
+        "dist",
+        filename,
+      ),
     ];
 
     try {
@@ -346,10 +380,10 @@ export class RuntimeProfiler {
       }
     }
 
-    const searched = candidates.map(c => `\n      ${c}`).join("");
+    const searched = candidates.map((c) => `\n      ${c}`).join("");
     throw new Error(
       `❌ web-vitals not found.\n\n   Searched in:${searched}\n\n` +
-      `   Fix: run "npm install web-vitals" inside react-tool/\n`,
+        `   Fix: run "npm install web-vitals" inside react-tool/\n`,
     );
   }
 
@@ -382,7 +416,9 @@ export class RuntimeProfiler {
       if (fs.existsSync(p)) return p;
     }
 
-    throw new Error("❌ No compatible browser found! Please install Google Chrome or Chromium.");
+    throw new Error(
+      "❌ No compatible browser found! Please install Google Chrome or Chromium.",
+    );
   }
 
   // ───────────────────────────────────────────────────────────
@@ -395,17 +431,22 @@ export class RuntimeProfiler {
     const pkgManager = fs.existsSync(path.join(this.projectPath, "yarn.lock"))
       ? "yarn"
       : fs.existsSync(path.join(this.projectPath, "pnpm-lock.yaml"))
-      ? "pnpm"
-      : "npm";
+        ? "pnpm"
+        : "npm";
 
     console.log(`📦 Starting ${pkgManager} dev server...`);
 
     this.devServer = spawn(pkgManager, ["run", "dev"], {
-      cwd:        this.projectPath,
-      shell:      isWin ? true : "/bin/bash",
-      env:        { ...process.env, ...(isWin ? {} : { PATH: process.env.PATH + ":/usr/local/bin:/usr/bin:/bin" }) },
-      detached:   !isWin,
-      stdio:      ["ignore", "pipe", "pipe"],
+      cwd: this.projectPath,
+      shell: isWin ? true : "/bin/bash",
+      env: {
+        ...process.env,
+        ...(isWin
+          ? {}
+          : { PATH: process.env.PATH + ":/usr/local/bin:/usr/bin:/bin" }),
+      },
+      detached: !isWin,
+      stdio: ["ignore", "pipe", "pipe"],
       windowsHide: true,
     });
 
@@ -458,11 +499,15 @@ export class RuntimeProfiler {
       this.browser = await puppeteer.launch({
         executablePath: this.getBrowserPath(),
         headless: true,
-        args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"],
+        args: [
+          "--no-sandbox",
+          "--disable-setuid-sandbox",
+          "--disable-dev-shm-usage",
+        ],
       });
     }
 
-    const page         = await this.browser.newPage();
+    const page = await this.browser.newPage();
     const devicePreset = DEVICE_PRESETS[device];
 
     await page.setViewport({
@@ -491,7 +536,9 @@ export class RuntimeProfiler {
     // Slows down JavaScript execution to simulate low-end hardware.
     // rate 1 = real speed, rate 4 = 4x slower (Lighthouse mobile preset).
     if (cpuThrottle > 1) {
-      await cdpClient.send("Emulation.setCPUThrottlingRate", { rate: cpuThrottle });
+      await cdpClient.send("Emulation.setCPUThrottlingRate", {
+        rate: cpuThrottle,
+      });
       console.log(`   ⚙️  CPU: ${cpuThrottle}x slowdown`);
     }
 
@@ -510,43 +557,43 @@ export class RuntimeProfiler {
       // Cast to Error since that is always what the browser sends.
       const error = err as Error;
       errors.push({
-        type:    "error",
+        type: "error",
         message: error?.message ?? String(err),
-        source:  "pageerror",
+        source: "pageerror",
       });
     });
 
     // Internal messages generated by our own profiler scripts that
     // would show up as false positives in the app's error report.
     const PROFILER_NOISE = [
-      "Deprecated API for given entry type",   // from getEntriesByType("largest-contentful-paint")
-      "web-vitals",                             // from our web-vitals injection
+      "Deprecated API for given entry type", // from getEntriesByType("largest-contentful-paint")
+      "web-vitals", // from our web-vitals injection
     ];
 
     page.on("console", (msg) => {
       const text = msg.text();
 
       // Skip messages that come from our own injected scripts
-      if (PROFILER_NOISE.some(noise => text.includes(noise))) return;
+      if (PROFILER_NOISE.some((noise) => text.includes(noise))) return;
 
       if (msg.type() === "error") {
         errors.push({
-          type:    "error",
+          type: "error",
           message: text,
-          source:  "console",
+          source: "console",
         });
       } else if (msg.type() === "warn") {
         errors.push({
-          type:    "warning",
+          type: "warning",
           message: text,
-          source:  "console",
+          source: "console",
         });
       }
     });
 
     // ── React DevTools hook injection ─────────────────────────
     await page.evaluateOnNewDocument(() => {
-      const win = (globalThis as any);
+      const win = globalThis as any;
       const rerenders: Record<string, number> = {};
       const commitDurations: number[] = [];
 
@@ -568,11 +615,14 @@ export class RuntimeProfiler {
         hook.__reactDoctorPatched__ = true;
         const originalOnCommit = hook.onCommitFiberRoot;
         hook.onCommitFiberRoot = (rendererID: any, fiberRoot: any) => {
-          if (originalOnCommit) originalOnCommit.call(hook, rendererID, fiberRoot);
+          if (originalOnCommit)
+            originalOnCommit.call(hook, rendererID, fiberRoot);
           try {
             const rootFiber = fiberRoot.current;
             if (rootFiber?.actualDuration != null) {
-              commitDurations.push(parseFloat(rootFiber.actualDuration.toFixed(2)));
+              commitDurations.push(
+                parseFloat(rootFiber.actualDuration.toFixed(2)),
+              );
             }
             walkFiber(rootFiber);
           } catch (e) {}
@@ -605,15 +655,20 @@ export class RuntimeProfiler {
 
       // Simulate click for INP
       await page.mouse.click(
-        devicePreset.viewport.width  / 2,
+        devicePreset.viewport.width / 2,
         devicePreset.viewport.height / 2,
       );
 
-      const perfMetrics  = await page.metrics();
-      const vitals       = await this.runVitalsScript(page);
-      const reactData    = await this.runReactProfiler(page, renderTime);
-      const resources    = await this.getResourceUsage(page);
-      const screenshots  = await this.captureScreenshots(page, url, device, renderTime);
+      const perfMetrics = await page.metrics();
+      const vitals = await this.runVitalsScript(page);
+      const reactData = await this.runReactProfiler(page, renderTime);
+      const resources = await this.getResourceUsage(page);
+      const screenshots = await this.captureScreenshots(
+        page,
+        url,
+        device,
+        renderTime,
+      );
 
       await page.close();
 
@@ -629,9 +684,11 @@ export class RuntimeProfiler {
         errors,
         screenshots,
         stats: {
-          domNodes:    perfMetrics.Nodes ?? 0,
-          jsHeapMB:    ((perfMetrics.JSHeapUsedSize ?? 0) / 1024 / 1024).toFixed(2),
-          payloadMB:   resources.totalMB.toFixed(2),
+          domNodes: perfMetrics.Nodes ?? 0,
+          jsHeapMB: ((perfMetrics.JSHeapUsedSize ?? 0) / 1024 / 1024).toFixed(
+            2,
+          ),
+          payloadMB: resources.totalMB.toFixed(2),
           topOffender: resources.topFile,
         },
       };
@@ -663,17 +720,38 @@ export class RuntimeProfiler {
         };
 
         const done = () => {
-          if (++count === 5 && !resolved) { resolved = true; resolve(finalize()); }
+          if (++count === 5 && !resolved) {
+            resolved = true;
+            resolve(finalize());
+          }
         };
 
-        v.onLCP((m: any)  => { results.lcp  = m.value; done(); });
-        v.onFCP((m: any)  => { results.fcp  = m.value; done(); });
-        v.onCLS((m: any)  => { results.cls  = m.value; done(); });
-        v.onINP((m: any)  => { results.inp  = m.value; done(); });
-        v.onTTFB((m: any) => { results.ttfb = m.value; done(); });
+        v.onLCP((m: any) => {
+          results.lcp = m.value;
+          done();
+        });
+        v.onFCP((m: any) => {
+          results.fcp = m.value;
+          done();
+        });
+        v.onCLS((m: any) => {
+          results.cls = m.value;
+          done();
+        });
+        v.onINP((m: any) => {
+          results.inp = m.value;
+          done();
+        });
+        v.onTTFB((m: any) => {
+          results.ttfb = m.value;
+          done();
+        });
 
         setTimeout(() => {
-          if (!resolved) { resolved = true; resolve(finalize()); }
+          if (!resolved) {
+            resolved = true;
+            resolve(finalize());
+          }
         }, 8000);
       });
     })) as WebVitals;
@@ -683,32 +761,40 @@ export class RuntimeProfiler {
   // PRIVATE: React Profiler API
   // ───────────────────────────────────────────────────────────
 
-  private async runReactProfiler(page: Page, renderTime: number): Promise<ReactProfilerData> {
+  private async runReactProfiler(
+    page: Page,
+    renderTime: number,
+  ): Promise<ReactProfilerData> {
     await new Promise((r) => setTimeout(r, 3000));
 
     const result = await page.evaluate((renderTimeMs: number) => {
-      const win  = globalThis as any;
+      const win = globalThis as any;
       const data = win.__reactDoctorData__;
-      const hookExists       = !!win.__REACT_DEVTOOLS_GLOBAL_HOOK__;
-      const hookSupportsFiber = win.__REACT_DEVTOOLS_GLOBAL_HOOK__?.supportsFiber ?? false;
+      const hookExists = !!win.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+      const hookSupportsFiber =
+        win.__REACT_DEVTOOLS_GLOBAL_HOOK__?.supportsFiber ?? false;
 
       return {
         hookExists,
         hookSupportsFiber,
-        dataExists:      !!data,
-        rerenders:       data?.rerenders       ?? {},
+        dataExists: !!data,
+        rerenders: data?.rerenders ?? {},
         commitDurations: data?.commitDurations ?? [],
-        renderTime:      renderTimeMs,
+        renderTime: renderTimeMs,
       };
     }, renderTime);
 
-    console.log(`   ⚛️  Hook exists: ${result.hookExists} | supportsFiber: ${result.hookSupportsFiber} | data captured: ${result.dataExists}`);
-    console.log(`   ⚛️  Commits: ${result.commitDurations.length} | Components: ${Object.keys(result.rerenders).length}`);
+    console.log(
+      `   ⚛️  Hook exists: ${result.hookExists} | supportsFiber: ${result.hookSupportsFiber} | data captured: ${result.dataExists}`,
+    );
+    console.log(
+      `   ⚛️  Commits: ${result.commitDurations.length} | Components: ${Object.keys(result.rerenders).length}`,
+    );
 
     return {
-      rerenders:       result.rerenders,
+      rerenders: result.rerenders,
       commitDurations: result.commitDurations,
-      renderTime:      result.renderTime,
+      renderTime: result.renderTime,
     };
   }
 
@@ -748,13 +834,18 @@ export class RuntimeProfiler {
     // Get the FCP and LCP timestamps from the browser's Performance API
     // so we can annotate the screenshots with when those events happened
     const timings = await page.evaluate(() => {
-      const fcpEntry = performance.getEntriesByName("first-contentful-paint")[0];
-      const lcpEntries = (performance as any).getEntriesByType("largest-contentful-paint");
+      const fcpEntry = performance.getEntriesByName(
+        "first-contentful-paint",
+      )[0];
+      const lcpEntries = (performance as any).getEntriesByType(
+        "largest-contentful-paint",
+      );
       return {
         fcp: fcpEntry?.startTime ?? 0,
-        lcp: lcpEntries.length > 0
-          ? lcpEntries[lcpEntries.length - 1].startTime
-          : 0,
+        lcp:
+          lcpEntries.length > 0
+            ? lcpEntries[lcpEntries.length - 1].startTime
+            : 0,
       };
     });
 
@@ -769,7 +860,10 @@ export class RuntimeProfiler {
     const timestamp = Date.now();
 
     // Take the full-load screenshot (page is currently at networkidle0 state)
-    const fullLoadBuffer = await page.screenshot({ type: "png", fullPage: false });
+    const fullLoadBuffer = await page.screenshot({
+      type: "png",
+      fullPage: false,
+    });
     const fullLoadBase64 = `data:image/png;base64,${Buffer.from(fullLoadBuffer as any).toString("base64")}`;
     const fullLoadFilename = `${urlSafe}-${device}-fullLoad-${timestamp}.png`;
 
@@ -779,7 +873,7 @@ export class RuntimeProfiler {
     );
 
     screenshots.push({
-      label:   "fullLoad",
+      label: "fullLoad",
       dataUrl: fullLoadBase64,
       takenAt: renderTime,
     });
@@ -791,7 +885,7 @@ export class RuntimeProfiler {
     // so the dashboard knows which frame corresponds to which event.
     if (timings.fcp > 0) {
       screenshots.push({
-        label:   "fcp",
+        label: "fcp",
         dataUrl: fullLoadBase64, // same visual — annotated with timing in dashboard
         takenAt: Math.round(timings.fcp),
       });
@@ -799,7 +893,7 @@ export class RuntimeProfiler {
 
     if (timings.lcp > 0) {
       screenshots.push({
-        label:   "lcp",
+        label: "lcp",
         dataUrl: fullLoadBase64,
         takenAt: Math.round(timings.lcp),
       });
@@ -816,9 +910,12 @@ export class RuntimeProfiler {
 
   private async getResourceUsage(page: Page) {
     return await page.evaluate(() => {
-      const entries    = performance.getEntriesByType("resource");
-      const totalBytes = entries.reduce((acc, e: any) => acc + (e.transferSize || 0), 0);
-      const sorted     = [...entries].sort(
+      const entries = performance.getEntriesByType("resource");
+      const totalBytes = entries.reduce(
+        (acc, e: any) => acc + (e.transferSize || 0),
+        0,
+      );
+      const sorted = [...entries].sort(
         (a: any, b: any) => (b.transferSize || 0) - (a.transferSize || 0),
       );
       const heaviest = sorted[0] as any;
@@ -849,13 +946,19 @@ export class RuntimeProfiler {
       console.log("🧹 Cleaning up background processes...");
       try {
         if (os.platform() === "win32") {
-          spawn("taskkill", ["/pid", this.devServer.pid.toString(), "/f", "/t"]);
+          spawn("taskkill", [
+            "/pid",
+            this.devServer.pid.toString(),
+            "/f",
+            "/t",
+          ]);
         } else {
           process.kill(-this.devServer.pid);
         }
       } catch (error) {
         const err = error as any;
-        if (err.code !== "ESRCH") console.warn(`   ⚠️ Cleanup warning: ${err.message}`);
+        if (err.code !== "ESRCH")
+          console.warn(`   ⚠️ Cleanup warning: ${err.message}`);
       }
       this.devServer = undefined;
     }

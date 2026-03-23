@@ -1,7 +1,10 @@
 import path from "path";
 import fs from "fs-extra";
 import * as parser from "@babel/parser";
-import traverse from "@babel/traverse";
+import * as traverseLib from "@babel/traverse";
+
+// Fix for Node 24 + ts-node: @babel/traverse exports default as a property
+const traverse: Function = (traverseLib as any).default ?? (traverseLib as any);
 
 /**
  * Scans the project's source files for React Router <Route path="...">
@@ -35,7 +38,7 @@ export class RouteScanner {
         });
 
         traverse(ast, {
-          JSXOpeningElement(p) {
+          JSXOpeningElement(p: any) {
             const isRoute = (p.node.name as any).name === "Route";
             if (isRoute) {
               const pathAttr = p.node.attributes.find(
@@ -56,6 +59,7 @@ export class RouteScanner {
       }
     }
 
-    return [...new Set(routes)];
+    // Fallback: always return at least "/" even if scanning fails
+    return routes.length > 0 ? [...new Set(routes)] : ["/"];
   }
 }

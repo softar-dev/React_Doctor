@@ -57,7 +57,7 @@ if (major < 18) {
 //
 // This means the core never needs its own build step — the CLI
 // handles TypeScript resolution for the whole project.
-require("ts-node").register({
+require(require.resolve("ts-node", { paths: [__dirname] })).register({
   // Don't type-check on every require() — just transpile.
   // Type checking happens at build time, not at runtime.
   // This makes startup much faster.

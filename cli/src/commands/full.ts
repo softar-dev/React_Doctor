@@ -162,11 +162,14 @@ export async function runFullCommand(
         ? "mobile"
         : "desktop";
 
+  const throttleLabel = options.throttle ?? "none";
+  const cpuLabel = options.cpu ?? 1;
+
   printSection("Full Diagnostic");
   printInfo("Project", resolvedPath);
   printInfo("Device", deviceLabel);
-  printInfo("CPU", `${options.cpu ?? 1}x`);
-  printInfo("Network", options.throttle ?? "none");
+  printInfo("CPU", `${cpuLabel}x`);
+  printInfo("Network", throttleLabel);
 
   // ── Output directory ───────────────────────────────────────
   // Reports are saved inside the user's project in a hidden
@@ -184,21 +187,17 @@ export async function runFullCommand(
 
   const staticSpin = spinner("Scanning JSX/TSX source files...");
   try {
-    // Import the FileScanner and StaticAnalyzer from core
     const { FileScanner } = getCoreModule("static-ana/static/scanner");
     const { StaticAnalyzer } = getCoreModule("static-ana/static/analyzer");
 
     const scanner = new FileScanner();
     const analyzer = new StaticAnalyzer();
 
-    // Find all JSX/TSX files in the project
     const files = await scanner.findFiles(resolvedPath);
     staticSpin.text = `  Analyzing ${files.length} file(s)...`;
 
-    // Run all 9 detectors on each file
     staticReport = await analyzer.analyze(files);
 
-    // Save static report to the project's .react-doctor/ folder
     fs.writeFileSync(
       path.join(outputDir, "staticreport.json"),
       JSON.stringify(staticReport, null, 2),
@@ -219,12 +218,7 @@ export async function runFullCommand(
       chalk.green(`Static analysis complete — ${files.length} files scanned`),
     );
 
-    // Print a quick summary
-    printResult(
-      "Files analyzed",
-      String(staticReport.filesAnalyzed ?? 0),
-      "info",
-    );
+    printResult("Files analyzed", String(staticReport.filesAnalyzed ?? 0), "info");
     printResult("Total issues", String(total), total > 0 ? "warn" : "good");
     printResult("Critical", String(critical), critical > 0 ? "poor" : "good");
     printResult("Warnings", String(warnings), warnings > 0 ? "warn" : "good");
@@ -233,7 +227,6 @@ export async function runFullCommand(
   } catch (err: any) {
     staticSpin.fail(chalk.red("Static analysis failed"));
     console.log(chalk.red(`\n  ${err.message}\n`));
-    // Static failure is not fatal — we continue with profiling
     staticReport = null;
   }
 
@@ -254,11 +247,10 @@ export async function runFullCommand(
 
     runtimeReports = await profiler.profile([], {
       device: devices,
-      throttle: options.throttle ?? "none",
-      cpuThrottle: options.cpu ?? 1,
+      throttle: throttleLabel,
+      cpuThrottle: cpuLabel,
     });
 
-    // Save runtime report to .react-doctor/
     fs.writeFileSync(
       path.join(outputDir, "runtimereport.json"),
       JSON.stringify(runtimeReports, null, 2),
@@ -276,9 +268,16 @@ export async function runFullCommand(
       const [route, device] = key.includes("::")
         ? key.split("::")
         : [key, "desktop"];
+
       console.log();
       console.log(
         `  ${chalk.bold(route)} ${chalk.gray(`[${device}]`)}  Score: ${scoreBadge(report.performanceScore)}`,
+      );
+      // ── Device / CPU / Network line ──────────────────────────
+      console.log(
+        `  ${chalk.gray("Device:")} ${device}  ` +
+        `${chalk.gray("CPU:")} ${report.cpuThrottling ?? cpuLabel}x  ` +
+        `${chalk.gray("Network:")} ${throttleLabel}`,
       );
 
       printResult(
@@ -317,12 +316,8 @@ export async function runFullCommand(
       );
 
       if ((report.errors ?? []).length > 0) {
-        const errs = report.errors.filter(
-          (e: any) => e.type === "error",
-        ).length;
-        const warn = report.errors.filter(
-          (e: any) => e.type === "warning",
-        ).length;
+        const errs = report.errors.filter((e: any) => e.type === "error").length;
+        const warn = report.errors.filter((e: any) => e.type === "warning").length;
         printResult(
           "Issues",
           `${errs} error(s)  ${warn} warning(s)`,
@@ -353,7 +348,6 @@ export async function runFullCommand(
     const engine = new RuleEngine(outputDir);
     ruleResults = await engine.run(staticReport, runtimeReports);
 
-    // Save suggestions to .react-doctor/
     const allSuggestions = ruleResults.flatMap((r: any) => r.suggestions);
     fs.writeFileSync(
       path.join(outputDir, "suggestions.json"),
@@ -361,15 +355,9 @@ export async function runFullCommand(
     );
 
     const total = allSuggestions.length;
-    const critical = allSuggestions.filter(
-      (s: any) => s.severity === "critical",
-    ).length;
-    const warnings = allSuggestions.filter(
-      (s: any) => s.severity === "warning",
-    ).length;
-    const infos = allSuggestions.filter(
-      (s: any) => s.severity === "info",
-    ).length;
+    const critical = allSuggestions.filter((s: any) => s.severity === "critical").length;
+    const warnings = allSuggestions.filter((s: any) => s.severity === "warning").length;
+    const infos = allSuggestions.filter((s: any) => s.severity === "info").length;
 
     ruleSpin.succeed(
       chalk.green(`Rule Engine complete — ${total} suggestion(s) generated`),
@@ -379,7 +367,6 @@ export async function runFullCommand(
     printResult("Warnings", String(warnings), warnings > 0 ? "warn" : "good");
     printResult("Info", String(infos), "info");
 
-    // Print top suggestions (max 5, critical first)
     if (total > 0) {
       console.log();
       console.log(chalk.gray("  Top suggestions:"));
@@ -420,23 +407,14 @@ export async function runFullCommand(
       ruleResults,
     );
 
-    // Save final report to .react-doctor/
     fs.writeFileSync(
       path.join(outputDir, "finalreport.json"),
       JSON.stringify(finalReport, null, 2),
     );
 
     compilerSpin.succeed(chalk.green("Final report compiled"));
-    printResult(
-      "Overall score",
-      scoreBadge(finalReport.performanceScore),
-      "none",
-    );
-    printResult(
-      "Report saved",
-      path.join(outputDir, "finalreport.json"),
-      "info",
-    );
+    printResult("Overall score", scoreBadge(finalReport.performanceScore), "none");
+    printResult("Report saved", path.join(outputDir, "finalreport.json"), "info");
   } catch (err: any) {
     compilerSpin.fail(chalk.red("Report Compiler failed"));
     console.log(chalk.red(`\n  ${err.message}\n`));

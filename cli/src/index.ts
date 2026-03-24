@@ -55,6 +55,9 @@ Examples:
   $ react-doctor full ./my-app --mobile              Mobile only
   $ react-doctor full ./my-app --desktop --mobile    Both desktop and mobile
   $ react-doctor full ./my-app --cpu 4               Simulate slow Android device
+  $ react-doctor full ./my-app --throttle slow4g     Simulate slow 4G network
+  $ react-doctor full ./my-app --throttle 3g         Simulate 3G network
+  $ react-doctor full ./my-app --cpu 4 --throttle 3g Slow device + slow network
   $ react-doctor full ./my-app --upload              Upload results to dashboard
 
   $ react-doctor analyze ./my-app                    Static code analysis only
@@ -64,6 +67,8 @@ Examples:
   $ react-doctor profile ./my-app --mobile           Mobile only
   $ react-doctor profile ./my-app --desktop --mobile Both devices
   $ react-doctor profile ./my-app --cpu 4            4x CPU slowdown simulation
+  $ react-doctor profile ./my-app --throttle slow4g  Simulate slow 4G network
+  $ react-doctor profile ./my-app --throttle 3g      Simulate 3G network
 
   $ react-doctor install                       Install from GitHub into a project
   $ react-doctor install --path ./my-app       Install into a specific folder

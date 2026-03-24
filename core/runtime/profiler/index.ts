@@ -127,6 +127,7 @@ export class RuntimeProfiler {
             errors,
             screenshots,
             cpuThrottling: cpuThrottle,
+             networkThrottle: throttle,
           };
         }
       }

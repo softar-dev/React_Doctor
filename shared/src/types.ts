@@ -107,6 +107,7 @@ export interface RuntimeReport {
 
   // NEW: which CPU throttle was active (1 = real speed, 4 = 4x slowdown)
   cpuThrottling: number;
+  networkThrottle: string;
 }
 
 // ─────────────────────────────────────────────────────────────

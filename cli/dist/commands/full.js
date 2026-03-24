@@ -97,11 +97,13 @@ async function runFullCommand(projectPath, options = {}) {
         : wantMobile
             ? "mobile"
             : "desktop";
+    const throttleLabel = options.throttle ?? "none";
+    const cpuLabel = options.cpu ?? 1;
     (0, ui_1.printSection)("Full Diagnostic");
     (0, ui_1.printInfo)("Project", resolvedPath);
     (0, ui_1.printInfo)("Device", deviceLabel);
-    (0, ui_1.printInfo)("CPU", `${options.cpu ?? 1}x`);
-    (0, ui_1.printInfo)("Network", options.throttle ?? "none");
+    (0, ui_1.printInfo)("CPU", `${cpuLabel}x`);
+    (0, ui_1.printInfo)("Network", throttleLabel);
     // ── Output directory ───────────────────────────────────────
     // Reports are saved inside the user's project in a hidden
     // .react-doctor/ folder — easy to find, easy to gitignore.
@@ -114,17 +116,13 @@ async function runFullCommand(projectPath, options = {}) {
     let staticReport;
     const staticSpin = (0, ui_1.spinner)("Scanning JSX/TSX source files...");
     try {
-        // Import the FileScanner and StaticAnalyzer from core
         const { FileScanner } = getCoreModule("static-ana/static/scanner");
         const { StaticAnalyzer } = getCoreModule("static-ana/static/analyzer");
         const scanner = new FileScanner();
         const analyzer = new StaticAnalyzer();
-        // Find all JSX/TSX files in the project
         const files = await scanner.findFiles(resolvedPath);
         staticSpin.text = `  Analyzing ${files.length} file(s)...`;
-        // Run all 9 detectors on each file
         staticReport = await analyzer.analyze(files);
-        // Save static report to the project's .react-doctor/ folder
         fs_1.default.writeFileSync(path_1.default.join(outputDir, "staticreport.json"), JSON.stringify(staticReport, null, 2));
         const critical = staticReport.issues?.filter((i) => i.severity === "critical")
             .length ?? 0;
@@ -134,7 +132,6 @@ async function runFullCommand(projectPath, options = {}) {
             0;
         const total = staticReport.issues?.length ?? 0;
         staticSpin.succeed(chalk_1.default.green(`Static analysis complete — ${files.length} files scanned`));
-        // Print a quick summary
         (0, ui_1.printResult)("Files analyzed", String(staticReport.filesAnalyzed ?? 0), "info");
         (0, ui_1.printResult)("Total issues", String(total), total > 0 ? "warn" : "good");
         (0, ui_1.printResult)("Critical", String(critical), critical > 0 ? "poor" : "good");
@@ -145,7 +142,6 @@ async function runFullCommand(projectPath, options = {}) {
     catch (err) {
         staticSpin.fail(chalk_1.default.red("Static analysis failed"));
         console.log(chalk_1.default.red(`\n  ${err.message}\n`));
-        // Static failure is not fatal — we continue with profiling
         staticReport = null;
     }
     // ════════════════════════════════════════════════════════════
@@ -160,10 +156,9 @@ async function runFullCommand(projectPath, options = {}) {
         profilingSpin.text = "  Profiling... (this takes ~30 seconds per route)";
         runtimeReports = await profiler.profile([], {
             device: devices,
-            throttle: options.throttle ?? "none",
-            cpuThrottle: options.cpu ?? 1,
+            throttle: throttleLabel,
+            cpuThrottle: cpuLabel,
         });
-        // Save runtime report to .react-doctor/
         fs_1.default.writeFileSync(path_1.default.join(outputDir, "runtimereport.json"), JSON.stringify(runtimeReports, null, 2));
         const routeKeys = Object.keys(runtimeReports);
         profilingSpin.succeed(chalk_1.default.green(`Profiling complete — ${routeKeys.length} route/device combination(s)`));
@@ -174,6 +169,10 @@ async function runFullCommand(projectPath, options = {}) {
                 : [key, "desktop"];
             console.log();
             console.log(`  ${chalk_1.default.bold(route)} ${chalk_1.default.gray(`[${device}]`)}  Score: ${(0, ui_1.scoreBadge)(report.performanceScore)}`);
+            // ── Device / CPU / Network line ──────────────────────────
+            console.log(`  ${chalk_1.default.gray("Device:")} ${device}  ` +
+                `${chalk_1.default.gray("CPU:")} ${report.cpuThrottling ?? cpuLabel}x  ` +
+                `${chalk_1.default.gray("Network:")} ${throttleLabel}`);
             (0, ui_1.printResult)("LCP", `${report.metrics.lcp.toFixed(0)}ms`, (0, ui_1.vitalStatus)("lcp", report.metrics.lcp));
             (0, ui_1.printResult)("FCP", `${report.metrics.fcp.toFixed(0)}ms`, (0, ui_1.vitalStatus)("fcp", report.metrics.fcp));
             (0, ui_1.printResult)("TTFB", `${report.metrics.ttfb.toFixed(0)}ms`, (0, ui_1.vitalStatus)("ttfb", report.metrics.ttfb));
@@ -209,7 +208,6 @@ async function runFullCommand(projectPath, options = {}) {
         const { RuleEngine } = getCoreModule("rule-engine/index");
         const engine = new RuleEngine(outputDir);
         ruleResults = await engine.run(staticReport, runtimeReports);
-        // Save suggestions to .react-doctor/
         const allSuggestions = ruleResults.flatMap((r) => r.suggestions);
         fs_1.default.writeFileSync(path_1.default.join(outputDir, "suggestions.json"), JSON.stringify(ruleResults, null, 2));
         const total = allSuggestions.length;
@@ -220,7 +218,6 @@ async function runFullCommand(projectPath, options = {}) {
         (0, ui_1.printResult)("Critical", String(critical), critical > 0 ? "poor" : "good");
         (0, ui_1.printResult)("Warnings", String(warnings), warnings > 0 ? "warn" : "good");
         (0, ui_1.printResult)("Info", String(infos), "info");
-        // Print top suggestions (max 5, critical first)
         if (total > 0) {
             console.log();
             console.log(chalk_1.default.gray("  Top suggestions:"));
@@ -250,7 +247,6 @@ async function runFullCommand(projectPath, options = {}) {
         const { ReportCompiler } = getCoreModule("report-compiler/index");
         const compiler = new ReportCompiler();
         finalReport = await compiler.compile(staticReport, runtimeReports, ruleResults);
-        // Save final report to .react-doctor/
         fs_1.default.writeFileSync(path_1.default.join(outputDir, "finalreport.json"), JSON.stringify(finalReport, null, 2));
         compilerSpin.succeed(chalk_1.default.green("Final report compiled"));
         (0, ui_1.printResult)("Overall score", (0, ui_1.scoreBadge)(finalReport.performanceScore), "none");

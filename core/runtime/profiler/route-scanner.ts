@@ -3,19 +3,8 @@ import fs from "fs-extra";
 import * as parser from "@babel/parser";
 import * as traverseLib from "@babel/traverse";
 
-// Fix for Node 24 + ts-node: @babel/traverse exports default as a property
 const traverse: Function = (traverseLib as any).default ?? (traverseLib as any);
 
-/**
- * Scans the project's source files for React Router <Route path="...">
- * elements and returns all discovered route paths.
- *
- * Files checked (in order):
- *   src/App.tsx, src/App.jsx, src/main.tsx, src/routes.tsx
- *
- * Always includes "/" as the root route.
- * Duplicates are removed before returning.
- */
 export class RouteScanner {
   static async scanForRoutes(projectPath: string): Promise<string[]> {
     const routes: string[] = ["/"];
@@ -24,7 +13,11 @@ export class RouteScanner {
       path.join(projectPath, "src", "App.tsx"),
       path.join(projectPath, "src", "App.jsx"),
       path.join(projectPath, "src", "main.tsx"),
+      path.join(projectPath, "src", "main.jsx"),
       path.join(projectPath, "src", "routes.tsx"),
+      path.join(projectPath, "src", "routes.jsx"),
+      path.join(projectPath, "src", "router.tsx"),
+      path.join(projectPath, "src", "router.jsx"),
     ];
 
     for (const filePath of potentialFiles) {
@@ -38,6 +31,7 @@ export class RouteScanner {
         });
 
         traverse(ast, {
+          // ── React Router v5: <Route path="/foo" /> ──────────
           JSXOpeningElement(p: any) {
             const isRoute = (p.node.name as any).name === "Route";
             if (isRoute) {
@@ -53,13 +47,30 @@ export class RouteScanner {
               }
             }
           },
+
+          // ── React Router v6: createBrowserRouter([{ path: "/foo" }]) ──
+          ObjectExpression(p: any) {
+            const pathProp = p.node.properties.find(
+              (prop: any) =>
+                prop.type === "ObjectProperty" &&
+                prop.key?.name === "path" &&
+                prop.value?.type === "StringLiteral",
+            );
+            if (pathProp) {
+              const routePath = pathProp.value.value;
+              // Skip dynamic segments like /docs/:id — only add static base routes
+              if (!routePath.includes(":")) {
+                routes.push(routePath);
+              }
+            }
+          },
         });
       } catch {
         // Skip files that fail to parse silently
       }
     }
 
-    // Fallback: always return at least "/" even if scanning fails
-    return routes.length > 0 ? [...new Set(routes)] : ["/"];
+    const result = [...new Set(routes)];
+    return result.length > 0 ? result : ["/"];
   }
 }

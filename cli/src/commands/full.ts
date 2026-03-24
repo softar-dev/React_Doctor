@@ -25,15 +25,22 @@
 //   → ../../../core = core folder
 // ─────────────────────────────────────────────────────────────
 
-import { Command }   from "commander";
-import path          from "path";
-import fs            from "fs";
-import chalk         from "chalk";
-import axios         from "axios";
+import { Command } from "commander";
+import path from "path";
+import fs from "fs";
+import chalk from "chalk";
+import axios from "axios";
 import {
-  printBanner, printSection, printResult,
-  printDone, printFail, printInfo, scoreBadge,
-  severityIcon, vitalStatus, spinner,
+  printBanner,
+  printSection,
+  printResult,
+  printDone,
+  printFail,
+  printInfo,
+  scoreBadge,
+  severityIcon,
+  vitalStatus,
+  spinner,
 } from "../ui";
 
 // ── Core imports ──────────────────────────────────────────────
@@ -45,7 +52,9 @@ function getCoreModule(relativePath: string) {
   // __dirname = cli/src/commands/
   // 3 levels up = react-tool root
   // then into core/
-  return require(path.resolve(__dirname, "..", "..", "..", "core", relativePath));
+  return require(
+    path.resolve(__dirname, "..", "..", "..", "core", relativePath),
+  );
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -55,7 +64,9 @@ function getCoreModule(relativePath: string) {
 export function registerFullCommand(program: Command): void {
   program
     .command("full")
-    .description("Run the complete React Doctor diagnostic (static + runtime + rules)")
+    .description(
+      "Run the complete React Doctor diagnostic (static + runtime + rules)",
+    )
     .argument(
       "[projectPath]",
       "Path to the React project (defaults to current directory)",
@@ -106,16 +117,15 @@ export function registerFullCommand(program: Command): void {
 export async function runFullCommand(
   projectPath: string,
   options: {
-    desktop?:   boolean;
-    mobile?:    boolean;
-    cpu?:       1 | 4 | 6;
-    throttle?:  string;
-    upload?:    boolean;
-    apiUrl?:    string;
-    noBanner?:  boolean;
+    desktop?: boolean;
+    mobile?: boolean;
+    cpu?: 1 | 4 | 6;
+    throttle?: string;
+    upload?: boolean;
+    apiUrl?: string;
+    noBanner?: boolean;
   } = {},
 ): Promise<void> {
-
   const resolvedPath = path.resolve(projectPath);
 
   if (!options.noBanner) printBanner();
@@ -124,8 +134,8 @@ export async function runFullCommand(
   if (!fs.existsSync(path.join(resolvedPath, "package.json"))) {
     printFail(
       `No package.json found at: ${resolvedPath}\n\n` +
-      `  Make sure you point to the root of a React project.\n` +
-      `  Example: react-doctor full ./my-react-app`,
+        `  Make sure you point to the root of a React project.\n` +
+        `  Example: react-doctor full ./my-react-app`,
     );
     process.exit(1);
   }
@@ -136,23 +146,27 @@ export async function runFullCommand(
   // If only --mobile is passed, only mobile runs.
   // If both are passed, both run in one pass.
   const wantDesktop = options.desktop || (!options.desktop && !options.mobile);
-  const wantMobile  = options.mobile ?? false;
+  const wantMobile = options.mobile ?? false;
 
   const devices: ("desktop" | "mobile")[] | "desktop" | "mobile" =
-    wantDesktop && wantMobile ? ["desktop", "mobile"] :
-    wantMobile                ? "mobile"              :
-                                "desktop";
+    wantDesktop && wantMobile
+      ? ["desktop", "mobile"]
+      : wantMobile
+        ? "mobile"
+        : "desktop";
 
   const deviceLabel =
-    wantDesktop && wantMobile ? "desktop + mobile" :
-    wantMobile                ? "mobile"           :
-                                "desktop";
+    wantDesktop && wantMobile
+      ? "desktop + mobile"
+      : wantMobile
+        ? "mobile"
+        : "desktop";
 
   printSection("Full Diagnostic");
-  printInfo("Project",  resolvedPath);
-  printInfo("Device",   deviceLabel);
-  printInfo("CPU",      `${options.cpu ?? 1}x`);
-  printInfo("Network",  options.throttle ?? "none");
+  printInfo("Project", resolvedPath);
+  printInfo("Device", deviceLabel);
+  printInfo("CPU", `${options.cpu ?? 1}x`);
+  printInfo("Network", options.throttle ?? "none");
 
   // ── Output directory ───────────────────────────────────────
   // Reports are saved inside the user's project in a hidden
@@ -171,10 +185,10 @@ export async function runFullCommand(
   const staticSpin = spinner("Scanning JSX/TSX source files...");
   try {
     // Import the FileScanner and StaticAnalyzer from core
-    const { FileScanner }    = getCoreModule("static-ana/static/scanner");
+    const { FileScanner } = getCoreModule("static-ana/static/scanner");
     const { StaticAnalyzer } = getCoreModule("static-ana/static/analyzer");
 
-    const scanner  = new FileScanner();
+    const scanner = new FileScanner();
     const analyzer = new StaticAnalyzer();
 
     // Find all JSX/TSX files in the project
@@ -190,21 +204,32 @@ export async function runFullCommand(
       JSON.stringify(staticReport, null, 2),
     );
 
-    const critical = staticReport.issues?.filter((i: any) => i.severity === "critical").length ?? 0;
-    const warnings = staticReport.issues?.filter((i: any) => i.severity === "warning").length  ?? 0;
-    const infos    = staticReport.issues?.filter((i: any) => i.severity === "info").length     ?? 0;
-    const total    = staticReport.issues?.length ?? 0;
+    const critical =
+      staticReport.issues?.filter((i: any) => i.severity === "critical")
+        .length ?? 0;
+    const warnings =
+      staticReport.issues?.filter((i: any) => i.severity === "warning")
+        .length ?? 0;
+    const infos =
+      staticReport.issues?.filter((i: any) => i.severity === "info").length ??
+      0;
+    const total = staticReport.issues?.length ?? 0;
 
-    staticSpin.succeed(chalk.green(`Static analysis complete — ${files.length} files scanned`));
+    staticSpin.succeed(
+      chalk.green(`Static analysis complete — ${files.length} files scanned`),
+    );
 
     // Print a quick summary
-    printResult("Files analyzed",   String(staticReport.filesAnalyzed ?? 0), "info");
-    printResult("Total issues",     String(total),    total > 0 ? "warn" : "good");
-    printResult("Critical",         String(critical), critical > 0 ? "poor" : "good");
-    printResult("Warnings",         String(warnings), warnings > 0 ? "warn" : "good");
-    printResult("Info",             String(infos),    "info");
-    printResult("Health grade",     staticReport.grade ?? "N/A", "info");
-
+    printResult(
+      "Files analyzed",
+      String(staticReport.filesAnalyzed ?? 0),
+      "info",
+    );
+    printResult("Total issues", String(total), total > 0 ? "warn" : "good");
+    printResult("Critical", String(critical), critical > 0 ? "poor" : "good");
+    printResult("Warnings", String(warnings), warnings > 0 ? "warn" : "good");
+    printResult("Info", String(infos), "info");
+    printResult("Health grade", staticReport.grade ?? "N/A", "info");
   } catch (err: any) {
     staticSpin.fail(chalk.red("Static analysis failed"));
     console.log(chalk.red(`\n  ${err.message}\n`));
@@ -224,12 +249,12 @@ export async function runFullCommand(
   try {
     const { RuntimeProfiler } = getCoreModule("runtime/profiler/index");
 
-    const profiler = new RuntimeProfiler(resolvedPath);
+    const profiler = new RuntimeProfiler(resolvedPath, outputDir);
     profilingSpin.text = "  Profiling... (this takes ~30 seconds per route)";
 
     runtimeReports = await profiler.profile([], {
-      device:      devices,
-      throttle:    options.throttle ?? "none",
+      device: devices,
+      throttle: options.throttle ?? "none",
       cpuThrottle: options.cpu ?? 1,
     });
 
@@ -240,31 +265,73 @@ export async function runFullCommand(
     );
 
     const routeKeys = Object.keys(runtimeReports);
-    profilingSpin.succeed(chalk.green(`Profiling complete — ${routeKeys.length} route/device combination(s)`));
+    profilingSpin.succeed(
+      chalk.green(
+        `Profiling complete — ${routeKeys.length} route/device combination(s)`,
+      ),
+    );
 
     // Print results for each route
     for (const [key, report] of Object.entries(runtimeReports)) {
-      const [route, device] = key.includes("::") ? key.split("::") : [key, "desktop"];
+      const [route, device] = key.includes("::")
+        ? key.split("::")
+        : [key, "desktop"];
       console.log();
-      console.log(`  ${chalk.bold(route)} ${chalk.gray(`[${device}]`)}  Score: ${scoreBadge(report.performanceScore)}`);
+      console.log(
+        `  ${chalk.bold(route)} ${chalk.gray(`[${device}]`)}  Score: ${scoreBadge(report.performanceScore)}`,
+      );
 
-      printResult("LCP",         `${report.metrics.lcp.toFixed(0)}ms`,  vitalStatus("lcp",  report.metrics.lcp));
-      printResult("FCP",         `${report.metrics.fcp.toFixed(0)}ms`,  vitalStatus("fcp",  report.metrics.fcp));
-      printResult("TTFB",        `${report.metrics.ttfb.toFixed(0)}ms`, vitalStatus("ttfb", report.metrics.ttfb));
-      printResult("CLS",         report.metrics.cls.toFixed(3),          vitalStatus("cls",  report.metrics.cls));
-      printResult("INP",         `${report.metrics.inp.toFixed(0)}ms`,  vitalStatus("inp",  report.metrics.inp));
-      printResult("Render time", `${report.renderTime}ms`,
-        report.renderTime <= 2000 ? "good" : report.renderTime <= 4000 ? "warn" : "poor");
+      printResult(
+        "LCP",
+        `${report.metrics.lcp.toFixed(0)}ms`,
+        vitalStatus("lcp", report.metrics.lcp),
+      );
+      printResult(
+        "FCP",
+        `${report.metrics.fcp.toFixed(0)}ms`,
+        vitalStatus("fcp", report.metrics.fcp),
+      );
+      printResult(
+        "TTFB",
+        `${report.metrics.ttfb.toFixed(0)}ms`,
+        vitalStatus("ttfb", report.metrics.ttfb),
+      );
+      printResult(
+        "CLS",
+        report.metrics.cls.toFixed(3),
+        vitalStatus("cls", report.metrics.cls),
+      );
+      printResult(
+        "INP",
+        `${report.metrics.inp.toFixed(0)}ms`,
+        vitalStatus("inp", report.metrics.inp),
+      );
+      printResult(
+        "Render time",
+        `${report.renderTime}ms`,
+        report.renderTime <= 2000
+          ? "good"
+          : report.renderTime <= 4000
+            ? "warn"
+            : "poor",
+      );
 
       if ((report.errors ?? []).length > 0) {
-        const errs = report.errors.filter((e: any) => e.type === "error").length;
-        const warn = report.errors.filter((e: any) => e.type === "warning").length;
-        printResult("Issues", `${errs} error(s)  ${warn} warning(s)`, errs > 0 ? "poor" : "warn");
+        const errs = report.errors.filter(
+          (e: any) => e.type === "error",
+        ).length;
+        const warn = report.errors.filter(
+          (e: any) => e.type === "warning",
+        ).length;
+        printResult(
+          "Issues",
+          `${errs} error(s)  ${warn} warning(s)`,
+          errs > 0 ? "poor" : "warn",
+        );
       } else {
         printResult("Issues", "None detected", "good");
       }
     }
-
   } catch (err: any) {
     profilingSpin.fail(chalk.red("Runtime profiling failed"));
     console.log(chalk.red(`\n  ${err.message}\n`));
@@ -283,8 +350,8 @@ export async function runFullCommand(
   try {
     const { RuleEngine } = getCoreModule("rule-engine/index");
 
-    const engine = new RuleEngine();
-    ruleResults  = await engine.run(staticReport, runtimeReports);
+    const engine = new RuleEngine(outputDir);
+    ruleResults = await engine.run(staticReport, runtimeReports);
 
     // Save suggestions to .react-doctor/
     const allSuggestions = ruleResults.flatMap((r: any) => r.suggestions);
@@ -293,33 +360,42 @@ export async function runFullCommand(
       JSON.stringify(ruleResults, null, 2),
     );
 
-    const total    = allSuggestions.length;
-    const critical = allSuggestions.filter((s: any) => s.severity === "critical").length;
-    const warnings = allSuggestions.filter((s: any) => s.severity === "warning").length;
-    const infos    = allSuggestions.filter((s: any) => s.severity === "info").length;
+    const total = allSuggestions.length;
+    const critical = allSuggestions.filter(
+      (s: any) => s.severity === "critical",
+    ).length;
+    const warnings = allSuggestions.filter(
+      (s: any) => s.severity === "warning",
+    ).length;
+    const infos = allSuggestions.filter(
+      (s: any) => s.severity === "info",
+    ).length;
 
-    ruleSpin.succeed(chalk.green(`Rule Engine complete — ${total} suggestion(s) generated`));
+    ruleSpin.succeed(
+      chalk.green(`Rule Engine complete — ${total} suggestion(s) generated`),
+    );
 
     printResult("Critical", String(critical), critical > 0 ? "poor" : "good");
     printResult("Warnings", String(warnings), warnings > 0 ? "warn" : "good");
-    printResult("Info",     String(infos),    "info");
+    printResult("Info", String(infos), "info");
 
     // Print top suggestions (max 5, critical first)
     if (total > 0) {
       console.log();
       console.log(chalk.gray("  Top suggestions:"));
-      allSuggestions
-        .slice(0, 5)
-        .forEach((s: any) => {
-          const icon = severityIcon(s.severity);
-          const comp = s.affectedComponent ? chalk.cyan(` [${s.affectedComponent}]`) : "";
-          console.log(`    ${icon}  ${s.title}${comp}`);
-        });
+      allSuggestions.slice(0, 5).forEach((s: any) => {
+        const icon = severityIcon(s.severity);
+        const comp = s.affectedComponent
+          ? chalk.cyan(` [${s.affectedComponent}]`)
+          : "";
+        console.log(`    ${icon}  ${s.title}${comp}`);
+      });
       if (total > 5) {
-        console.log(chalk.gray(`\n    ... and ${total - 5} more in the full report.`));
+        console.log(
+          chalk.gray(`\n    ... and ${total - 5} more in the full report.`),
+        );
       }
     }
-
   } catch (err: any) {
     ruleSpin.fail(chalk.red("Rule Engine failed"));
     console.log(chalk.red(`\n  ${err.message}\n`));
@@ -338,7 +414,11 @@ export async function runFullCommand(
     const { ReportCompiler } = getCoreModule("report-compiler/index");
 
     const compiler = new ReportCompiler();
-    finalReport = await compiler.compile(staticReport, runtimeReports, ruleResults);
+    finalReport = await compiler.compile(
+      staticReport,
+      runtimeReports,
+      ruleResults,
+    );
 
     // Save final report to .react-doctor/
     fs.writeFileSync(
@@ -347,9 +427,16 @@ export async function runFullCommand(
     );
 
     compilerSpin.succeed(chalk.green("Final report compiled"));
-    printResult("Overall score", scoreBadge(finalReport.performanceScore), "none");
-    printResult("Report saved",  path.join(outputDir, "finalreport.json"), "info");
-
+    printResult(
+      "Overall score",
+      scoreBadge(finalReport.performanceScore),
+      "none",
+    );
+    printResult(
+      "Report saved",
+      path.join(outputDir, "finalreport.json"),
+      "info",
+    );
   } catch (err: any) {
     compilerSpin.fail(chalk.red("Report Compiler failed"));
     console.log(chalk.red(`\n  ${err.message}\n`));
@@ -391,8 +478,8 @@ export async function runFullCommand(
   if (!options.upload) {
     console.log(
       chalk.gray("  Tip: add ") +
-      chalk.cyan("--upload") +
-      chalk.gray(" to send results to the dashboard."),
+        chalk.cyan("--upload") +
+        chalk.gray(" to send results to the dashboard."),
     );
   }
 

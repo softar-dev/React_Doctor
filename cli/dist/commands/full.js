@@ -87,12 +87,16 @@ async function runFullCommand(projectPath, options = {}) {
     // If both are passed, both run in one pass.
     const wantDesktop = options.desktop || (!options.desktop && !options.mobile);
     const wantMobile = options.mobile ?? false;
-    const devices = wantDesktop && wantMobile ? ["desktop", "mobile"] :
-        wantMobile ? "mobile" :
-            "desktop";
-    const deviceLabel = wantDesktop && wantMobile ? "desktop + mobile" :
-        wantMobile ? "mobile" :
-            "desktop";
+    const devices = wantDesktop && wantMobile
+        ? ["desktop", "mobile"]
+        : wantMobile
+            ? "mobile"
+            : "desktop";
+    const deviceLabel = wantDesktop && wantMobile
+        ? "desktop + mobile"
+        : wantMobile
+            ? "mobile"
+            : "desktop";
     (0, ui_1.printSection)("Full Diagnostic");
     (0, ui_1.printInfo)("Project", resolvedPath);
     (0, ui_1.printInfo)("Device", deviceLabel);
@@ -122,9 +126,12 @@ async function runFullCommand(projectPath, options = {}) {
         staticReport = await analyzer.analyze(files);
         // Save static report to the project's .react-doctor/ folder
         fs_1.default.writeFileSync(path_1.default.join(outputDir, "staticreport.json"), JSON.stringify(staticReport, null, 2));
-        const critical = staticReport.issues?.filter((i) => i.severity === "critical").length ?? 0;
-        const warnings = staticReport.issues?.filter((i) => i.severity === "warning").length ?? 0;
-        const infos = staticReport.issues?.filter((i) => i.severity === "info").length ?? 0;
+        const critical = staticReport.issues?.filter((i) => i.severity === "critical")
+            .length ?? 0;
+        const warnings = staticReport.issues?.filter((i) => i.severity === "warning")
+            .length ?? 0;
+        const infos = staticReport.issues?.filter((i) => i.severity === "info").length ??
+            0;
         const total = staticReport.issues?.length ?? 0;
         staticSpin.succeed(chalk_1.default.green(`Static analysis complete — ${files.length} files scanned`));
         // Print a quick summary
@@ -149,7 +156,7 @@ async function runFullCommand(projectPath, options = {}) {
     const profilingSpin = (0, ui_1.spinner)("Starting dev server and launching Chrome...");
     try {
         const { RuntimeProfiler } = getCoreModule("runtime/profiler/index");
-        const profiler = new RuntimeProfiler(resolvedPath);
+        const profiler = new RuntimeProfiler(resolvedPath, outputDir);
         profilingSpin.text = "  Profiling... (this takes ~30 seconds per route)";
         runtimeReports = await profiler.profile([], {
             device: devices,
@@ -162,7 +169,9 @@ async function runFullCommand(projectPath, options = {}) {
         profilingSpin.succeed(chalk_1.default.green(`Profiling complete — ${routeKeys.length} route/device combination(s)`));
         // Print results for each route
         for (const [key, report] of Object.entries(runtimeReports)) {
-            const [route, device] = key.includes("::") ? key.split("::") : [key, "desktop"];
+            const [route, device] = key.includes("::")
+                ? key.split("::")
+                : [key, "desktop"];
             console.log();
             console.log(`  ${chalk_1.default.bold(route)} ${chalk_1.default.gray(`[${device}]`)}  Score: ${(0, ui_1.scoreBadge)(report.performanceScore)}`);
             (0, ui_1.printResult)("LCP", `${report.metrics.lcp.toFixed(0)}ms`, (0, ui_1.vitalStatus)("lcp", report.metrics.lcp));
@@ -170,7 +179,11 @@ async function runFullCommand(projectPath, options = {}) {
             (0, ui_1.printResult)("TTFB", `${report.metrics.ttfb.toFixed(0)}ms`, (0, ui_1.vitalStatus)("ttfb", report.metrics.ttfb));
             (0, ui_1.printResult)("CLS", report.metrics.cls.toFixed(3), (0, ui_1.vitalStatus)("cls", report.metrics.cls));
             (0, ui_1.printResult)("INP", `${report.metrics.inp.toFixed(0)}ms`, (0, ui_1.vitalStatus)("inp", report.metrics.inp));
-            (0, ui_1.printResult)("Render time", `${report.renderTime}ms`, report.renderTime <= 2000 ? "good" : report.renderTime <= 4000 ? "warn" : "poor");
+            (0, ui_1.printResult)("Render time", `${report.renderTime}ms`, report.renderTime <= 2000
+                ? "good"
+                : report.renderTime <= 4000
+                    ? "warn"
+                    : "poor");
             if ((report.errors ?? []).length > 0) {
                 const errs = report.errors.filter((e) => e.type === "error").length;
                 const warn = report.errors.filter((e) => e.type === "warning").length;
@@ -194,7 +207,7 @@ async function runFullCommand(projectPath, options = {}) {
     const ruleSpin = (0, ui_1.spinner)("Evaluating rules against both reports...");
     try {
         const { RuleEngine } = getCoreModule("rule-engine/index");
-        const engine = new RuleEngine();
+        const engine = new RuleEngine(outputDir);
         ruleResults = await engine.run(staticReport, runtimeReports);
         // Save suggestions to .react-doctor/
         const allSuggestions = ruleResults.flatMap((r) => r.suggestions);
@@ -211,11 +224,11 @@ async function runFullCommand(projectPath, options = {}) {
         if (total > 0) {
             console.log();
             console.log(chalk_1.default.gray("  Top suggestions:"));
-            allSuggestions
-                .slice(0, 5)
-                .forEach((s) => {
+            allSuggestions.slice(0, 5).forEach((s) => {
                 const icon = (0, ui_1.severityIcon)(s.severity);
-                const comp = s.affectedComponent ? chalk_1.default.cyan(` [${s.affectedComponent}]`) : "";
+                const comp = s.affectedComponent
+                    ? chalk_1.default.cyan(` [${s.affectedComponent}]`)
+                    : "";
                 console.log(`    ${icon}  ${s.title}${comp}`);
             });
             if (total > 5) {

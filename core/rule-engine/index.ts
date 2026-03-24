@@ -35,14 +35,11 @@ export class RuleEngine {
   // Path to the reports folder where suggestions.json is saved
   private reportDir: string;
 
-  constructor() {
-    this.rulesPath = path.join(__dirname, "rules.json");
-
-    // __dirname = core/rule-engine/
-    // 1 level up = core/  → reports folder lives here
-    this.reportDir = path.resolve(__dirname, "..", "reports");
-    fs.ensureDirSync(this.reportDir);
-  }
+  constructor(outputDir?: string) {
+  this.rulesPath = path.join(__dirname, "rules.json");
+  this.reportDir = outputDir ?? path.resolve(__dirname, "..", "reports");
+  fs.ensureDirSync(this.reportDir);
+}
 
   /**
    * Runs the Rule Engine against both reports.

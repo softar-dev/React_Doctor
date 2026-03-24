@@ -41,15 +41,13 @@ export class RuntimeProfiler {
   private reportDir:     string;
   private screenshotDir: string;
 
-  constructor(projectPath: string) {
-    this.projectPath   = path.resolve(projectPath);
-    // __dirname = core/runtime/profiler/
-    // 2 levels up = core/  ← reports folder lives here
-    this.reportDir     = path.resolve(__dirname, "..", "..", "reports");
-    this.screenshotDir = path.join(this.reportDir, "screenshots");
-    fs.ensureDirSync(this.reportDir);
-    fs.ensureDirSync(this.screenshotDir);
-  }
+  constructor(projectPath: string, outputDir?: string) {
+  this.projectPath   = path.resolve(projectPath);
+  this.reportDir     = outputDir ?? path.resolve(__dirname, "..", "..", "reports");
+  this.screenshotDir = path.join(this.reportDir, "screenshots");
+  fs.ensureDirSync(this.reportDir);
+  fs.ensureDirSync(this.screenshotDir);
+}
 
   /**
    * Main entry point. Runs the full profiling pipeline.

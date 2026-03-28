@@ -1,4 +1,4 @@
-import { spawn, ChildProcess } from "child_process";
+import { spawn, ChildProcess, execSync } from "child_process";
 import path from "path";
 import fs from "fs-extra";
 import os from "os";
@@ -8,18 +8,9 @@ import os from "os";
  * for lock files, then spawns the dev server as a background
  * child process.
  *
- * Windows spawn rules:
- *   shell:true + bare name "npm" — cmd.exe resolves npm → npm.cmd correctly.
- *   shell:false breaks for .cmd files (EINVAL).
- *   shell:true + "npm.cmd" double-wraps and causes ENOENT.
- *
- * Linux spawn rules:
- *   shell:"/bin/bash" ensures nvm/volta PATH hooks are loaded.
- *   detached:true lets process.kill(-pid) kill the whole process group
- *   (npm → vite → esbuild and all children at once).
- *
- * Returns the ChildProcess so the caller can attach listeners
- * and kill it during cleanup.
+ * Windows: shell:true so npm.cmd resolves correctly.
+ * Linux:   tries /bin/bash first, falls back to /bin/sh if bash
+ *          is not present (Alpine, minimal containers, etc).
  */
 export function spawnDevServer(projectPath: string): ChildProcess {
   const isWin = os.platform() === "win32";
@@ -32,10 +23,17 @@ export function spawnDevServer(projectPath: string): ChildProcess {
 
   console.log(`📦 Starting ${pkgManager} dev server...`);
 
+  // On Linux, prefer bash but fall back to sh if bash is missing
+  const shell = isWin
+    ? true
+    : fs.existsSync("/bin/bash")
+    ? "/bin/bash"
+    : "/bin/sh";
+
   return spawn(pkgManager, ["run", "dev"], {
     cwd:         projectPath,
-    shell:       isWin ? true : "/bin/bash",
-    env:         {
+    shell,
+    env: {
       ...process.env,
       ...(isWin ? {} : { PATH: process.env.PATH + ":/usr/local/bin:/usr/bin:/bin" }),
     },
@@ -46,26 +44,19 @@ export function spawnDevServer(projectPath: string): ChildProcess {
 }
 
 /**
- * Watches the dev server's stdout and stderr for a "localhost:PORT"
- * line, then resolves with the port number.
+ * Watches the dev server's stdout and stderr for a port number.
  *
- * Why ANSI stripping is needed:
- *   Vite colorizes its output with escape codes like \x1B[32m.
- *   Without stripping, "localhost:5173" looks like
- *   "localhost\x1B[0m:5173" and the regex never matches.
- *
- * Why the 2-second delay:
- *   Vite prints the port slightly before it is fully bound and
- *   ready to accept connections. Resolving immediately causes
- *   Puppeteer to hit the server too early and get refused.
+ * Handles both "localhost:PORT" and "127.0.0.1:PORT" since
+ * some Linux setups print the IP instead of the hostname.
+ * Also handles "port PORT" format used by some dev servers.
  */
 export function waitForServer(devServer: ChildProcess): Promise<number> {
   return new Promise((resolve, reject) => {
     let resolved = false;
 
     const timeout = setTimeout(
-      () => reject(new Error("⏱️ Dev server timed out after 30 seconds!")),
-      30000,
+      () => reject(new Error("⏱️ Dev server timed out after 60 seconds!")),
+      60000,
     );
 
     const onData = (data: Buffer) => {
@@ -73,7 +64,11 @@ export function waitForServer(devServer: ChildProcess): Promise<number> {
       const output = data.toString().replace(/\x1B\[[0-9;]*[mGKHF]/g, "");
       console.log(`   ${output.trim()}`);
 
-      const match = output.match(/localhost:(\d+)/);
+      // Match "localhost:PORT", "127.0.0.1:PORT", or "port PORT"
+      const match =
+        output.match(/(?:localhost|127\.0\.0\.1):(\d+)/) ??
+        output.match(/port\s+(\d+)/i);
+
       if (match && !resolved) {
         resolved = true;
         clearTimeout(timeout);
@@ -96,13 +91,11 @@ export function waitForServer(devServer: ChildProcess): Promise<number> {
 }
 
 /**
- * Kills the dev server process tree cleanly.
+ * Kills the dev server process tree cleanly on both platforms.
  *
- * Linux:   process.kill(-pid) sends SIGTERM to the entire process group,
- *          stopping npm, vite, esbuild and any other children at once.
- * Windows: taskkill /F /T kills the process tree with the same effect.
- *
- * ESRCH error (No Such Process) means the server already stopped — ignored.
+ * Linux:   process.kill(-pid) sends SIGTERM to the entire process group.
+ * Windows: taskkill /F /T kills the process tree.
+ * ESRCH:   process already stopped — ignored safely.
  */
 export function killDevServer(devServer: ChildProcess): void {
   if (!devServer.pid) return;

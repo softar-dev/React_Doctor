@@ -12,20 +12,6 @@ import { ReactProfilerData, DeviceType } from "./types";
 // WEB VITALS
 // ─────────────────────────────────────────────────────────────
 
-/**
- * Injects the web-vitals library (as pre-loaded string content) into
- * the page and collects all 5 Core Web Vitals.
- *
- * Uses { content } injection — NO network request, works offline.
- *
- * The 8-second fallback resolves with whatever metrics fired so far
- * in case INP or LCP never fire (e.g. on a static page with no images).
- * The resolved flag prevents the fallback from firing a second time
- * after the metrics already resolved normally.
- *
- * LCP fallback: if LCP never fired (no large elements on page),
- * FCP is used as the baseline so we never report 0ms.
- */
 export async function collectWebVitals(
   page: Page,
   webVitalsCode: string,
@@ -70,22 +56,10 @@ export async function collectWebVitals(
 // REACT PROFILER
 // ─────────────────────────────────────────────────────────────
 
-/**
- * Reads the React profiler data that was collected by the
- * __REACT_DEVTOOLS_GLOBAL_HOOK__ injected in evaluateOnNewDocument.
- *
- * Waits 3 seconds after page load to capture deferred renders,
- * lazy-loaded components, and data-fetch re-renders.
- *
- * The hook injection itself happens in index.ts inside collectMetrics()
- * via page.evaluateOnNewDocument() before navigation — this function
- * only reads what was accumulated during and after page load.
- */
 export async function collectReactProfilerData(
   page: Page,
   renderTime: number,
 ): Promise<ReactProfilerData> {
-  // Wait for deferred renders to settle
   await new Promise((r) => setTimeout(r, 3000));
 
   const result = await page.evaluate((renderTimeMs: number) => {
@@ -125,15 +99,6 @@ export async function collectReactProfilerData(
 // RESOURCE USAGE
 // ─────────────────────────────────────────────────────────────
 
-/**
- * Uses the browser's native Performance API to measure:
- *   - Total page weight (sum of all transferred bytes)
- *   - The single heaviest file downloaded (the "top offender")
- *
- * performance.getEntriesByType("resource") returns every JS bundle,
- * CSS file, image, and font downloaded to render the page.
- * transferSize is the actual compressed bytes sent over the wire.
- */
 export async function collectResourceUsage(page: Page) {
   return await page.evaluate(() => {
     const entries    = performance.getEntriesByType("resource");
@@ -161,18 +126,6 @@ export async function collectResourceUsage(page: Page) {
 // SCREENSHOTS
 // ─────────────────────────────────────────────────────────────
 
-/**
- * Captures a screenshot of the page at its current state (full load)
- * and records FCP / LCP timestamps from the Performance API.
- *
- * Saved in two formats:
- *   1. PNG file on disk in screenshotDir — directly viewable
- *   2. Base64 data URL in the JSON report — ready for <img src="..."> in dashboard
- *
- * FCP and LCP entries share the same screenshot image but carry the
- * timestamp of when that event fired, so the dashboard can annotate
- * the filmstrip with the correct timing.
- */
 export async function captureScreenshots(
   page: Page,
   url: string,
@@ -182,7 +135,6 @@ export async function captureScreenshots(
 ): Promise<Screenshot[]> {
   const screenshots: Screenshot[] = [];
 
-  // Read FCP and LCP timestamps from the browser's Performance API
   const timings = await page.evaluate(() => {
     const fcpEntry   = performance.getEntriesByName("first-contentful-paint")[0];
     const lcpEntries = (performance as any).getEntriesByType("largest-contentful-paint");
@@ -194,7 +146,6 @@ export async function captureScreenshots(
     };
   });
 
-  // Build a safe filename from the URL and device
   const urlSafe = url
     .replace(/https?:\/\//, "")
     .replace(/[/:?#]/g, "-")
@@ -203,10 +154,18 @@ export async function captureScreenshots(
 
   const timestamp      = Date.now();
   const fullLoadBuffer = await page.screenshot({ type: "png", fullPage: false });
-  const fullLoadBase64 = `data:image/png;base64,${Buffer.from(fullLoadBuffer as any).toString("base64")}`;
+
+  // ── Safe Buffer conversion — works on both Windows and Linux
+  // Puppeteer can return Buffer or Uint8Array depending on version/platform.
+  // Converting through Uint8Array first guarantees it works either way.
+  const bufferSafe = Buffer.isBuffer(fullLoadBuffer)
+    ? fullLoadBuffer
+    : Buffer.from(fullLoadBuffer as Uint8Array);
+
+  const fullLoadBase64   = `data:image/png;base64,${bufferSafe.toString("base64")}`;
   const fullLoadFilename = `${urlSafe}-${device}-fullLoad-${timestamp}.png`;
 
-  await fs.writeFile(path.join(screenshotDir, fullLoadFilename), fullLoadBuffer);
+  await fs.writeFile(path.join(screenshotDir, fullLoadFilename), bufferSafe);
   console.log(`   📸 Screenshot saved: ${fullLoadFilename}`);
 
   screenshots.push({ label: "fullLoad", dataUrl: fullLoadBase64, takenAt: renderTime });
@@ -225,17 +184,6 @@ export async function captureScreenshots(
 // ERROR LISTENERS
 // ─────────────────────────────────────────────────────────────
 
-/**
- * Attaches error and warning listeners to the page BEFORE navigation.
- * Returns the errors array — it fills itself as the page loads.
- *
- * pageerror: uncaught JS exceptions (TypeError, ReferenceError, etc.)
- * console:   console.error() and console.warn() — React sends all its
- *            developer warnings (missing keys, bad hooks, etc.) here.
- *
- * Profiler-generated noise (web-vitals warnings, DevTools hook messages)
- * is filtered out so it doesn't appear as false positives.
- */
 export function attachErrorListeners(page: Page): PageError[] {
   const errors: PageError[] = [];
 

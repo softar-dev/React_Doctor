@@ -1,77 +1,98 @@
 import os from "os";
 import path from "path";
 import fs from "fs-extra";
+import { execSync } from "child_process";
 
 /**
  * Finds and returns the path to the Chrome/Chromium executable.
  *
- * Windows: checks three common installation paths including the
- *          per-user AppData location.
- * Linux:   checks system-wide and Snap paths for Google Chrome
- *          and Chromium.
+ * Windows: checks common installation paths including per-user AppData.
+ * Linux:   checks all known system paths + tries `which` as a fallback.
  * macOS:   checks the standard Applications folder.
  *
  * Throws a clear error if no browser is found.
  */
 export function getBrowserPath(): string {
-  if (os.platform() === "win32") {
+  const platform = os.platform();
+
+  if (platform === "win32") {
     const winPaths = [
       "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
       "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
       `C:\\Users\\${os.userInfo().username}\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe`,
+      "C:\\Program Files\\Chromium\\Application\\chrome.exe",
     ];
     for (const p of winPaths) {
       if (fs.existsSync(p)) return p;
     }
     throw new Error(
-      "❌ Chrome not found! Please install Google Chrome on Windows.",
+      "❌ Chrome not found! Please install Google Chrome on Windows.\n" +
+      "   Download: https://www.google.com/chrome/",
     );
   }
 
-  const unixPaths = [
+  if (platform === "darwin") {
+    const macPaths = [
+      "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+      "/Applications/Chromium.app/Contents/MacOS/Chromium",
+    ];
+    for (const p of macPaths) {
+      if (fs.existsSync(p)) return p;
+    }
+    throw new Error(
+      "❌ Chrome not found! Please install Google Chrome on macOS.\n" +
+      "   Download: https://www.google.com/chrome/",
+    );
+  }
+
+  // Linux — check all known install locations
+  const linuxPaths = [
     "/usr/bin/google-chrome",
-    "/usr/bin/chromium-browser",
+    "/usr/bin/google-chrome-stable",
     "/usr/bin/chromium",
+    "/usr/bin/chromium-browser",
+    "/usr/local/bin/chrome",
+    "/usr/local/bin/chromium",
+    "/opt/google/chrome/chrome",
+    "/opt/google/chrome/google-chrome",
     "/snap/bin/chromium",
-    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "/snap/bin/google-chrome",
   ];
 
-  for (const p of unixPaths) {
+  for (const p of linuxPaths) {
     if (fs.existsSync(p)) return p;
   }
 
+  // Last resort: try `which` to find it anywhere on PATH
+  for (const cmd of ["google-chrome", "google-chrome-stable", "chromium", "chromium-browser"]) {
+    try {
+      const result = execSync(`which ${cmd}`, { stdio: ["ignore", "pipe", "ignore"] })
+        .toString()
+        .trim();
+      if (result && fs.existsSync(result)) return result;
+    } catch {
+      // not found via which, try next
+    }
+  }
+
   throw new Error(
-    "❌ No compatible browser found! Please install Google Chrome or Chromium.",
+    "❌ No compatible browser found on Linux!\n\n" +
+    "   Install one of the following:\n" +
+    "     Ubuntu/Debian: sudo apt install chromium-browser\n" +
+    "     Fedora:        sudo dnf install chromium\n" +
+    "     Snap:          sudo snap install chromium\n" +
+    "     Or install Google Chrome from: https://www.google.com/chrome/",
   );
 }
 
 /**
  * Reads the web-vitals IIFE bundle from local node_modules.
  *
- * WHY NOT USE A CDN URL:
- *   The original approach used page.addScriptTag({ url: "https://unpkg.com/..." })
- *   which requires an internet connection every run. If the connection drops,
- *   the profiler crashes. This version reads from disk — works 100% offline.
- *
- * HOW IT WORKS:
- *   The IIFE build exposes window.webVitals in the browser. We inject it with
- *   page.addScriptTag({ content: code }) which inlines the script without
- *   making any network request.
- *
- * SEARCH ORDER:
- *   1. react-tool/node_modules      (standard after npm install)
- *   2. one level higher             (monorepo hoisting fallback)
- *   3. target project's node_modules
- *   4. Node's require.resolve()     (most reliable — finds it wherever Node would)
- *
- * projectPath is needed for candidate 3.
- * __profilerDir is the directory of the calling file (__dirname equivalent).
+ * Uses { content } injection — NO network request, works offline.
  */
 export function getWebVitalsScript(projectPath: string, profilerDir: string): string {
   const filename = "web-vitals.iife.js";
 
-  // profilerDir = core/runtime/profiler/
-  // 3 levels up = react-tool/  → node_modules lives there
   const candidates: string[] = [
     path.resolve(profilerDir, "..", "..", "..", "node_modules", "web-vitals", "dist", filename),
     path.resolve(profilerDir, "..", "..", "..", "..", "node_modules", "web-vitals", "dist", filename),

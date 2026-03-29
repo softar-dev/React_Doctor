@@ -69,11 +69,14 @@ export class ReportCompiler {
   // this file's location at core/report-compiler/
   private reportsDir: string;
 
-  constructor() {
-    // __dirname = core/report-compiler/
-    // ".."      = core/
+  constructor(outputDir?: string) {
+  if (outputDir) {
+    this.reportsDir = outputDir;
+  } else {
     this.reportsDir = path.resolve(__dirname, "..", "reports");
   }
+  fs.ensureDirSync(this.reportsDir);
+}
 
   // ───────────────────────────────────────────────────────────
   // PUBLIC: compile
@@ -348,8 +351,9 @@ export class ReportCompiler {
    * the backend if bandwidth is a concern.
    */
   private async save(report: FinalReport): Promise<void> {
-    const outputPath = path.join(this.reportsDir, "finalreport.json");
-    await fs.writeJson(outputPath, report, { spaces: 2 });
-    console.log(`📄 Final report saved to: ${outputPath}`);
-  }
+  fs.ensureDirSync(this.reportsDir);
+  const outputPath = path.join(this.reportsDir, "finalreport.json");
+  await fs.writeJson(outputPath, report, { spaces: 2 });
+  console.log(`📄 Final report saved to: ${outputPath}`);
+}
 }

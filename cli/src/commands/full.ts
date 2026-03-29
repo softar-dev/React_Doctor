@@ -218,7 +218,11 @@ export async function runFullCommand(
       chalk.green(`Static analysis complete — ${files.length} files scanned`),
     );
 
-    printResult("Files analyzed", String(staticReport.filesAnalyzed ?? 0), "info");
+    printResult(
+      "Files analyzed",
+      String(staticReport.filesAnalyzed ?? 0),
+      "info",
+    );
     printResult("Total issues", String(total), total > 0 ? "warn" : "good");
     printResult("Critical", String(critical), critical > 0 ? "poor" : "good");
     printResult("Warnings", String(warnings), warnings > 0 ? "warn" : "good");
@@ -276,8 +280,8 @@ export async function runFullCommand(
       // ── Device / CPU / Network line ──────────────────────────
       console.log(
         `  ${chalk.gray("Device:")} ${device}  ` +
-        `${chalk.gray("CPU:")} ${report.cpuThrottling ?? cpuLabel}x  ` +
-        `${chalk.gray("Network:")} ${throttleLabel}`,
+          `${chalk.gray("CPU:")} ${report.cpuThrottling ?? cpuLabel}x  ` +
+          `${chalk.gray("Network:")} ${throttleLabel}`,
       );
 
       printResult(
@@ -316,8 +320,12 @@ export async function runFullCommand(
       );
 
       if ((report.errors ?? []).length > 0) {
-        const errs = report.errors.filter((e: any) => e.type === "error").length;
-        const warn = report.errors.filter((e: any) => e.type === "warning").length;
+        const errs = report.errors.filter(
+          (e: any) => e.type === "error",
+        ).length;
+        const warn = report.errors.filter(
+          (e: any) => e.type === "warning",
+        ).length;
         printResult(
           "Issues",
           `${errs} error(s)  ${warn} warning(s)`,
@@ -355,9 +363,15 @@ export async function runFullCommand(
     );
 
     const total = allSuggestions.length;
-    const critical = allSuggestions.filter((s: any) => s.severity === "critical").length;
-    const warnings = allSuggestions.filter((s: any) => s.severity === "warning").length;
-    const infos = allSuggestions.filter((s: any) => s.severity === "info").length;
+    const critical = allSuggestions.filter(
+      (s: any) => s.severity === "critical",
+    ).length;
+    const warnings = allSuggestions.filter(
+      (s: any) => s.severity === "warning",
+    ).length;
+    const infos = allSuggestions.filter(
+      (s: any) => s.severity === "info",
+    ).length;
 
     ruleSpin.succeed(
       chalk.green(`Rule Engine complete — ${total} suggestion(s) generated`),
@@ -400,7 +414,8 @@ export async function runFullCommand(
   try {
     const { ReportCompiler } = getCoreModule("report-compiler/index");
 
-    const compiler = new ReportCompiler();
+    const compiler = new ReportCompiler(outputDir);
+
     finalReport = await compiler.compile(
       staticReport,
       runtimeReports,
@@ -413,8 +428,16 @@ export async function runFullCommand(
     );
 
     compilerSpin.succeed(chalk.green("Final report compiled"));
-    printResult("Overall score", scoreBadge(finalReport.performanceScore), "none");
-    printResult("Report saved", path.join(outputDir, "finalreport.json"), "info");
+    printResult(
+      "Overall score",
+      scoreBadge(finalReport.performanceScore),
+      "none",
+    );
+    printResult(
+      "Report saved",
+      path.join(outputDir, "finalreport.json"),
+      "info",
+    );
   } catch (err: any) {
     compilerSpin.fail(chalk.red("Report Compiler failed"));
     console.log(chalk.red(`\n  ${err.message}\n`));

@@ -35,6 +35,7 @@ const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const chalk_1 = __importDefault(require("chalk"));
 const axios_1 = __importDefault(require("axios"));
+const child_process_1 = require("child_process");
 const ui_1 = require("../ui");
 // ── Core imports ──────────────────────────────────────────────
 // These are the actual classes from the core folder.
@@ -264,12 +265,74 @@ async function runFullCommand(projectPath, options = {}) {
     // ════════════════════════════════════════════════════════════
     if (options.upload && finalReport) {
         (0, ui_1.printSection)("Uploading to Backend");
-        const uploadSpin = (0, ui_1.spinner)(`Uploading to ${options.apiUrl}...`);
+        const uploadSpin = (0, ui_1.spinner)(`Connecting to ${options.apiUrl}...`);
         try {
-            await axios_1.default.post(`${options.apiUrl}/api/reports/upload`, finalReport, {
+            // Ensure apiUrl has a default
+            const apiUrl = options.apiUrl ?? "http://localhost:3000";
+            // 1. Check if backend is already running
+            try {
+                await axios_1.default.get(`${apiUrl}/health`, { timeout: 2000 });
+                uploadSpin.text = "Backend detected. Preparing upload...";
+            }
+            catch (err) {
+                // 2. If not running, start it automatically
+                // Determine the project root directory (where cli/ and backend/ are siblings)
+                const projectRoot = path_1.default.resolve(__dirname, "..", "..", "..");
+                // Backend is a sibling folder to cli at projectRoot
+                const backendRoot = path_1.default.resolve(projectRoot, "backend");
+                // Check for compiled JS first (for installed packages)
+                const backendDist = path_1.default.join(backendRoot, "dist", "index.js");
+                // Check for TS source (for local dev)
+                const backendSrc = path_1.default.join(backendRoot, "src", "index.ts");
+                let command;
+                let args;
+                if (fs_1.default.existsSync(backendDist)) {
+                    command = "node";
+                    args = [backendDist];
+                }
+                else if (fs_1.default.existsSync(backendSrc)) {
+                    command = "npx";
+                    args = ["ts-node", backendSrc];
+                }
+                else {
+                    throw new Error(`Cannot find backend at: ${backendRoot}. Ensure 'backend' folder exists next to 'cli'.`);
+                }
+                uploadSpin.text = "Backend not found. Starting local server automatically...";
+                // Extract port safely
+                const port = new URL(apiUrl).port || "3000";
+                // Spawn the backend process
+                const backendProcess = (0, child_process_1.spawn)(command, args, {
+                    stdio: "inherit",
+                    env: {
+                        ...process.env,
+                        API_KEY: options.apiKey || "react-doctor-secret-key-change-this",
+                        PORT: port,
+                    },
+                    cwd: backendRoot
+                });
+                // 3. Wait for backend to be ready
+                let isReady = false;
+                let retries = 0;
+                while (!isReady && retries < 15) {
+                    try {
+                        await axios_1.default.get(`${apiUrl}/health`, { timeout: 1000 });
+                        isReady = true;
+                    }
+                    catch {
+                        await new Promise((r) => setTimeout(r, 1000));
+                        retries++;
+                    }
+                }
+                if (!isReady)
+                    throw new Error("Backend failed to start after 15 seconds.");
+                uploadSpin.text = "Backend started successfully!";
+            }
+            // 4. Perform the actual upload
+            uploadSpin.text = "Uploading report...";
+            await axios_1.default.post(`${apiUrl}/api/reports/upload`, finalReport, {
                 headers: {
                     "Content-Type": "application/json",
-                    "x-api-key": options.apiKey || "react-doctor-secret-key-change-this", // ← Use the configurable key
+                    "x-api-key": options.apiKey || "react-doctor-secret-key-change-this",
                 },
                 timeout: 10000,
             });
@@ -278,10 +341,6 @@ async function runFullCommand(projectPath, options = {}) {
         catch (err) {
             uploadSpin.fail(chalk_1.default.yellow("Upload failed — report saved locally"));
             console.log(chalk_1.default.gray(`  ${err.message}`));
-            if (err.response?.status === 401) {
-                console.log(chalk_1.default.red(`  API Key mismatch! Make sure your API key matches the backend.`));
-                console.log(chalk_1.default.gray(`  Backend expects: ${process.env.REACT_DOCTOR_API_KEY || 'react-doctor-secret-key-change-this'}`));
-            }
         }
     }
     // ════════════════════════════════════════════════════════════

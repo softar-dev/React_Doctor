@@ -30,6 +30,7 @@ import path from "path";
 import fs from "fs";
 import chalk from "chalk";
 import axios from "axios";
+import { spawn } from "child_process";
 import {
   printBanner,
   printSection,
@@ -455,30 +456,94 @@ export async function runFullCommand(
   // ════════════════════════════════════════════════════════════
 
   if (options.upload && finalReport) {
-    printSection("Uploading to Backend");
+  printSection("Uploading to Backend");
 
-    const uploadSpin = spinner(`Uploading to ${options.apiUrl}...`);
+  const uploadSpin = spinner(`Connecting to ${options.apiUrl}...`);
+  
+  try {
+    // Ensure apiUrl has a default
+    const apiUrl = options.apiUrl ?? "http://localhost:3000";
+    
+    // 1. Check if backend is already running
     try {
-      await axios.post(`${options.apiUrl}/api/reports/upload`, finalReport, {
+      await axios.get(`${apiUrl}/health`, { timeout: 2000 });
+      uploadSpin.text = "Backend detected. Preparing upload...";
+    } catch (err) {
+      // 2. If not running, start it automatically
+      
+      // Determine the project root directory (where cli/ and backend/ are siblings)
+      const projectRoot = path.resolve(__dirname, "..", "..", "..");
+      
+      // Backend is a sibling folder to cli at projectRoot
+      const backendRoot = path.resolve(projectRoot, "backend");
+      
+      // Check for compiled JS first (for installed packages)
+      const backendDist = path.join(backendRoot, "dist", "index.js");
+      // Check for TS source (for local dev)
+      const backendSrc = path.join(backendRoot, "src", "index.ts");
+
+      let command: string;
+      let args: string[];
+
+      if (fs.existsSync(backendDist)) {
+        command = "node";
+        args = [backendDist];
+      } else if (fs.existsSync(backendSrc)) {
+        command = "npx";
+        args = ["ts-node", backendSrc];
+      } else {
+        throw new Error(`Cannot find backend at: ${backendRoot}. Ensure 'backend' folder exists next to 'cli'.`);
+      }
+
+      uploadSpin.text = "Backend not found. Starting local server automatically...";
+
+      // Extract port safely
+      const port = new URL(apiUrl).port || "3000";
+
+      // Spawn the backend process
+      const backendProcess = spawn(command, args, {
+        stdio: "inherit",
+        env: {
+          ...process.env,
+          API_KEY: options.apiKey || "react-doctor-secret-key-change-this",
+          PORT: port,
+        },
+        cwd: backendRoot
+      });
+
+      // 3. Wait for backend to be ready
+      let isReady = false;
+      let retries = 0;
+      while (!isReady && retries < 15) {
+        try {
+          await axios.get(`${apiUrl}/health`, { timeout: 1000 });
+          isReady = true;
+        } catch {
+          await new Promise((r) => setTimeout(r, 1000));
+          retries++;
+        }
+      }
+
+      if (!isReady) throw new Error("Backend failed to start after 15 seconds.");
+      uploadSpin.text = "Backend started successfully!";
+    }
+
+    // 4. Perform the actual upload
+    uploadSpin.text = "Uploading report...";
+    await axios.post(`${apiUrl}/api/reports/upload`, finalReport, {
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": options.apiKey || "react-doctor-secret-key-change-this", // ← Use the configurable key
+        "x-api-key": options.apiKey || "react-doctor-secret-key-change-this",
       } as Record<string, string>,
       timeout: 10000,
     });
-      uploadSpin.succeed(chalk.green("Report uploaded successfully"));
-    } catch (err: any) {
-      uploadSpin.fail(chalk.yellow("Upload failed — report saved locally"));
-      console.log(chalk.gray(`  ${err.message}`));
 
-      if (err.response?.status === 401) {
-      console.log(chalk.red(`  API Key mismatch! Make sure your API key matches the backend.`));
-      console.log(chalk.gray(`  Backend expects: ${process.env.REACT_DOCTOR_API_KEY || 'react-doctor-secret-key-change-this'}`));
-    }
-    }
-    
+    uploadSpin.succeed(chalk.green("Report uploaded successfully"));
+  } catch (err: any) {
+    uploadSpin.fail(chalk.yellow("Upload failed — report saved locally"));
+    console.log(chalk.gray(`  ${err.message}`));
   }
-
+}
   // ════════════════════════════════════════════════════════════
   // FINAL SUMMARY
   // ════════════════════════════════════════════════════════════

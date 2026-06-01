@@ -103,12 +103,18 @@ export function registerFullCommand(program: Command): void {
       "Backend API URL to upload to",
       "http://localhost:3000",
     )
+    // ✅ Single --api-key option (defined BEFORE .action)
+    .option(
+      "--api-key <key>",
+      "API key for backend authentication (overrides REACT_DOCTOR_API_KEY env var)",
+      process.env.REACT_DOCTOR_API_KEY || "react-doctor-secret-key-change-this",
+    )
     .option("--no-banner", "Skip the banner")
+    // ✅ .action() comes LAST, with no trailing semicolon/comment
     .action(async (projectPath: string, options) => {
       await runFullCommand(projectPath, options);
     });
 }
-
 // ─────────────────────────────────────────────────────────────
 // MAIN RUNNER
 // Exported so other commands (analyze --full) can call it too.
@@ -124,6 +130,7 @@ export async function runFullCommand(
     upload?: boolean;
     apiUrl?: string;
     noBanner?: boolean;
+    apiKey?: string;
   } = {},
 ): Promise<void> {
   const resolvedPath = path.resolve(projectPath);
@@ -452,15 +459,24 @@ export async function runFullCommand(
 
     const uploadSpin = spinner(`Uploading to ${options.apiUrl}...`);
     try {
-      await axios.post(`${options.apiUrl}/api/report/upload`, finalReport, {
-        headers: { "Content-Type": "application/json" },
-        timeout: 10000,
-      });
+      await axios.post(`${options.apiUrl}/api/reports/upload`, finalReport, {
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": options.apiKey || "react-doctor-secret-key-change-this", // ← Use the configurable key
+      } as Record<string, string>,
+      timeout: 10000,
+    });
       uploadSpin.succeed(chalk.green("Report uploaded successfully"));
     } catch (err: any) {
       uploadSpin.fail(chalk.yellow("Upload failed — report saved locally"));
       console.log(chalk.gray(`  ${err.message}`));
+
+      if (err.response?.status === 401) {
+      console.log(chalk.red(`  API Key mismatch! Make sure your API key matches the backend.`));
+      console.log(chalk.gray(`  Backend expects: ${process.env.REACT_DOCTOR_API_KEY || 'react-doctor-secret-key-change-this'}`));
     }
+    }
+    
   }
 
   // ════════════════════════════════════════════════════════════

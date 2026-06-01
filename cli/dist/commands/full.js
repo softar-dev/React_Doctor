@@ -60,7 +60,10 @@ function registerFullCommand(program) {
         .option("--throttle <preset>", "Network throttle: none | slow4g | 3g  (only meaningful against deployed URLs)", "none")
         .option("--upload", "Upload the final report to the React Doctor backend API", false)
         .option("--api-url <url>", "Backend API URL to upload to", "http://localhost:3000")
+        // ✅ Single --api-key option (defined BEFORE .action)
+        .option("--api-key <key>", "API key for backend authentication (overrides REACT_DOCTOR_API_KEY env var)", process.env.REACT_DOCTOR_API_KEY || "react-doctor-secret-key-change-this")
         .option("--no-banner", "Skip the banner")
+        // ✅ .action() comes LAST, with no trailing semicolon/comment
         .action(async (projectPath, options) => {
         await runFullCommand(projectPath, options);
     });
@@ -245,7 +248,7 @@ async function runFullCommand(projectPath, options = {}) {
     const compilerSpin = (0, ui_1.spinner)("Compiling final report...");
     try {
         const { ReportCompiler } = getCoreModule("report-compiler/index");
-        const compiler = new ReportCompiler();
+        const compiler = new ReportCompiler(outputDir);
         finalReport = await compiler.compile(staticReport, runtimeReports, ruleResults);
         fs_1.default.writeFileSync(path_1.default.join(outputDir, "finalreport.json"), JSON.stringify(finalReport, null, 2));
         compilerSpin.succeed(chalk_1.default.green("Final report compiled"));
@@ -263,8 +266,11 @@ async function runFullCommand(projectPath, options = {}) {
         (0, ui_1.printSection)("Uploading to Backend");
         const uploadSpin = (0, ui_1.spinner)(`Uploading to ${options.apiUrl}...`);
         try {
-            await axios_1.default.post(`${options.apiUrl}/api/report/upload`, finalReport, {
-                headers: { "Content-Type": "application/json" },
+            await axios_1.default.post(`${options.apiUrl}/api/reports/upload`, finalReport, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-api-key": options.apiKey || "react-doctor-secret-key-change-this", // ← Use the configurable key
+                },
                 timeout: 10000,
             });
             uploadSpin.succeed(chalk_1.default.green("Report uploaded successfully"));
@@ -272,6 +278,10 @@ async function runFullCommand(projectPath, options = {}) {
         catch (err) {
             uploadSpin.fail(chalk_1.default.yellow("Upload failed — report saved locally"));
             console.log(chalk_1.default.gray(`  ${err.message}`));
+            if (err.response?.status === 401) {
+                console.log(chalk_1.default.red(`  API Key mismatch! Make sure your API key matches the backend.`));
+                console.log(chalk_1.default.gray(`  Backend expects: ${process.env.REACT_DOCTOR_API_KEY || 'react-doctor-secret-key-change-this'}`));
+            }
         }
     }
     // ════════════════════════════════════════════════════════════

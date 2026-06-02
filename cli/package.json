@@ -10,7 +10,13 @@
     "build": "tsc",
     "prepare": "tsc"
   },
-  "keywords": ["react", "performance", "profiler", "cli", "analyzer"],
+  "keywords": [
+    "react",
+    "performance",
+    "profiler",
+    "cli",
+    "analyzer"
+  ],
   "author": "Ozma",
   "license": "MIT",
   "dependencies": {
@@ -22,6 +28,7 @@
     "typescript": "^5.0.0"
   },
   "devDependencies": {
+    "@types/babel__traverse": "^7.28.0",
     "@types/node": "^20.0.0"
   }
 }

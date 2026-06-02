@@ -6,20 +6,7 @@
   "bin": {
     "react-doctor": "./cli/bin/react-doctor.js"
   },
-  "scripts": {
-    "build:cli": "npm --prefix cli run build",
-    "build:backend": "npm --prefix backend run build",
-    "build": "npm run build:cli && npm run build:backend",
-    "postinstall": "cd backend && npm install && cd ..",
-    "prepublishOnly": "npm run build"
-  },
-  "files": [
-    "cli",
-    "core",
-    "shared",
-    "backend",
-    "package.json"
-  ],
+  "scripts": {},
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -33,11 +20,6 @@
     "commander": "^12.0.0",
     "fs-extra": "^11.3.4",
     "glob": "^13.0.6",
-    "better-sqlite3": "^12.10.0",
-    "cors": "^2.8.6",
-    "dotenv": "^17.4.2",
-    "express": "^5.2.1",
-    "helmet": "^8.2.0",
     "ora": "^5.4.1",
     "puppeteer-core": "^22.0.0",
     "ts-node": "^10.9.2",

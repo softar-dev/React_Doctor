@@ -301,12 +301,16 @@ async function runFullCommand(projectPath, options = {}) {
                 // Extract port safely
                 const port = new URL(apiUrl).port || "3000";
                 // Spawn the backend process
+                // Create backend data directory in the target project
+                const backendDataDir = path_1.default.join(outputDir, "backend-data");
+                fs_1.default.mkdirSync(backendDataDir, { recursive: true });
                 const backendProcess = (0, child_process_1.spawn)(command, args, {
                     stdio: "inherit",
                     env: {
                         ...process.env,
                         API_KEY: options.apiKey || "react-doctor-secret-key-change-this",
                         PORT: port,
+                        DB_PATH: path_1.default.join(backendDataDir, "reports.db"),
                     },
                     cwd: backendRoot
                 });

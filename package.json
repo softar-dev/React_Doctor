@@ -10,6 +10,7 @@
     "build:cli": "npm --prefix cli run build",
     "build:backend": "npm --prefix backend run build",
     "build": "npm run build:cli && npm run build:backend",
+    "postinstall": "npm install --prefix backend || true",
     "prepublishOnly": "npm run build"
   },
   "files": [

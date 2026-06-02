@@ -501,12 +501,17 @@ export async function runFullCommand(
       const port = new URL(apiUrl).port || "3000";
 
       // Spawn the backend process
+      // Create backend data directory in the target project
+      const backendDataDir = path.join(outputDir, "backend-data");
+      fs.mkdirSync(backendDataDir, { recursive: true });
+
       const backendProcess = spawn(command, args, {
         stdio: "inherit",
         env: {
           ...process.env,
           API_KEY: options.apiKey || "react-doctor-secret-key-change-this",
           PORT: port,
+          DB_PATH: path.join(backendDataDir, "reports.db"),
         },
         cwd: backendRoot
       });

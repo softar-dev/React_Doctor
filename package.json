@@ -6,7 +6,19 @@
   "bin": {
     "react-doctor": "./cli/bin/react-doctor.js"
   },
-  "scripts": {},
+  "scripts": {
+    "build:cli": "npm --prefix cli run build",
+    "build:backend": "npm --prefix backend run build",
+    "build": "npm run build:cli && npm run build:backend",
+    "prepare": "npm run build"
+  },
+  "files": [
+    "cli",
+    "core",
+    "shared",
+    "backend",
+    "package.json"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",

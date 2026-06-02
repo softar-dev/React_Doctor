@@ -1,22 +1,15 @@
 {
-  "name": "react-doctor",
+  "name": "react-tool",
   "version": "1.0.0",
-  "description": "React Performance Tool ",
-  "main": "cli/dist/index.js",
+  "description": "",
+  "main": "index.js",
   "bin": {
-    "react-doctor": "./cli/dist/index.js"
+    "react-doctor": "./cli/bin/react-doctor.js"
   },
-  "scripts": {
-    "build": "npm run build:cli && npm run build:backend",
-    "build:cli": "cd cli && tsc",
-    "build:backend": "cd backend && tsc",
-    "prepare": "npm run build",
-    "dev:cli": "cd cli && ts-node src/index.ts",
-    "dev:backend": "cd backend && ts-node src/index.ts"
-  },
-  "keywords": ["react", "performance", "cli", "analyzer"],
-  "author": "Ozma",
-  "license": "MIT",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "type": "commonjs",
   "dependencies": {
     "@babel/parser": "^7.29.0",
@@ -40,19 +33,7 @@
   },
   "devDependencies": {
     "@types/babel__traverse": "^7.28.0",
-    "@types/better-sqlite3": "^7.6.13",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.6",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^25.3.3",
-    "nodemon": "^3.1.14"
-  },
-  "files": [
-    "cli/dist/**",
-    "cli/package.json",
-    "core/**",
-    "backend/dist/**",
-    "backend/package.json",
-    "package.json"
-  ]
+    "@types/node": "^25.3.3"
+  }
 }

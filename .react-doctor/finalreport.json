@@ -1,0 +1,3867 @@
+{
+  "projectName": "react-app",
+  "analyzedAt": "2026-06-01T08:45:45.080Z",
+  "static": {
+    "timestamp": "2026-06-01T08:44:44.613Z",
+    "componentCount": 53,
+    "issues": [
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-6",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 6,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-7",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 7,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-8",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 8,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-17",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 17,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-27",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 27,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-28",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 28,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-29",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 29,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-30",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 30,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-31",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 31,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-34",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 34,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-35",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 35,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-36",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 36,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-37",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 37,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-40",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 40,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-41",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 41,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-42",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 42,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-43",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 43,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-45",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 45,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-47",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 47,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-53",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 53,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-54",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 54,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-57",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 57,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-58",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 58,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-59",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 59,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-60",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 60,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-61",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 61,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-66",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 66,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-69",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 69,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-72",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 72,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-74",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 74,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-75",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 75,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-76",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 76,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-79",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 79,
+        "column": 4,
+        "severity": "info",
+        "message": "console.error() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_test_analyzer_ts-80",
+        "component": "testCompleteAnalysis",
+        "file": "core\\static-ana\\test-analyzer.ts",
+        "line": 80,
+        "column": 4,
+        "severity": "info",
+        "message": "console.error() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-91",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 91,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-92",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 92,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-93",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 93,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-99",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 99,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-104",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 104,
+        "column": 26,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-105",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 105,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-106",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 106,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-115",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 115,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-123",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 123,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-124",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 124,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-127",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 127,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-128",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 128,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-131",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 131,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-132",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 132,
+        "column": 6,
+        "severity": "info",
+        "message": "console.table() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-141",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 141,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-142",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 142,
+        "column": 6,
+        "severity": "info",
+        "message": "console.table() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-150",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 150,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-154",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 154,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-162",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 162,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-163",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 163,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-164",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 164,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-166",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 166,
+        "column": 10,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-169",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 169,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-174",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 174,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-182",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 182,
+        "column": 8,
+        "severity": "info",
+        "message": "console.table() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-186",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 186,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-188",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 188,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-194",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 194,
+        "column": 10,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-195",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 195,
+        "column": 32,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-198",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 198,
+        "column": 10,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-199",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 199,
+        "column": 32,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-204",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 204,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-206",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 206,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-209",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 209,
+        "column": 10,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-211",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 211,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-214",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 214,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-217",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 217,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-219",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 219,
+        "column": 4,
+        "severity": "info",
+        "message": "console.error() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_test_runtime_profiler_ts-220",
+        "component": "startTest",
+        "file": "core\\runtime\\test-runtime-profiler.ts",
+        "line": 220,
+        "column": 4,
+        "severity": "info",
+        "message": "console.error() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "dead-code-core_rule_engine_types_ts-1",
+        "component": "Global/Module",
+        "file": "core\\rule-engine\\types.ts",
+        "line": 1,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"StaticReport\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_rule_engine_types_ts-1",
+        "component": "Global/Module",
+        "file": "core\\rule-engine\\types.ts",
+        "line": 1,
+        "column": 23,
+        "severity": "warning",
+        "message": "Unused Import found: \"RuntimeReport\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_rule_engine_types_ts-1",
+        "component": "Global/Module",
+        "file": "core\\rule-engine\\types.ts",
+        "line": 1,
+        "column": 38,
+        "severity": "warning",
+        "message": "Unused Import found: \"Suggestion\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-48",
+        "component": "loadReports",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 48,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-50",
+        "component": "loadReports",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 50,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-57",
+        "component": "loadReports",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 57,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-59",
+        "component": "loadReports",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 59,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-69",
+        "component": "printResults",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 69,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-70",
+        "component": "printResults",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 70,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-71",
+        "component": "printResults",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 71,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-72",
+        "component": "printResults",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 72,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-73",
+        "component": "printResults",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 73,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-74",
+        "component": "printResults",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 74,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-75",
+        "component": "printResults",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 75,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-78",
+        "component": "printResults",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 78,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-82",
+        "component": "printResults",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 82,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-88",
+        "component": "printResults",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 88,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-91",
+        "component": "printResults",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 91,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-94",
+        "component": "printResults",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 94,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-95",
+        "component": "printResults",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 95,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-96",
+        "component": "printResults",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 96,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-100",
+        "component": "printResults",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 100,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-103",
+        "component": "printResults",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 103,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-111",
+        "component": "main",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 111,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-112",
+        "component": "main",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 112,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-113",
+        "component": "main",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 113,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-119",
+        "component": "main",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 119,
+        "column": 4,
+        "severity": "info",
+        "message": "console.error() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-135",
+        "component": "main",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 135,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-136",
+        "component": "main",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 136,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-137",
+        "component": "main",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 137,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-138",
+        "component": "main",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 138,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_test_rule_engine_ts-142",
+        "component": "Unknown",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 142,
+        "column": 2,
+        "severity": "info",
+        "message": "console.error() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "dead-code-core_rule_engine_test_rule_engine_ts-13",
+        "component": "Global/Module",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 13,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"StaticReport\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_rule_engine_test_rule_engine_ts-13",
+        "component": "Global/Module",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 13,
+        "column": 23,
+        "severity": "warning",
+        "message": "Unused Import found: \"RuntimeReport\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_rule_engine_test_rule_engine_ts-14",
+        "component": "Global/Module",
+        "file": "core\\rule-engine\\test-rule-engine.ts",
+        "line": 14,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"RuleEngineResult\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_rule_engine_suggestion_builder_ts-17",
+        "component": "Global/Module",
+        "file": "core\\rule-engine\\suggestion-builder.ts",
+        "line": 17,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"Suggestion\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_rule_engine_suggestion_builder_ts-18",
+        "component": "Global/Module",
+        "file": "core\\rule-engine\\suggestion-builder.ts",
+        "line": 18,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"RuleDefinition\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_rule_engine_suggestion_builder_ts-18",
+        "component": "Global/Module",
+        "file": "core\\rule-engine\\suggestion-builder.ts",
+        "line": 18,
+        "column": 25,
+        "severity": "warning",
+        "message": "Unused Import found: \"EvaluationContext\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "console-core_rule_engine_index_ts-59",
+        "component": "Unknown",
+        "file": "core\\rule-engine\\index.ts",
+        "line": 59,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_index_ts-63",
+        "component": "Unknown",
+        "file": "core\\rule-engine\\index.ts",
+        "line": 63,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_index_ts-71",
+        "component": "Unknown",
+        "file": "core\\rule-engine\\index.ts",
+        "line": 71,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_index_ts-90",
+        "component": "Unknown",
+        "file": "core\\rule-engine\\index.ts",
+        "line": 90,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_index_ts-97",
+        "component": "Unknown",
+        "file": "core\\rule-engine\\index.ts",
+        "line": 97,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_index_ts-107",
+        "component": "Unknown",
+        "file": "core\\rule-engine\\index.ts",
+        "line": 107,
+        "column": 26,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_index_ts-108",
+        "component": "Unknown",
+        "file": "core\\rule-engine\\index.ts",
+        "line": 108,
+        "column": 26,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_index_ts-109",
+        "component": "Unknown",
+        "file": "core\\rule-engine\\index.ts",
+        "line": 109,
+        "column": 26,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_index_ts-119",
+        "component": "Unknown",
+        "file": "core\\rule-engine\\index.ts",
+        "line": 119,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_rule_engine_index_ts-220",
+        "component": "Unknown",
+        "file": "core\\rule-engine\\index.ts",
+        "line": 220,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "dead-code-core_rule_engine_index_ts-25",
+        "component": "Global/Module",
+        "file": "core\\rule-engine\\index.ts",
+        "line": 25,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"StaticReport\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_rule_engine_index_ts-25",
+        "component": "Global/Module",
+        "file": "core\\rule-engine\\index.ts",
+        "line": 25,
+        "column": 23,
+        "severity": "warning",
+        "message": "Unused Import found: \"RuntimeReport\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_rule_engine_index_ts-25",
+        "component": "Global/Module",
+        "file": "core\\rule-engine\\index.ts",
+        "line": 25,
+        "column": 38,
+        "severity": "warning",
+        "message": "Unused Import found: \"Suggestion\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_rule_engine_index_ts-26",
+        "component": "Global/Module",
+        "file": "core\\rule-engine\\index.ts",
+        "line": 26,
+        "column": 25,
+        "severity": "warning",
+        "message": "Unused Import found: \"RuleEngineResult\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "console-core_rule_engine_evaluator_ts-66",
+        "component": "evaluateRule",
+        "file": "core\\rule-engine\\evaluator.ts",
+        "line": 66,
+        "column": 4,
+        "severity": "info",
+        "message": "console.warn() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "dead-code-core_rule_engine_evaluator_ts-27",
+        "component": "Global/Module",
+        "file": "core\\rule-engine\\evaluator.ts",
+        "line": 27,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"RuleDefinition\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_rule_engine_context_builder_ts-13",
+        "component": "Global/Module",
+        "file": "core\\rule-engine\\context-builder.ts",
+        "line": 13,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"StaticReport\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_rule_engine_context_builder_ts-13",
+        "component": "Global/Module",
+        "file": "core\\rule-engine\\context-builder.ts",
+        "line": 13,
+        "column": 23,
+        "severity": "warning",
+        "message": "Unused Import found: \"RuntimeReport\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_rule_engine_context_builder_ts-14",
+        "component": "Global/Module",
+        "file": "core\\rule-engine\\context-builder.ts",
+        "line": 14,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"EvaluationContext\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-31",
+        "component": "printSummary",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 31,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-32",
+        "component": "printSummary",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 32,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-33",
+        "component": "printSummary",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 33,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-35",
+        "component": "printSummary",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 35,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-36",
+        "component": "printSummary",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 36,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-37",
+        "component": "printSummary",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 37,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-40",
+        "component": "printSummary",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 40,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-41",
+        "component": "printSummary",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 41,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-42",
+        "component": "printSummary",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 42,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-43",
+        "component": "printSummary",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 43,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-48",
+        "component": "printSummary",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 48,
+        "column": 20,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-49",
+        "component": "printSummary",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 49,
+        "column": 20,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-50",
+        "component": "printSummary",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 50,
+        "column": 20,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-53",
+        "component": "printSummary",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 53,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-58",
+        "component": "printSummary",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 58,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-62",
+        "component": "printSummary",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 62,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-68",
+        "component": "printSummary",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 68,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-71",
+        "component": "printSummary",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 71,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-76",
+        "component": "printSummary",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 76,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-79",
+        "component": "printSummary",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 79,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-84",
+        "component": "printSummary",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 84,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-87",
+        "component": "printSummary",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 87,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-91",
+        "component": "printSummary",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 91,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-97",
+        "component": "main",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 97,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-98",
+        "component": "main",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 98,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-99",
+        "component": "main",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 99,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-112",
+        "component": "main",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 112,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-113",
+        "component": "main",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 113,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-116",
+        "component": "main",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 116,
+        "column": 4,
+        "severity": "info",
+        "message": "console.error() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-117",
+        "component": "main",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 117,
+        "column": 4,
+        "severity": "info",
+        "message": "console.error() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-118",
+        "component": "main",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 118,
+        "column": 4,
+        "severity": "info",
+        "message": "console.error() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-119",
+        "component": "main",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 119,
+        "column": 4,
+        "severity": "info",
+        "message": "console.error() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-120",
+        "component": "main",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 120,
+        "column": 4,
+        "severity": "info",
+        "message": "console.error() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_test_report_compiler_ts-121",
+        "component": "main",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 121,
+        "column": 4,
+        "severity": "info",
+        "message": "console.error() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "dead-code-core_report_compiler_test_report_compiler_ts-18",
+        "component": "Global/Module",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 18,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"FinalReport\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_report_compiler_test_report_compiler_ts-19",
+        "component": "Global/Module",
+        "file": "core\\report-compiler\\test-report-compiler.ts",
+        "line": 19,
+        "column": 7,
+        "severity": "warning",
+        "message": "Unused Import found: \"path\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "console-core_report_compiler_index_ts-115",
+        "component": "Unknown",
+        "file": "core\\report-compiler\\index.ts",
+        "line": 115,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_index_ts-141",
+        "component": "Unknown",
+        "file": "core\\report-compiler\\index.ts",
+        "line": 141,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_index_ts-142",
+        "component": "Unknown",
+        "file": "core\\report-compiler\\index.ts",
+        "line": 142,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_index_ts-143",
+        "component": "Unknown",
+        "file": "core\\report-compiler\\index.ts",
+        "line": 143,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_index_ts-156",
+        "component": "Unknown",
+        "file": "core\\report-compiler\\index.ts",
+        "line": 156,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_index_ts-162",
+        "component": "Unknown",
+        "file": "core\\report-compiler\\index.ts",
+        "line": 162,
+        "column": 22,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_index_ts-163",
+        "component": "Unknown",
+        "file": "core\\report-compiler\\index.ts",
+        "line": 163,
+        "column": 22,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_index_ts-164",
+        "component": "Unknown",
+        "file": "core\\report-compiler\\index.ts",
+        "line": 164,
+        "column": 22,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_index_ts-172",
+        "component": "Unknown",
+        "file": "core\\report-compiler\\index.ts",
+        "line": 172,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_index_ts-187",
+        "component": "Unknown",
+        "file": "core\\report-compiler\\index.ts",
+        "line": 187,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_index_ts-212",
+        "component": "Unknown",
+        "file": "core\\report-compiler\\index.ts",
+        "line": 212,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_index_ts-233",
+        "component": "Unknown",
+        "file": "core\\report-compiler\\index.ts",
+        "line": 233,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_index_ts-254",
+        "component": "Unknown",
+        "file": "core\\report-compiler\\index.ts",
+        "line": 254,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_report_compiler_index_ts-357",
+        "component": "Unknown",
+        "file": "core\\report-compiler\\index.ts",
+        "line": 357,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "dead-code-core_report_compiler_index_ts-41",
+        "component": "Global/Module",
+        "file": "core\\report-compiler\\index.ts",
+        "line": 41,
+        "column": 2,
+        "severity": "warning",
+        "message": "Unused Import found: \"Suggestion\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_report_compiler_index_ts-42",
+        "component": "Global/Module",
+        "file": "core\\report-compiler\\index.ts",
+        "line": 42,
+        "column": 2,
+        "severity": "warning",
+        "message": "Unused Import found: \"FinalReport\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "console-cli_src_ui_ts-21",
+        "component": "printBanner",
+        "file": "cli\\src\\ui.ts",
+        "line": 21,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_ui_ts-22",
+        "component": "printBanner",
+        "file": "cli\\src\\ui.ts",
+        "line": 22,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_ui_ts-23",
+        "component": "printBanner",
+        "file": "cli\\src\\ui.ts",
+        "line": 23,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_ui_ts-24",
+        "component": "printBanner",
+        "file": "cli\\src\\ui.ts",
+        "line": 24,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_ui_ts-25",
+        "component": "printBanner",
+        "file": "cli\\src\\ui.ts",
+        "line": 25,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_ui_ts-26",
+        "component": "printBanner",
+        "file": "cli\\src\\ui.ts",
+        "line": 26,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_ui_ts-33",
+        "component": "printSection",
+        "file": "cli\\src\\ui.ts",
+        "line": 33,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_ui_ts-34",
+        "component": "printSection",
+        "file": "cli\\src\\ui.ts",
+        "line": 34,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_ui_ts-35",
+        "component": "printSection",
+        "file": "cli\\src\\ui.ts",
+        "line": 35,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_ui_ts-61",
+        "component": "printResult",
+        "file": "cli\\src\\ui.ts",
+        "line": 61,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_ui_ts-85",
+        "component": "printDone",
+        "file": "cli\\src\\ui.ts",
+        "line": 85,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_ui_ts-86",
+        "component": "printDone",
+        "file": "cli\\src\\ui.ts",
+        "line": 86,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_ui_ts-87",
+        "component": "printDone",
+        "file": "cli\\src\\ui.ts",
+        "line": 87,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_ui_ts-91",
+        "component": "printFail",
+        "file": "cli\\src\\ui.ts",
+        "line": 91,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_ui_ts-92",
+        "component": "printFail",
+        "file": "cli\\src\\ui.ts",
+        "line": 92,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_ui_ts-93",
+        "component": "printFail",
+        "file": "cli\\src\\ui.ts",
+        "line": 93,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_ui_ts-99",
+        "component": "printInfo",
+        "file": "cli\\src\\ui.ts",
+        "line": 99,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "dead-code-cli_src_ui_ts-15",
+        "component": "Global/Module",
+        "file": "cli\\src\\ui.ts",
+        "line": 15,
+        "column": 14,
+        "severity": "warning",
+        "message": "Unused Import found: \"Ora\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "console-cli_bin_react_doctor_js-7",
+        "component": "Unknown",
+        "file": "cli\\bin\\react-doctor.js",
+        "line": 7,
+        "column": 2,
+        "severity": "info",
+        "message": "console.error() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-backend_src_index_ts-31",
+        "component": "Unknown",
+        "file": "backend\\src\\index.ts",
+        "line": 31,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "dead-code-backend_src_index_ts-1",
+        "component": "Global/Module",
+        "file": "backend\\src\\index.ts",
+        "line": 1,
+        "column": 18,
+        "severity": "warning",
+        "message": "Unused Import found: \"Request\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-backend_src_index_ts-1",
+        "component": "Global/Module",
+        "file": "backend\\src\\index.ts",
+        "line": 1,
+        "column": 27,
+        "severity": "warning",
+        "message": "Unused Import found: \"Response\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "console-core_static_ana_static_scanner_ts-43",
+        "component": "Unknown",
+        "file": "core\\static-ana\\static\\scanner.ts",
+        "line": 43,
+        "column": 8,
+        "severity": "info",
+        "message": "console.warn() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_static_scanner_ts-62",
+        "component": "Unknown",
+        "file": "core\\static-ana\\static\\scanner.ts",
+        "line": 62,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_static_scanner_ts-73",
+        "component": "Unknown",
+        "file": "core\\static-ana\\static\\scanner.ts",
+        "line": 73,
+        "column": 6,
+        "severity": "info",
+        "message": "console.error() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "dead-code-core_static_ana_static_helpers_ts-1",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\helpers.ts",
+        "line": 1,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"NodePath\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_helpers_ts-2",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\helpers.ts",
+        "line": 2,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"Node\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_ast_parser_ts-2",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\ast-parser.ts",
+        "line": 2,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"File\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "console-core_static_ana_static_analyzer_ts-31",
+        "component": "Unknown",
+        "file": "core\\static-ana\\static\\analyzer.ts",
+        "line": 31,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_static_analyzer_ts-32",
+        "component": "Unknown",
+        "file": "core\\static-ana\\static\\analyzer.ts",
+        "line": 32,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_static_analyzer_ts-33",
+        "component": "Unknown",
+        "file": "core\\static-ana\\static\\analyzer.ts",
+        "line": 33,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_static_analyzer_ts-60",
+        "component": "Unknown",
+        "file": "core\\static-ana\\static\\analyzer.ts",
+        "line": 60,
+        "column": 10,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_static_analyzer_ts-62",
+        "component": "Unknown",
+        "file": "core\\static-ana\\static\\analyzer.ts",
+        "line": 62,
+        "column": 10,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_static_analyzer_ts-68",
+        "component": "Unknown",
+        "file": "core\\static-ana\\static\\analyzer.ts",
+        "line": 68,
+        "column": 8,
+        "severity": "info",
+        "message": "console.error() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_static_ana_static_analyzer_ts-101",
+        "component": "Unknown",
+        "file": "core\\static-ana\\static\\analyzer.ts",
+        "line": 101,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "dead-code-core_static_ana_static_analyzer_ts-4",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\analyzer.ts",
+        "line": 4,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"StaticReport\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_analyzer_ts-4",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\analyzer.ts",
+        "line": 4,
+        "column": 23,
+        "severity": "warning",
+        "message": "Unused Import found: \"ComponentIssue\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_analyzer_ts-5",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\analyzer.ts",
+        "line": 5,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"ScannedFile\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "console-core_runtime_profiler_server_ts-24",
+        "component": "spawnDevServer",
+        "file": "core\\runtime\\profiler\\server.ts",
+        "line": 24,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_server_ts-65",
+        "component": "onData",
+        "file": "core\\runtime\\profiler\\server.ts",
+        "line": 65,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_server_ts-112",
+        "component": "killDevServer",
+        "file": "core\\runtime\\profiler\\server.ts",
+        "line": 112,
+        "column": 6,
+        "severity": "info",
+        "message": "console.warn() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_server_ts-1",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\server.ts",
+        "line": 1,
+        "column": 16,
+        "severity": "warning",
+        "message": "Unused Import found: \"ChildProcess\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_server_ts-1",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\server.ts",
+        "line": 1,
+        "column": 30,
+        "severity": "warning",
+        "message": "Unused Import found: \"execSync\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_score_ts-1",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\score.ts",
+        "line": 1,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"WebVitals\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_score_ts-1",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\score.ts",
+        "line": 1,
+        "column": 20,
+        "severity": "warning",
+        "message": "Unused Import found: \"PageError\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "console-core_runtime_profiler_porfiler_ts-261",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 261,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_porfiler_ts-262",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 262,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_porfiler_ts-274",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 274,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_porfiler_ts-276",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 276,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_porfiler_ts-282",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 282,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_porfiler_ts-286",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 286,
+        "column": 10,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_porfiler_ts-298",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 298,
+        "column": 10,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_porfiler_ts-324",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 324,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_porfiler_ts-379",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 379,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_porfiler_ts-438",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 438,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_porfiler_ts-468",
+        "component": "onData",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 468,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_porfiler_ts-533",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 533,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_porfiler_ts-543",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 543,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_porfiler_ts-788",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 788,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_porfiler_ts-791",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 791,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_porfiler_ts-903",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 903,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_porfiler_ts-947",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 947,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_porfiler_ts-962",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 962,
+        "column": 10,
+        "severity": "info",
+        "message": "console.warn() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_porfiler_ts-1",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 1,
+        "column": 20,
+        "severity": "warning",
+        "message": "Unused Import found: \"Browser\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_porfiler_ts-1",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 1,
+        "column": 29,
+        "severity": "warning",
+        "message": "Unused Import found: \"Page\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_porfiler_ts-2",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 2,
+        "column": 16,
+        "severity": "warning",
+        "message": "Unused Import found: \"ChildProcess\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_porfiler_ts-4",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 4,
+        "column": 2,
+        "severity": "warning",
+        "message": "Unused Import found: \"RuntimeReport\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_porfiler_ts-6",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 6,
+        "column": 2,
+        "severity": "warning",
+        "message": "Unused Import found: \"SystemStats\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_porfiler_ts-7",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 7,
+        "column": 2,
+        "severity": "warning",
+        "message": "Unused Import found: \"PageError\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_porfiler_ts-8",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\porfiler.ts",
+        "line": 8,
+        "column": 2,
+        "severity": "warning",
+        "message": "Unused Import found: \"Screenshot\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "console-core_runtime_profiler_index_ts-83",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\index.ts",
+        "line": 83,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_index_ts-84",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\index.ts",
+        "line": 84,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_index_ts-95",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\index.ts",
+        "line": 95,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_index_ts-97",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\index.ts",
+        "line": 97,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_index_ts-101",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\index.ts",
+        "line": 101,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_index_ts-105",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\index.ts",
+        "line": 105,
+        "column": 10,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_index_ts-113",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\index.ts",
+        "line": 113,
+        "column": 10,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_index_ts-139",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\index.ts",
+        "line": 139,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_index_ts-188",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\index.ts",
+        "line": 188,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_index_ts-193",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\index.ts",
+        "line": 193,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_index_ts-306",
+        "component": "Unknown",
+        "file": "core\\runtime\\profiler\\index.ts",
+        "line": 306,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_index_ts-7",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\index.ts",
+        "line": 7,
+        "column": 20,
+        "severity": "warning",
+        "message": "Unused Import found: \"Browser\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_index_ts-8",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\index.ts",
+        "line": 8,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"ChildProcess\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_index_ts-9",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\index.ts",
+        "line": 9,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"RuntimeReport\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_index_ts-10",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\index.ts",
+        "line": 10,
+        "column": 7,
+        "severity": "warning",
+        "message": "Unused Import found: \"os\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_index_ts-15",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\index.ts",
+        "line": 15,
+        "column": 2,
+        "severity": "warning",
+        "message": "Unused Import found: \"ProfileOptions\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_index_ts-16",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\index.ts",
+        "line": 16,
+        "column": 2,
+        "severity": "warning",
+        "message": "Unused Import found: \"DeviceType\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_index_ts-17",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\index.ts",
+        "line": 17,
+        "column": 2,
+        "severity": "warning",
+        "message": "Unused Import found: \"ThrottlePreset\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_index_ts-18",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\index.ts",
+        "line": 18,
+        "column": 2,
+        "severity": "warning",
+        "message": "Unused Import found: \"CpuThrottle\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "console-core_runtime_profiler_collectors_ts-81",
+        "component": "collectReactProfilerData",
+        "file": "core\\runtime\\profiler\\collectors.ts",
+        "line": 81,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_collectors_ts-86",
+        "component": "collectReactProfilerData",
+        "file": "core\\runtime\\profiler\\collectors.ts",
+        "line": 86,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_runtime_profiler_collectors_ts-169",
+        "component": "captureScreenshots",
+        "file": "core\\runtime\\profiler\\collectors.ts",
+        "line": 169,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_collectors_ts-1",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\collectors.ts",
+        "line": 1,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"Page\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_collectors_ts-6",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\collectors.ts",
+        "line": 6,
+        "column": 2,
+        "severity": "warning",
+        "message": "Unused Import found: \"PageError\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_collectors_ts-7",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\collectors.ts",
+        "line": 7,
+        "column": 2,
+        "severity": "warning",
+        "message": "Unused Import found: \"Screenshot\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_collectors_ts-9",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\collectors.ts",
+        "line": 9,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"ReactProfilerData\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_runtime_profiler_collectors_ts-9",
+        "component": "Global/Module",
+        "file": "core\\runtime\\profiler\\collectors.ts",
+        "line": 9,
+        "column": 28,
+        "severity": "warning",
+        "message": "Unused Import found: \"DeviceType\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "console-core_runtime_profiler_browser_ts-111",
+        "component": "getWebVitalsScript",
+        "file": "core\\runtime\\profiler\\browser.ts",
+        "line": 111,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_profile_ts-112",
+        "component": "registerProfileCommand",
+        "file": "cli\\src\\commands\\profile.ts",
+        "line": 112,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_profile_ts-146",
+        "component": "registerProfileCommand",
+        "file": "cli\\src\\commands\\profile.ts",
+        "line": 146,
+        "column": 10,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_profile_ts-147",
+        "component": "registerProfileCommand",
+        "file": "cli\\src\\commands\\profile.ts",
+        "line": 147,
+        "column": 10,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_profile_ts-152",
+        "component": "registerProfileCommand",
+        "file": "cli\\src\\commands\\profile.ts",
+        "line": 152,
+        "column": 10,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_profile_ts-211",
+        "component": "registerProfileCommand",
+        "file": "cli\\src\\commands\\profile.ts",
+        "line": 211,
+        "column": 14,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_profile_ts-223",
+        "component": "registerProfileCommand",
+        "file": "cli\\src\\commands\\profile.ts",
+        "line": 223,
+        "column": 10,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_profile_ts-231",
+        "component": "registerProfileCommand",
+        "file": "cli\\src\\commands\\profile.ts",
+        "line": 231,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_profile_ts-234",
+        "component": "registerProfileCommand",
+        "file": "cli\\src\\commands\\profile.ts",
+        "line": 234,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_profile_ts-242",
+        "component": "registerProfileCommand",
+        "file": "cli\\src\\commands\\profile.ts",
+        "line": 242,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "dead-code-cli_src_commands_profile_ts-24",
+        "component": "Global/Module",
+        "file": "cli\\src\\commands\\profile.ts",
+        "line": 24,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"Command\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "console-cli_src_commands_install_ts-74",
+        "component": "registerInstallCommand",
+        "file": "cli\\src\\commands\\install.ts",
+        "line": 74,
+        "column": 10,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_install_ts-96",
+        "component": "registerInstallCommand",
+        "file": "cli\\src\\commands\\install.ts",
+        "line": 96,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_install_ts-110",
+        "component": "registerInstallCommand",
+        "file": "cli\\src\\commands\\install.ts",
+        "line": 110,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_install_ts-133",
+        "component": "registerInstallCommand",
+        "file": "cli\\src\\commands\\install.ts",
+        "line": 133,
+        "column": 24,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_install_ts-143",
+        "component": "registerInstallCommand",
+        "file": "cli\\src\\commands\\install.ts",
+        "line": 143,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_install_ts-154",
+        "component": "registerInstallCommand",
+        "file": "cli\\src\\commands\\install.ts",
+        "line": 154,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_install_ts-160",
+        "component": "registerInstallCommand",
+        "file": "cli\\src\\commands\\install.ts",
+        "line": 160,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "dead-code-cli_src_commands_install_ts-24",
+        "component": "Global/Module",
+        "file": "cli\\src\\commands\\install.ts",
+        "line": 24,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"Command\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "console-cli_src_commands_full_ts-233",
+        "component": "runFullCommand",
+        "file": "cli\\src\\commands\\full.ts",
+        "line": 233,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_full_ts-276",
+        "component": "runFullCommand",
+        "file": "cli\\src\\commands\\full.ts",
+        "line": 276,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_full_ts-277",
+        "component": "runFullCommand",
+        "file": "cli\\src\\commands\\full.ts",
+        "line": 277,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_full_ts-281",
+        "component": "runFullCommand",
+        "file": "cli\\src\\commands\\full.ts",
+        "line": 281,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_full_ts-340",
+        "component": "runFullCommand",
+        "file": "cli\\src\\commands\\full.ts",
+        "line": 340,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_full_ts-385",
+        "component": "runFullCommand",
+        "file": "cli\\src\\commands\\full.ts",
+        "line": 385,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_full_ts-386",
+        "component": "runFullCommand",
+        "file": "cli\\src\\commands\\full.ts",
+        "line": 386,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_full_ts-392",
+        "component": "runFullCommand",
+        "file": "cli\\src\\commands\\full.ts",
+        "line": 392,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_full_ts-395",
+        "component": "runFullCommand",
+        "file": "cli\\src\\commands\\full.ts",
+        "line": 395,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_full_ts-402",
+        "component": "runFullCommand",
+        "file": "cli\\src\\commands\\full.ts",
+        "line": 402,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_full_ts-443",
+        "component": "runFullCommand",
+        "file": "cli\\src\\commands\\full.ts",
+        "line": 443,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_full_ts-465",
+        "component": "runFullCommand",
+        "file": "cli\\src\\commands\\full.ts",
+        "line": 465,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_full_ts-475",
+        "component": "runFullCommand",
+        "file": "cli\\src\\commands\\full.ts",
+        "line": 475,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_full_ts-476",
+        "component": "runFullCommand",
+        "file": "cli\\src\\commands\\full.ts",
+        "line": 476,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_full_ts-477",
+        "component": "runFullCommand",
+        "file": "cli\\src\\commands\\full.ts",
+        "line": 477,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_full_ts-478",
+        "component": "runFullCommand",
+        "file": "cli\\src\\commands\\full.ts",
+        "line": 478,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_full_ts-479",
+        "component": "runFullCommand",
+        "file": "cli\\src\\commands\\full.ts",
+        "line": 479,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_full_ts-480",
+        "component": "runFullCommand",
+        "file": "cli\\src\\commands\\full.ts",
+        "line": 480,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_full_ts-483",
+        "component": "runFullCommand",
+        "file": "cli\\src\\commands\\full.ts",
+        "line": 483,
+        "column": 4,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "dead-code-cli_src_commands_full_ts-28",
+        "component": "Global/Module",
+        "file": "cli\\src\\commands\\full.ts",
+        "line": 28,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"Command\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "console-cli_src_commands_analyze_ts-77",
+        "component": "registerAnalyzeCommand",
+        "file": "cli\\src\\commands\\analyze.ts",
+        "line": 77,
+        "column": 6,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_analyze_ts-131",
+        "component": "registerAnalyzeCommand",
+        "file": "cli\\src\\commands\\analyze.ts",
+        "line": 131,
+        "column": 12,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_analyze_ts-132",
+        "component": "registerAnalyzeCommand",
+        "file": "cli\\src\\commands\\analyze.ts",
+        "line": 132,
+        "column": 12,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_analyze_ts-133",
+        "component": "registerAnalyzeCommand",
+        "file": "cli\\src\\commands\\analyze.ts",
+        "line": 133,
+        "column": 12,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_analyze_ts-134",
+        "component": "registerAnalyzeCommand",
+        "file": "cli\\src\\commands\\analyze.ts",
+        "line": 134,
+        "column": 12,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_analyze_ts-135",
+        "component": "registerAnalyzeCommand",
+        "file": "cli\\src\\commands\\analyze.ts",
+        "line": 135,
+        "column": 12,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_analyze_ts-139",
+        "component": "registerAnalyzeCommand",
+        "file": "cli\\src\\commands\\analyze.ts",
+        "line": 139,
+        "column": 12,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_analyze_ts-140",
+        "component": "registerAnalyzeCommand",
+        "file": "cli\\src\\commands\\analyze.ts",
+        "line": 140,
+        "column": 12,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_analyze_ts-143",
+        "component": "registerAnalyzeCommand",
+        "file": "cli\\src\\commands\\analyze.ts",
+        "line": 143,
+        "column": 10,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_analyze_ts-147",
+        "component": "registerAnalyzeCommand",
+        "file": "cli\\src\\commands\\analyze.ts",
+        "line": 147,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_analyze_ts-150",
+        "component": "registerAnalyzeCommand",
+        "file": "cli\\src\\commands\\analyze.ts",
+        "line": 150,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-cli_src_commands_analyze_ts-158",
+        "component": "registerAnalyzeCommand",
+        "file": "cli\\src\\commands\\analyze.ts",
+        "line": 158,
+        "column": 8,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "dead-code-cli_src_commands_analyze_ts-18",
+        "component": "Global/Module",
+        "file": "cli\\src\\commands\\analyze.ts",
+        "line": 18,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"Command\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "console-backend_src_routes_reports_ts-80",
+        "component": "Unknown",
+        "file": "backend\\src\\routes\\reports.ts",
+        "line": 80,
+        "column": 4,
+        "severity": "info",
+        "message": "console.error() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "dead-code-backend_src_routes_reports_ts-2",
+        "component": "Global/Module",
+        "file": "backend\\src\\routes\\reports.ts",
+        "line": 2,
+        "column": 17,
+        "severity": "warning",
+        "message": "Unused Import found: \"Request\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-backend_src_routes_reports_ts-2",
+        "component": "Global/Module",
+        "file": "backend\\src\\routes\\reports.ts",
+        "line": 2,
+        "column": 26,
+        "severity": "warning",
+        "message": "Unused Import found: \"Response\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-backend_src_middleware_auth_ts-1",
+        "component": "Global/Module",
+        "file": "backend\\src\\middleware\\auth.ts",
+        "line": 1,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"Request\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-backend_src_middleware_auth_ts-1",
+        "component": "Global/Module",
+        "file": "backend\\src\\middleware\\auth.ts",
+        "line": 1,
+        "column": 18,
+        "severity": "warning",
+        "message": "Unused Import found: \"Response\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-backend_src_middleware_auth_ts-1",
+        "component": "Global/Module",
+        "file": "backend\\src\\middleware\\auth.ts",
+        "line": 1,
+        "column": 28,
+        "severity": "warning",
+        "message": "Unused Import found: \"NextFunction\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "console-core_tests_mock_react_project_src_app_tsx-5",
+        "component": "App",
+        "file": "core\\tests\\mock-react-project\\src\\app.tsx",
+        "line": 5,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_tests_mock_react_project_src_app_tsx-12",
+        "component": "App",
+        "file": "core\\tests\\mock-react-project\\src\\app.tsx",
+        "line": 12,
+        "column": 29,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "inline-function-core_tests_mock_react_project_src_app_tsx-12",
+        "component": "App",
+        "file": "core\\tests\\mock-react-project\\src\\app.tsx",
+        "line": 12,
+        "column": 14,
+        "severity": "info",
+        "message": "Inline ArrowFunctionExpression in prop \"onClick\"",
+        "suggestion": "Use useCallback or define function outside component to prevent re-renders"
+      },
+      {
+        "id": "inline-function-core_tests_mock_react_project_src_app_tsx-17",
+        "component": "App",
+        "file": "core\\tests\\mock-react-project\\src\\app.tsx",
+        "line": 17,
+        "column": 14,
+        "severity": "info",
+        "message": "Inline ArrowFunctionExpression in prop \"onClick\"",
+        "suggestion": "Use useCallback or define function outside component to prevent re-renders"
+      },
+      {
+        "id": "dead-code-core_tests_mock_react_project_src_app_tsx-1",
+        "component": "Global/Module",
+        "file": "core\\tests\\mock-react-project\\src\\app.tsx",
+        "line": 1,
+        "column": 7,
+        "severity": "warning",
+        "message": "Unused Import found: \"React\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_detectors_prop_drilling_ts-2",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\detectors\\prop-drilling.ts",
+        "line": 2,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"File\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_detectors_prop_drilling_ts-3",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\detectors\\prop-drilling.ts",
+        "line": 3,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"ComponentIssue\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_detectors_missing_memo_ts-2",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\detectors\\missing-memo.ts",
+        "line": 2,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"File\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_detectors_missing_memo_ts-2",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\detectors\\missing-memo.ts",
+        "line": 2,
+        "column": 15,
+        "severity": "warning",
+        "message": "Unused Import found: \"isCallExpression\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_detectors_missing_memo_ts-3",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\detectors\\missing-memo.ts",
+        "line": 3,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"ComponentIssue\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_detectors_missing_key_ts-2",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\detectors\\missing-key.ts",
+        "line": 2,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"File\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_detectors_missing_key_ts-2",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\detectors\\missing-key.ts",
+        "line": 2,
+        "column": 59,
+        "severity": "warning",
+        "message": "Unused Import found: \"isArrayExpression\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_detectors_missing_key_ts-3",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\detectors\\missing-key.ts",
+        "line": 3,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"ComponentIssue\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_detectors_large_component_ts-2",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\detectors\\large-component.ts",
+        "line": 2,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"File\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_detectors_large_component_ts-3",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\detectors\\large-component.ts",
+        "line": 3,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"ComponentIssue\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_detectors_inline_style_ts-2",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\detectors\\inline-style.ts",
+        "line": 2,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"File\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_detectors_inline_style_ts-3",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\detectors\\inline-style.ts",
+        "line": 3,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"ComponentIssue\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_detectors_inline_function_ts-2",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\detectors\\inline-function.ts",
+        "line": 2,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"File\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_detectors_inline_function_ts-3",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\detectors\\inline-function.ts",
+        "line": 3,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"ComponentIssue\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_detectors_effect_loop_ts-2",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\detectors\\effect-loop.ts",
+        "line": 2,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"File\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_detectors_effect_loop_ts-3",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\detectors\\effect-loop.ts",
+        "line": 3,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"ComponentIssue\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_detectors_dead_code_ts-2",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\detectors\\dead-code.ts",
+        "line": 2,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"File\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_detectors_dead_code_ts-3",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\detectors\\dead-code.ts",
+        "line": 3,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"ComponentIssue\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_detectors_console_log_ts-2",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\detectors\\console-log.ts",
+        "line": 2,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"File\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_static_ana_static_detectors_console_log_ts-3",
+        "component": "Global/Module",
+        "file": "core\\static-ana\\static\\detectors\\console-log.ts",
+        "line": 3,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"ComponentIssue\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "console-core_tests_mock_react_project_src_components_UserDashboard_tsx-13",
+        "component": "UserDashboard",
+        "file": "core\\tests\\mock-react-project\\src\\components\\UserDashboard.tsx",
+        "line": 13,
+        "column": 2,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_tests_mock_react_project_src_components_UserDashboard_tsx-61",
+        "component": "Profile",
+        "file": "core\\tests\\mock-react-project\\src\\components\\UserDashboard.tsx",
+        "line": 61,
+        "column": 29,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "inline-function-core_tests_mock_react_project_src_components_UserDashboard_tsx-61",
+        "component": "Profile",
+        "file": "core\\tests\\mock-react-project\\src\\components\\UserDashboard.tsx",
+        "line": 61,
+        "column": 14,
+        "severity": "info",
+        "message": "Inline ArrowFunctionExpression in prop \"onClick\"",
+        "suggestion": "Use useCallback or define function outside component to prevent re-renders"
+      },
+      {
+        "id": "dead-code-core_tests_mock_react_project_src_components_UserDashboard_tsx-1",
+        "component": "Global/Module",
+        "file": "core\\tests\\mock-react-project\\src\\components\\UserDashboard.tsx",
+        "line": 1,
+        "column": 7,
+        "severity": "warning",
+        "message": "Unused Import found: \"React\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_tests_mock_react_project_src_components_UserDashboard_tsx-2",
+        "component": "Global/Module",
+        "file": "core\\tests\\mock-react-project\\src\\components\\UserDashboard.tsx",
+        "line": 2,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"fetchUser\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "dead-code-core_tests_mock_react_project_src_components_UserDashboard_tsx-3",
+        "component": "Global/Module",
+        "file": "core\\tests\\mock-react-project\\src\\components\\UserDashboard.tsx",
+        "line": 3,
+        "column": 9,
+        "severity": "warning",
+        "message": "Unused Import found: \"GhostData\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "infinite-loop-core_tests_mock_react_project_src_components_UserDashboard_tsx-16",
+        "component": "UserDashboard",
+        "file": "core\\tests\\mock-react-project\\src\\components\\UserDashboard.tsx",
+        "line": 16,
+        "column": 2,
+        "severity": "critical",
+        "message": "Potential Infinite Loop: \"useEffect\" is missing a dependency array",
+        "suggestion": "Add a dependency array (e.g., [], [data]) as the second argument to control when the effect runs."
+      },
+      {
+        "id": "inline-style-core_tests_mock_react_project_src_components_UserDashboard_tsx-37",
+        "component": "Content",
+        "file": "core\\tests\\mock-react-project\\src\\components\\UserDashboard.tsx",
+        "line": 37,
+        "column": 6,
+        "severity": "warning",
+        "message": "Large inline style object found (7 properties)",
+        "suggestion": "Move large style objects to a constant or use CSS/Styled-components to improve performance and readability."
+      },
+      {
+        "id": "prop-drilling-core_tests_mock_react_project_src_components_UserDashboard_tsx-8",
+        "component": "UserDashboard",
+        "file": "core\\tests\\mock-react-project\\src\\components\\UserDashboard.tsx",
+        "line": 8,
+        "severity": "info",
+        "message": "Potential Prop Drilling: The prop \"theme\" is passed through this component without being used locally.",
+        "suggestion": "Consider using React Context or a State Management library (Redux/Zustand) to avoid deep prop drilling."
+      },
+      {
+        "id": "prop-drilling-core_tests_mock_react_project_src_components_UserDashboard_tsx-33",
+        "component": "Content",
+        "file": "core\\tests\\mock-react-project\\src\\components\\UserDashboard.tsx",
+        "line": 33,
+        "severity": "info",
+        "message": "Potential Prop Drilling: The prop \"user\" is passed through this component without being used locally.",
+        "suggestion": "Consider using React Context or a State Management library (Redux/Zustand) to avoid deep prop drilling."
+      },
+      {
+        "id": "prop-drilling-core_tests_mock_react_project_src_components_UserDashboard_tsx-33",
+        "component": "Content",
+        "file": "core\\tests\\mock-react-project\\src\\components\\UserDashboard.tsx",
+        "line": 33,
+        "severity": "info",
+        "message": "Potential Prop Drilling: The prop \"theme\" is passed through this component without being used locally.",
+        "suggestion": "Consider using React Context or a State Management library (Redux/Zustand) to avoid deep prop drilling."
+      },
+      {
+        "id": "prop-drilling-core_tests_mock_react_project_src_components_UserDashboard_tsx-56",
+        "component": "Profile",
+        "file": "core\\tests\\mock-react-project\\src\\components\\UserDashboard.tsx",
+        "line": 56,
+        "severity": "info",
+        "message": "Potential Prop Drilling: The prop \"theme\" is passed through this component without being used locally.",
+        "suggestion": "Consider using React Context or a State Management library (Redux/Zustand) to avoid deep prop drilling."
+      },
+      {
+        "id": "dead-code-core_tests_mock_react_project_src_components_ListTesting_tsx-1",
+        "component": "Global/Module",
+        "file": "core\\tests\\mock-react-project\\src\\components\\ListTesting.tsx",
+        "line": 1,
+        "column": 7,
+        "severity": "warning",
+        "message": "Unused Import found: \"React\"",
+        "suggestion": "Remove the unused import to clean up the code and reduce bundle size."
+      },
+      {
+        "id": "missing-key-core_tests_mock_react_project_src_components_ListTesting_tsx-18",
+        "component": "staticList",
+        "file": "core\\tests\\mock-react-project\\src\\components\\ListTesting.tsx",
+        "line": 18,
+        "severity": "warning",
+        "message": "Missing \"key\" prop in an array of elements",
+        "suggestion": "Every element in an array or iterator must have a unique \"key\" prop."
+      },
+      {
+        "id": "missing-key-core_tests_mock_react_project_src_components_ListTesting_tsx-19",
+        "component": "staticList",
+        "file": "core\\tests\\mock-react-project\\src\\components\\ListTesting.tsx",
+        "line": 19,
+        "severity": "warning",
+        "message": "Missing \"key\" prop in an array of elements",
+        "suggestion": "Every element in an array or iterator must have a unique \"key\" prop."
+      },
+      {
+        "id": "missing-memo-core_tests_mock_react_project_src_components_ListTesting_tsx-3",
+        "component": "ListTesting",
+        "file": "core\\tests\\mock-react-project\\src\\components\\ListTesting.tsx",
+        "line": 3,
+        "severity": "info",
+        "message": "Large component \"ListTesting\" is not memoized.",
+        "suggestion": "Wrap this component in React.memo() to prevent unnecessary re-renders when parent props change."
+      },
+      {
+        "id": "console-core_tests_mock_react_project_src_components_Button_tsx-2",
+        "component": "Button",
+        "file": "core\\tests\\mock-react-project\\src\\components\\Button.tsx",
+        "line": 2,
+        "column": 2,
+        "severity": "info",
+        "message": "console.warn() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "console-core_tests_mock_react_project_src_components_Button_tsx-5",
+        "component": "Button",
+        "file": "core\\tests\\mock-react-project\\src\\components\\Button.tsx",
+        "line": 5,
+        "column": 27,
+        "severity": "info",
+        "message": "console.log() statement found",
+        "suggestion": "Remove console statements before deploying to production"
+      },
+      {
+        "id": "inline-function-core_tests_mock_react_project_src_components_Button_tsx-5",
+        "component": "Button",
+        "file": "core\\tests\\mock-react-project\\src\\components\\Button.tsx",
+        "line": 5,
+        "column": 12,
+        "severity": "info",
+        "message": "Inline ArrowFunctionExpression in prop \"onClick\"",
+        "suggestion": "Use useCallback or define function outside component to prevent re-renders"
+      }
+    ],
+    "filesAnalyzed": 53,
+    "filesFailed": 0,
+    "grade": "F"
+  },
+  "runtime": {},
+  "suggestions": [
+    {
+      "id": "missing-list-keys",
+      "title": "Missing key props in lists",
+      "description": "Components are rendering lists without key props. React uses keys to track which items changed — without them, React re-renders the entire list on every update.",
+      "severity": "critical",
+      "fix": "Add a unique key prop to every element inside a .map() call. Use the item's ID, not its index: key={item.id} not key={index}.",
+      "affectedComponent": "staticList"
+    },
+    {
+      "id": "prop-drilling-detected",
+      "title": "Deep prop drilling detected",
+      "description": "Props are being passed through multiple component layers to reach their destination. This makes components tightly coupled and hard to refactor.",
+      "severity": "warning",
+      "fix": "Use React Context for data that many components need (theme, user, settings). For complex state, consider Zustand or Redux Toolkit.",
+      "affectedComponent": "UserDashboard"
+    },
+    {
+      "id": "low-performance-score",
+      "title": "Overall performance score is low",
+      "description": "Your overall performance score is 0/100. Multiple metrics are underperforming simultaneously. A score below 50 means users are experiencing a noticeably slow and frustrating experience.",
+      "severity": "warning",
+      "fix": "Review all other suggestions in this report and fix critical issues first. Start with JS errors, then LCP, then React commit durations. Re-run React Doctor after each fix to track your progress."
+    },
+    {
+      "id": "inline-styles-detected",
+      "title": "Inline styles in components",
+      "description": "Components are using inline style objects. Every render creates a new object reference, which prevents React from skipping re-renders even when nothing visually changed.",
+      "severity": "info",
+      "fix": "Move styles to a CSS file, CSS module, or define them outside the component so the reference stays stable between renders.",
+      "affectedComponent": "Content"
+    },
+    {
+      "id": "dead-code-detected",
+      "title": "Dead code found",
+      "description": "Unused variables or imports were found in your components. These add to your bundle size for no benefit.",
+      "severity": "info",
+      "fix": "Remove unused imports and variables. Enable ESLint's no-unused-vars rule to catch these automatically.",
+      "affectedComponent": "Global/Module"
+    },
+    {
+      "id": "inline-functions-detected",
+      "title": "Inline functions found in JSX props",
+      "description": "Inline arrow functions were found directly inside JSX props. Every render creates a brand new function reference, which prevents React.memo() from working correctly on child components and can trigger unnecessary re-renders.",
+      "severity": "info",
+      "fix": "Move event handlers outside the JSX and wrap them with useCallback:\n\nconst handleClick = useCallback(() => {\n  // your handler\n}, [dependency]);\n\n// Then use:\n<Button onClick={handleClick} />",
+      "affectedComponent": "App"
+    }
+  ],
+  "performanceScore": 0
+}

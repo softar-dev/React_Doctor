@@ -1,0 +1,62 @@
+[
+  {
+    "timestamp": "2026-06-01T08:45:45.053Z",
+    "route": "(static-only)",
+    "device": "none",
+    "suggestions": [
+      {
+        "id": "missing-list-keys",
+        "title": "Missing key props in lists",
+        "description": "Components are rendering lists without key props. React uses keys to track which items changed — without them, React re-renders the entire list on every update.",
+        "severity": "critical",
+        "fix": "Add a unique key prop to every element inside a .map() call. Use the item's ID, not its index: key={item.id} not key={index}.",
+        "affectedComponent": "staticList"
+      },
+      {
+        "id": "prop-drilling-detected",
+        "title": "Deep prop drilling detected",
+        "description": "Props are being passed through multiple component layers to reach their destination. This makes components tightly coupled and hard to refactor.",
+        "severity": "warning",
+        "fix": "Use React Context for data that many components need (theme, user, settings). For complex state, consider Zustand or Redux Toolkit.",
+        "affectedComponent": "UserDashboard"
+      },
+      {
+        "id": "low-performance-score",
+        "title": "Overall performance score is low",
+        "description": "Your overall performance score is 0/100. Multiple metrics are underperforming simultaneously. A score below 50 means users are experiencing a noticeably slow and frustrating experience.",
+        "severity": "warning",
+        "fix": "Review all other suggestions in this report and fix critical issues first. Start with JS errors, then LCP, then React commit durations. Re-run React Doctor after each fix to track your progress."
+      },
+      {
+        "id": "inline-styles-detected",
+        "title": "Inline styles in components",
+        "description": "Components are using inline style objects. Every render creates a new object reference, which prevents React from skipping re-renders even when nothing visually changed.",
+        "severity": "info",
+        "fix": "Move styles to a CSS file, CSS module, or define them outside the component so the reference stays stable between renders.",
+        "affectedComponent": "Content"
+      },
+      {
+        "id": "dead-code-detected",
+        "title": "Dead code found",
+        "description": "Unused variables or imports were found in your components. These add to your bundle size for no benefit.",
+        "severity": "info",
+        "fix": "Remove unused imports and variables. Enable ESLint's no-unused-vars rule to catch these automatically.",
+        "affectedComponent": "Global/Module"
+      },
+      {
+        "id": "inline-functions-detected",
+        "title": "Inline functions found in JSX props",
+        "description": "Inline arrow functions were found directly inside JSX props. Every render creates a brand new function reference, which prevents React.memo() from working correctly on child components and can trigger unnecessary re-renders.",
+        "severity": "info",
+        "fix": "Move event handlers outside the JSX and wrap them with useCallback:\n\nconst handleClick = useCallback(() => {\n  // your handler\n}, [dependency]);\n\n// Then use:\n<Button onClick={handleClick} />",
+        "affectedComponent": "App"
+      }
+    ],
+    "summary": {
+      "critical": 1,
+      "warning": 2,
+      "info": 3,
+      "total": 6
+    }
+  }
+]

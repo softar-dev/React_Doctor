@@ -1,0 +1,46 @@
+[
+  {
+    "timestamp": "2026-03-23T20:56:29.876Z",
+    "route": "(static-only)",
+    "device": "none",
+    "suggestions": [
+      {
+        "id": "prop-drilling-detected",
+        "title": "Deep prop drilling detected",
+        "description": "Props are being passed through multiple component layers to reach their destination. This makes components tightly coupled and hard to refactor.",
+        "severity": "warning",
+        "fix": "Use React Context for data that many components need (theme, user, settings). For complex state, consider Zustand or Redux Toolkit.",
+        "affectedComponent": "UnknownComponent"
+      },
+      {
+        "id": "low-performance-score",
+        "title": "Overall performance score is low",
+        "description": "Your overall performance score is 0/100. Multiple metrics are underperforming simultaneously. A score below 50 means users are experiencing a noticeably slow and frustrating experience.",
+        "severity": "warning",
+        "fix": "Review all other suggestions in this report and fix critical issues first. Start with JS errors, then LCP, then React commit durations. Re-run React Doctor after each fix to track your progress."
+      },
+      {
+        "id": "dead-code-detected",
+        "title": "Dead code found",
+        "description": "Unused variables or imports were found in your components. These add to your bundle size for no benefit.",
+        "severity": "info",
+        "fix": "Remove unused imports and variables. Enable ESLint's no-unused-vars rule to catch these automatically.",
+        "affectedComponent": "Global/Module"
+      },
+      {
+        "id": "inline-functions-detected",
+        "title": "Inline functions found in JSX props",
+        "description": "Inline arrow functions were found directly inside JSX props. Every render creates a brand new function reference, which prevents React.memo() from working correctly on child components and can trigger unnecessary re-renders.",
+        "severity": "info",
+        "fix": "Move event handlers outside the JSX and wrap them with useCallback:\n\nconst handleClick = useCallback(() => {\n  // your handler\n}, [dependency]);\n\n// Then use:\n<Button onClick={handleClick} />",
+        "affectedComponent": "Navbar"
+      }
+    ],
+    "summary": {
+      "critical": 0,
+      "warning": 2,
+      "info": 2,
+      "total": 4
+    }
+  }
+]

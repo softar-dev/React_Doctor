@@ -6,10 +6,7 @@
   "bin": {
     "react-doctor": "./cli/bin/react-doctor.js"
   },
-  "scripts": {
-  "postinstall": "npm run install:submodules",
-  "install:submodules": "cd cli && npm install --ignore-scripts && cd ../backend && npm install --ignore-scripts"
-},
+  "scripts": {},
   "keywords": [],
   "author": "",
   "license": "ISC",

@@ -1,20 +1,23 @@
 {
-  "name": "react-tool",
+  "name": "react-doctor",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "React Performance Analyzer CLI & Backend",
+  "main": "cli/dist/index.js",
   "bin": {
-    "react-doctor": "./cli/bin/react-doctor.js"
+    "react-doctor": "./cli/dist/index.js"
   },
-  "scripts": {},
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "scripts": {
+    "postinstall": "npm run install:submodules",
+    "install:submodules": "cd cli && npm install --ignore-scripts && cd ../backend && npm install --ignore-scripts",
+    "build:cli": "cd cli && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "build": "npm run build:cli && npm run build:backend"
+  },
+  "keywords": ["react", "performance", "cli", "analyzer"],
+  "author": "Ozma",
+  "license": "MIT",
   "type": "commonjs",
   "dependencies": {
-    "@babel/parser": "^7.29.0",
-    "@babel/traverse": "^7.29.0",
-    "@babel/types": "^7.29.0",
     "axios": "^1.6.0",
     "chalk": "^4.1.2",
     "commander": "^12.0.0",
@@ -22,13 +25,20 @@
     "glob": "^13.0.6",
     "ora": "^5.4.1",
     "puppeteer-core": "^22.0.0",
+    "web-vitals": "^5.1.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.0.0",
-    "web-vitals": "^5.1.0"
+    "typescript": "^5.0.0"
   },
   "devDependencies": {
-    "@types/babel__traverse": "^7.28.0",
-    "@types/fs-extra": "^11.0.4",
-    "@types/node": "^25.3.3"
-  }
+    "@types/node": "^25.3.3",
+    "@types/fs-extra": "^11.0.4"
+  },
+  "files": [
+    "cli/dist/**",
+    "cli/package.json",
+    "core/**",
+    "backend/dist/**",
+    "backend/package.json",
+    "package.json"
+  ]
 }

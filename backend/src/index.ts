@@ -2,48 +2,38 @@ import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
+import path from 'path';
 import reportRoutes from './routes/reports';
 import db from './db';
 
-dotenv.config();
-
-// Debug: Check if API_KEY is loaded
-console.log(`[Debug] API_KEY loaded: ${process.env.API_KEY ? '✓' : '✗'}`);
-console.log(`[Debug] API_KEY value: ${process.env.API_KEY || 'NOT SET'}`);
+// Load .env from the backend folder, not from cwd
+dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const API_KEY = process.env.API_KEY || "react-doctor-secret-key-change-this";
 
-// ─── SECURITY AND PARSING MIDDLEWARE ──────────────────────────────────────────
-app.use(helmet()); // adds security headers
-app.use(cors());   // allows dashboard to call the API
-app.use(express.json({ limit: '50mb' })); // reports can be large (screenshots)
+// Make API_KEY available globally so auth middleware can use it
+process.env.API_KEY = API_KEY;
 
-// ─── ROUTES ───────────────────────────────────────────────────────────────────
-// Use only ONE path (plural is REST convention)
+app.use(helmet());
+app.use(cors());
+app.use(express.json({ limit: '50mb' }));
 app.use('/api/reports', reportRoutes);
 
-// ─── HEALTH CHECK - NO AUTH, USED TO VERIFY SERVER IS UP ──────────────────────
 app.get('/health', (_req: Request, res: Response) => {
-  res.json({ 
-    status: 'ok', 
-    timestamp: new Date().toISOString() 
-  });
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-
-// ─── 404 HANDLER ──────────────────────────────────────────────────────────────
 app.use((req: Request, res: Response) => {
   res.status(404).json({ message: 'Route not found' });
 });
 
-// ─── GLOBAL ERROR HANDLER ─────────────────────────────────────────────────────
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   console.error(err.stack);
   res.status(500).json({ message: 'Internal Server Error' });
 });
 
-// ─── START THE SERVER ─────────────────────────────────────────────────────────
 app.listen(PORT, () => {
-  console.log(`React Doctor backend running on http://localhost:${PORT}`);
+  console.log(`🩺 React Doctor backend running on http://localhost:${PORT}`);
 });

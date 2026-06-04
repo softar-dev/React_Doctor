@@ -1,5 +1,5 @@
 {
-  "name": "react-doctor",
+  "name": "react-doctor-cli-dev",
   "version": "1.0.0",
   "description": "React performance analyzer — static analysis + runtime profiling + smart suggestions",
   "main": "dist/index.js",

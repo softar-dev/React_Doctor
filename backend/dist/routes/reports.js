@@ -14,6 +14,9 @@
 //     Returns the full report for one run — static + runtime +
 //     suggestions all parsed back to objects.
 //
+//   GET  /api/reports/:id/screenshots
+//     Returns all screenshots for a report as base64 data URLs.
+//
 //   GET  /api/reports/project/:name
 //     All runs for a named project, summary only.
 //
@@ -31,39 +34,6 @@
 //     /screenshots/<filename>
 //   so the dashboard can load them as normal <img> tags.
 // ─────────────────────────────────────────────────────────────
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || (function () {
-    var ownKeys = function(o) {
-        ownKeys = Object.getOwnPropertyNames || function (o) {
-            var ar = [];
-            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
-            return ar;
-        };
-        return ownKeys(o);
-    };
-    return function (mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
-        __setModuleDefault(result, mod);
-        return result;
-    };
-})();
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -71,7 +41,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
-const db_1 = __importStar(require("../db"));
+const db_1 = __importDefault(require("../db"));
+const db_2 = require("../db");
 const auth_1 = require("../middleware/auth");
 const router = (0, express_1.Router)();
 // ── GET /api/reports ─────────────────────────────────────────
@@ -108,6 +79,87 @@ router.get("/project/:name", (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
+// ── GET /api/reports/:id/screenshots ──────────────────────────
+// Returns all screenshots for a report as base64 data URLs.
+// This is used by the dashboard to display screenshots.
+router.get("/:id/screenshots", (req, res) => {
+    try {
+        const reportId = req.params.id;
+        // First, check if screenshots table exists
+        const tableCheck = db_1.default.prepare(`
+      SELECT name FROM sqlite_master 
+      WHERE type='table' AND name='screenshots'
+    `).get();
+        if (!tableCheck) {
+            return res.json({ screenshots: [] });
+        }
+        // Get screenshots from the database
+        const stmt = db_1.default.prepare(`
+      SELECT route, label, taken_at, data_url
+      FROM screenshots
+      WHERE report_id = ?
+      ORDER BY taken_at ASC
+    `);
+        const dbScreenshots = stmt.all(reportId);
+        if (dbScreenshots.length === 0) {
+            // Fallback: try to extract from runtime_json
+            const report = db_1.default.prepare(`
+        SELECT runtime_json FROM reports WHERE id = ?
+      `).get(reportId);
+            if (report) {
+                const runtime = JSON.parse(report.runtime_json || '{}');
+                const screenshots = [];
+                for (const [routeKey, routeData] of Object.entries(runtime)) {
+                    const route = routeData;
+                    if (route.screenshots && Array.isArray(route.screenshots)) {
+                        for (const screenshot of route.screenshots) {
+                            if (screenshot.dataUrl && screenshot.dataUrl.startsWith('/screenshots/')) {
+                                const filename = screenshot.dataUrl.replace('/screenshots/', '');
+                                const filePath = path_1.default.join(db_2.screenshotsDir, filename);
+                                if (fs_1.default.existsSync(filePath)) {
+                                    try {
+                                        const imageBuffer = fs_1.default.readFileSync(filePath);
+                                        const base64Image = imageBuffer.toString('base64');
+                                        screenshots.push({
+                                            route: routeKey,
+                                            label: screenshot.label || 'screenshot',
+                                            taken_at: screenshot.takenAt || 0,
+                                            data_url: `data:image/png;base64,${base64Image}`,
+                                        });
+                                    }
+                                    catch (err) {
+                                        console.warn(`Could not read screenshot ${filename}: ${err}`);
+                                    }
+                                }
+                            }
+                            else if (screenshot.dataUrl && screenshot.dataUrl.startsWith('data:image')) {
+                                screenshots.push({
+                                    route: routeKey,
+                                    label: screenshot.label || 'screenshot',
+                                    taken_at: screenshot.takenAt || 0,
+                                    data_url: screenshot.dataUrl,
+                                });
+                            }
+                        }
+                    }
+                }
+                return res.json({ screenshots });
+            }
+        }
+        // Return screenshots from database
+        const screenshots = dbScreenshots.map((s) => ({
+            route: s.route,
+            label: s.label,
+            taken_at: s.taken_at,
+            data_url: s.data_url,
+        }));
+        res.json({ screenshots });
+    }
+    catch (err) {
+        console.error("GET /:id/screenshots error:", err.message);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
 // ── POST /api/reports/upload ──────────────────────────────────
 // Receives a FinalReport from the CLI, strips screenshots to disk,
 // and stores the three JSON blobs in separate columns.
@@ -131,9 +183,6 @@ router.post("/upload", auth_1.requireApiKey, (req, res) => {
         // ── Extract grade from static report ────────────────────
         const grade = body.static?.grade ?? "N/A";
         // ── Strip screenshots from runtime, save as .png files ──
-        // We do this BEFORE inserting so the DB never holds base64.
-        // The row ID isn't known yet — we'll rename after insert.
-        // For now we use a temp prefix and rename below.
         const { cleanedRuntime, pendingScreenshots } = extractScreenshots(body.runtime);
         // ── Insert the row ───────────────────────────────────────
         const stmt = db_1.default.prepare(`
@@ -147,7 +196,6 @@ router.post("/upload", auth_1.requireApiKey, (req, res) => {
         // ── Save screenshots with final filenames ────────────────
         const savedScreenshots = saveScreenshots(reportId, pendingScreenshots);
         // ── Patch runtime_json with final screenshot paths ───────
-        // Now that we have the reportId we can write the correct paths.
         if (savedScreenshots.length > 0) {
             const patchedRuntime = patchScreenshotPaths(cleanedRuntime, savedScreenshots);
             db_1.default.prepare("UPDATE reports SET runtime_json = ? WHERE id = ?").run(JSON.stringify(patchedRuntime), reportId);
@@ -180,7 +228,6 @@ router.get("/:id", (req, res) => {
             grade: row.grade,
             analyzedAt: row.analyzed_at,
             createdAt: row.created_at,
-            // Parse the three JSON blobs back into objects
             static: JSON.parse(row.static_json),
             runtime: JSON.parse(row.runtime_json),
             suggestions: JSON.parse(row.suggestions),
@@ -202,10 +249,6 @@ function getMissingFields(body) {
 /**
  * Walk the runtime map, strip every screenshot.dataUrl,
  * and collect them as Buffers ready to write to disk.
- *
- * Returns:
- *   cleanedRuntime  — runtime map with dataUrls replaced by tempPath markers
- *   pendingScreenshots — list of screenshots to save once we have a reportId
  */
 function extractScreenshots(runtime) {
     const pending = [];
@@ -214,17 +257,24 @@ function extractScreenshots(runtime) {
         const routeClone = { ...routeData };
         if (Array.isArray(routeClone.screenshots)) {
             routeClone.screenshots = routeClone.screenshots.map((shot) => {
-                if (!shot.dataUrl || !shot.dataUrl.startsWith("data:image/png;base64,")) {
+                // Check if it's a base64 data URL
+                if (shot.dataUrl && shot.dataUrl.startsWith("data:image/png;base64,")) {
+                    const base64 = shot.dataUrl.replace("data:image/png;base64,", "");
+                    const buffer = Buffer.from(base64, "base64");
+                    const safeRoute = routeKey.replace(/[/:]/g, "-").replace(/^-+/, "");
+                    const safeLabel = shot.label.replace(/[^a-z0-9]/gi, "-");
+                    const tempPath = `__PENDING__${safeRoute}__${safeLabel}`;
+                    pending.push({ routeKey, label: shot.label, buffer, tempPath });
+                    return { ...shot, dataUrl: tempPath };
+                }
+                else if (shot.dataUrl && shot.dataUrl.startsWith('/screenshots/')) {
+                    // Already a path - keep it
                     return shot;
                 }
-                const base64 = shot.dataUrl.replace("data:image/png;base64,", "");
-                const buffer = Buffer.from(base64, "base64");
-                // Sanitise routeKey for use in a filename — replace "/" and ":" with "-"
-                const safeRoute = routeKey.replace(/[/:]/g, "-").replace(/^-+/, "");
-                const safeLabel = shot.label.replace(/[^a-z0-9]/gi, "-");
-                const tempPath = `__PENDING__${safeRoute}__${safeLabel}`;
-                pending.push({ routeKey, label: shot.label, buffer, tempPath });
-                return { ...shot, dataUrl: tempPath };
+                else {
+                    // No valid dataUrl - keep as is or set to null
+                    return { ...shot, dataUrl: null };
+                }
             });
         }
         cleaned[routeKey] = routeClone;
@@ -233,15 +283,17 @@ function extractScreenshots(runtime) {
 }
 /**
  * Write each screenshot buffer to data/screenshots/<reportId>-<route>-<label>.png
- * Returns the list of saved files with their final URL paths.
  */
 function saveScreenshots(reportId, pending) {
     const saved = [];
+    if (!fs_1.default.existsSync(db_2.screenshotsDir)) {
+        fs_1.default.mkdirSync(db_2.screenshotsDir, { recursive: true });
+    }
     for (const shot of pending) {
         const safeRoute = shot.routeKey.replace(/[/:]/g, "-").replace(/^-+/, "");
         const safeLabel = shot.label.replace(/[^a-z0-9]/gi, "-");
         const filename = `${reportId}-${safeRoute}-${safeLabel}.png`;
-        const fullPath = path_1.default.join(db_1.screenshotsDir, filename);
+        const fullPath = path_1.default.join(db_2.screenshotsDir, filename);
         try {
             fs_1.default.writeFileSync(fullPath, shot.buffer);
             saved.push({
@@ -262,7 +314,6 @@ function saveScreenshots(reportId, pending) {
  * the final /screenshots/<file> URL paths.
  */
 function patchScreenshotPaths(runtime, saved) {
-    // Build a lookup from tempPath → filePath
     const lookup = {};
     for (const s of saved)
         lookup[s.tempPath] = s.filePath;

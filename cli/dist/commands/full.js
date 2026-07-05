@@ -12,18 +12,7 @@
 //   4. RuleEngine       → combines both reports into suggestions
 //   5. ReportCompiler   → merges everything into finalreport.json
 //   6. Upload           → sends the report to the backend API
-//
-// HOW IMPORTS WORK:
-// The CLI imports core modules directly as TypeScript classes.
-// No shell commands, no spawning child processes, no ts-node
-// inside ts-node. Everything runs in the same Node.js process,
-// which means objects are passed between steps in memory —
-// fast, clean, and no disk reads between steps.
-//
-// The core folder is 2 levels up from cli/src/commands/:
-//   cli/src/commands/full.ts
-//   → ../../..  = react-tool root
-//   → ../../../core = core folder
+//                          and opens the dashboard to that report
 // ─────────────────────────────────────────────────────────────
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -38,13 +27,7 @@ const axios_1 = __importDefault(require("axios"));
 const child_process_1 = require("child_process");
 const ui_1 = require("../ui");
 // ── Core imports ──────────────────────────────────────────────
-// These are the actual classes from the core folder.
-// We use require() with a resolved path so they work whether
-// the CLI is run from its own folder or from the project root.
 function getCoreModule(relativePath) {
-    // __dirname = cli/src/commands/
-    // 3 levels up = react-tool root
-    // then into core/
     return require(path_1.default.resolve(__dirname, "..", "..", "..", "core", relativePath));
 }
 // ─────────────────────────────────────────────────────────────
@@ -61,17 +44,14 @@ function registerFullCommand(program) {
         .option("--throttle <preset>", "Network throttle: none | slow4g | 3g  (only meaningful against deployed URLs)", "none")
         .option("--upload", "Upload the final report to the React Doctor backend API", false)
         .option("--api-url <url>", "Backend API URL to upload to", "http://localhost:3000")
-        // ✅ Single --api-key option (defined BEFORE .action)
         .option("--api-key <key>", "API key for backend authentication (overrides REACT_DOCTOR_API_KEY env var)", process.env.REACT_DOCTOR_API_KEY || "react-doctor-secret-key-change-this")
         .option("--no-banner", "Skip the banner")
-        // ✅ .action() comes LAST, with no trailing semicolon/comment
         .action(async (projectPath, options) => {
         await runFullCommand(projectPath, options);
     });
 }
 // ─────────────────────────────────────────────────────────────
 // MAIN RUNNER
-// Exported so other commands (analyze --full) can call it too.
 // ─────────────────────────────────────────────────────────────
 async function runFullCommand(projectPath, options = {}) {
     const resolvedPath = path_1.default.resolve(projectPath);
@@ -85,10 +65,6 @@ async function runFullCommand(projectPath, options = {}) {
         process.exit(1);
     }
     // ── Determine device configuration ──────────────────────────
-    // --desktop and --mobile are independent flags.
-    // If neither is passed, desktop is the default.
-    // If only --mobile is passed, only mobile runs.
-    // If both are passed, both run in one pass.
     const wantDesktop = options.desktop || (!options.desktop && !options.mobile);
     const wantMobile = options.mobile ?? false;
     const devices = wantDesktop && wantMobile
@@ -109,8 +85,6 @@ async function runFullCommand(projectPath, options = {}) {
     (0, ui_1.printInfo)("CPU", `${cpuLabel}x`);
     (0, ui_1.printInfo)("Network", throttleLabel);
     // ── Output directory ───────────────────────────────────────
-    // Reports are saved inside the user's project in a hidden
-    // .react-doctor/ folder — easy to find, easy to gitignore.
     const outputDir = path_1.default.join(resolvedPath, ".react-doctor");
     fs_1.default.mkdirSync(outputDir, { recursive: true });
     // ════════════════════════════════════════════════════════════
@@ -166,14 +140,12 @@ async function runFullCommand(projectPath, options = {}) {
         fs_1.default.writeFileSync(path_1.default.join(outputDir, "runtimereport.json"), JSON.stringify(runtimeReports, null, 2));
         const routeKeys = Object.keys(runtimeReports);
         profilingSpin.succeed(chalk_1.default.green(`Profiling complete — ${routeKeys.length} route/device combination(s)`));
-        // Print results for each route
         for (const [key, report] of Object.entries(runtimeReports)) {
             const [route, device] = key.includes("::")
                 ? key.split("::")
                 : [key, "desktop"];
             console.log();
             console.log(`  ${chalk_1.default.bold(route)} ${chalk_1.default.gray(`[${device}]`)}  Score: ${(0, ui_1.scoreBadge)(report.performanceScore)}`);
-            // ── Device / CPU / Network line ──────────────────────────
             console.log(`  ${chalk_1.default.gray("Device:")} ${device}  ` +
                 `${chalk_1.default.gray("CPU:")} ${report.cpuThrottling ?? cpuLabel}x  ` +
                 `${chalk_1.default.gray("Network:")} ${throttleLabel}`);
@@ -200,7 +172,6 @@ async function runFullCommand(projectPath, options = {}) {
     catch (err) {
         profilingSpin.fail(chalk_1.default.red("Runtime profiling failed"));
         console.log(chalk_1.default.red(`\n  ${err.message}\n`));
-        // Profiling failure is not fatal — rule engine can still run on static data
     }
     // ════════════════════════════════════════════════════════════
     // STEP 3 — RULE ENGINE
@@ -261,13 +232,12 @@ async function runFullCommand(projectPath, options = {}) {
         console.log(chalk_1.default.red(`\n  ${err.message}\n`));
     }
     // ════════════════════════════════════════════════════════════
-    // OPTIONAL — UPLOAD TO BACKEND API
+    // OPTIONAL — UPLOAD TO BACKEND API (WITH SCREENSHOTS)
     // ════════════════════════════════════════════════════════════
     if (options.upload && finalReport) {
         (0, ui_1.printSection)("Uploading to Backend");
         const uploadSpin = (0, ui_1.spinner)(`Connecting to ${options.apiUrl}...`);
         try {
-            // Ensure apiUrl has a default
             const apiUrl = options.apiUrl ?? "http://localhost:3000";
             // 1. Check if backend is already running
             try {
@@ -276,13 +246,9 @@ async function runFullCommand(projectPath, options = {}) {
             }
             catch (err) {
                 // 2. If not running, start it automatically
-                // Determine the project root directory (where cli/ and backend/ are siblings)
                 const projectRoot = path_1.default.resolve(__dirname, "..", "..", "..");
-                // Backend is a sibling folder to cli at projectRoot
                 const backendRoot = path_1.default.resolve(projectRoot, "backend");
-                // Check for compiled JS first (for installed packages)
                 const backendDist = path_1.default.join(backendRoot, "dist", "index.js");
-                // Check for TS source (for local dev)
                 const backendSrc = path_1.default.join(backendRoot, "src", "index.ts");
                 let command;
                 let args;
@@ -297,14 +263,12 @@ async function runFullCommand(projectPath, options = {}) {
                 else {
                     throw new Error(`Cannot find backend at: ${backendRoot}. Ensure 'backend' folder exists next to 'cli'.`);
                 }
-                uploadSpin.text = "Backend not found. Starting local server automatically...";
-                // Extract port safely
+                uploadSpin.text =
+                    "Backend not found. Starting local server automatically...";
                 const port = new URL(apiUrl).port || "3000";
-                // Spawn the backend process
-                // Create backend data directory in the target project
                 const backendDataDir = path_1.default.join(outputDir, "backend-data");
                 fs_1.default.mkdirSync(backendDataDir, { recursive: true });
-                const backendProcess = (0, child_process_1.spawn)(command, args, {
+                (0, child_process_1.spawn)(command, args, {
                     stdio: "inherit",
                     env: {
                         ...process.env,
@@ -312,9 +276,9 @@ async function runFullCommand(projectPath, options = {}) {
                         PORT: port,
                         DB_PATH: path_1.default.join(backendDataDir, "reports.db"),
                     },
-                    cwd: backendRoot
+                    cwd: backendRoot,
                 });
-                // 3. Wait for backend to be ready
+                // 3. Wait for backend to be ready (up to 15s)
                 let isReady = false;
                 let retries = 0;
                 while (!isReady && retries < 15) {
@@ -331,16 +295,86 @@ async function runFullCommand(projectPath, options = {}) {
                     throw new Error("Backend failed to start after 15 seconds.");
                 uploadSpin.text = "Backend started successfully!";
             }
-            // 4. Perform the actual upload
-            uploadSpin.text = "Uploading report...";
-            await axios_1.default.post(`${apiUrl}/api/reports/upload`, finalReport, {
+            // ── 4. Read and encode screenshots ──────────────────────
+            uploadSpin.text = "Processing screenshots...";
+            const screenshots = [];
+            const runtime = finalReport.runtime || {};
+            for (const [routeKey, routeData] of Object.entries(runtime)) {
+                if (routeData.screenshots && routeData.screenshots.length > 0) {
+                    for (const screenshot of routeData.screenshots) {
+                        try {
+                            // Check if this is a file path or already a data URL
+                            if (screenshot.dataUrl && !screenshot.dataUrl.startsWith('data:')) {
+                                // It's a file path - read and encode it
+                                const screenshotPath = path_1.default.join(outputDir, screenshot.dataUrl);
+                                if (fs_1.default.existsSync(screenshotPath)) {
+                                    const imageBuffer = fs_1.default.readFileSync(screenshotPath);
+                                    const base64Image = imageBuffer.toString('base64');
+                                    screenshots.push({
+                                        route: routeKey,
+                                        label: screenshot.label || 'screenshot',
+                                        takenAt: screenshot.takenAt || 0,
+                                        dataUrl: `data:image/png;base64,${base64Image}`,
+                                    });
+                                }
+                                else {
+                                    // File doesn't exist - store as placeholder
+                                    console.log(chalk_1.default.yellow(`  ⚠️ Screenshot not found: ${screenshotPath}`));
+                                    screenshots.push({
+                                        route: routeKey,
+                                        label: screenshot.label || 'screenshot',
+                                        takenAt: screenshot.takenAt || 0,
+                                        dataUrl: null,
+                                    });
+                                }
+                            }
+                            else if (screenshot.dataUrl && screenshot.dataUrl.startsWith('data:')) {
+                                // Already a data URL - use it directly
+                                screenshots.push({
+                                    route: routeKey,
+                                    label: screenshot.label || 'screenshot',
+                                    takenAt: screenshot.takenAt || 0,
+                                    dataUrl: screenshot.dataUrl,
+                                });
+                            }
+                        }
+                        catch (err) {
+                            console.log(chalk_1.default.yellow(`  ⚠️ Failed to process screenshot: ${err.message}`));
+                        }
+                    }
+                }
+            }
+            // ── 5. Prepare upload data with screenshots ─────────────
+            const uploadData = {
+                ...finalReport,
+                screenshots: screenshots,
+            };
+            uploadSpin.text = `Uploading report and ${screenshots.length} screenshots...`;
+            // ── 6. Perform the upload ──────────────────────────────
+            const response = await axios_1.default.post(`${apiUrl}/api/reports/upload`, uploadData, {
                 headers: {
                     "Content-Type": "application/json",
                     "x-api-key": options.apiKey || "react-doctor-secret-key-change-this",
                 },
-                timeout: 10000,
+                timeout: 30000, // Longer timeout for images
             });
-            uploadSpin.succeed(chalk_1.default.green("Report uploaded successfully"));
+            const reportId = response.data?.id;
+            const uploadedCount = response.data?.screenshots || 0;
+            uploadSpin.succeed(chalk_1.default.green(`Report uploaded successfully (${uploadedCount} screenshots)`));
+            // 7. Open the dashboard directly to this report
+            if (reportId) {
+                const dashboardUrl = `${apiUrl}/report/${reportId}`;
+                (0, ui_1.printInfo)("Opening dashboard", dashboardUrl);
+                const openCmd = process.platform === "win32"
+                    ? ["cmd", ["/c", "start", "", dashboardUrl]]
+                    : process.platform === "darwin"
+                        ? ["open", [dashboardUrl]]
+                        : ["xdg-open", [dashboardUrl]];
+                (0, child_process_1.spawn)(openCmd[0], openCmd[1], {
+                    stdio: "ignore",
+                    detached: true,
+                }).unref();
+            }
         }
         catch (err) {
             uploadSpin.fail(chalk_1.default.yellow("Upload failed — report saved locally"));

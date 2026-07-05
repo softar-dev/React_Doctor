@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>React Doctor — Dashboard</title>
+  <meta name="theme-color" content="#0B0C10" />
+  <!-- main.css is imported by src/main.js via Vite — no link tag needed here -->
+</head>
+<body>
+
+<!-- ── Sidebar ─────────────────────────────────────────────── -->
+<aside id="sidebar">
+  <div class="sidebar-logo">
+     <div>
+      <div class="logo-text">React Doctor</div>
+      <div class="logo-sub">Performance Dashboard</div>
+    </div>
+  </div>
+
+  <div class="sidebar-section">Analysis</div>
+
+  <button class="nav-item" data-route="overview">
+    Overview
+    <span class="nav-badge" id="nav-score"></span>
+  </button>
+  <button class="nav-item" data-route="vitals">
+    Web Vitals
+  </button>
+  <button class="nav-item" data-route="issues">
+     Code Issues
+    <span class="nav-badge" id="nav-issues-count"></span>
+  </button>
+  <button class="nav-item" data-route="suggestions">
+      Suggestions
+    <span class="nav-badge" id="nav-sug-count"></span>
+  </button>
+
+  <div class="sidebar-section">Reports</div>
+
+  <button class="nav-item" data-route="history">
+      History
+    <span class="nav-badge" id="nav-hist-count"></span>
+  </button>
+
+  <div class="sidebar-footer">
+    <div class="project-pill">
+      <div class="status-dot"></div>
+      <div>
+        <div class="proj-name" id="sidebar-project">—</div>
+        <div class="proj-sub" id="sidebar-date">—</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- ── Main ───────────────────────────────────────────────── -->
+<div id="main">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div>
+      <div class="topbar-title" id="topbar-title">Overview</div>
+      <div class="topbar-sub"   id="topbar-sub">Performance summary</div>
+    </div>
+    <div class="topbar-right">
+      <div class="topbar-time" id="topbar-time"></div>
+    </div>
+  </div>
+
+  <!-- ══ PAGE: OVERVIEW ═══════════════════════════════════════ -->
+  <div class="page-content" id="page-overview">
+
+    <!-- Score + meta -->
+    <div class="card section-gap">
+      <div class="score-ring-wrap">
+        <div id="ov-score-ring"></div>
+        <div class="score-details">
+          <h2>Performance Score</h2>
+          <p id="ov-summary" style="margin-bottom:12px">Loading…</p>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            <div id="ov-grade"></div>
+            <span style="font-size:.78rem;color:var(--text3)">Project: <strong id="ov-project" style="color:var(--text)">—</strong></span>
+            <span style="font-size:.78rem;color:var(--text3)">Analyzed: <span id="ov-analyzed" style="color:var(--text2)">—</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vital stat tiles -->
+    <div class="grid-4 section-gap">
+      <div class="stat-tile" id="tile-lcp">
+        <div class="stat-label">Avg LCP</div>
+        <div class="stat-value">—</div>
+        <div class="stat-meta">Good &lt; 2.5s</div>
+      </div>
+      <div class="stat-tile" id="tile-fcp">
+        <div class="stat-label">Avg FCP</div>
+        <div class="stat-value">—</div>
+        <div class="stat-meta">Good &lt; 1.8s</div>
+      </div>
+      <div class="stat-tile" id="tile-cls">
+        <div class="stat-label">Avg CLS</div>
+        <div class="stat-value">—</div>
+        <div class="stat-meta">Good &lt; 0.1</div>
+      </div>
+      <div class="stat-tile" id="tile-issues">
+        <div class="stat-label">Total Issues</div>
+        <div class="stat-value">—</div>
+        <div class="stat-meta">Static analysis</div>
+      </div>
+    </div>
+
+    <!-- Routes table -->
+    <div class="card section-gap">
+      <div class="card-title"> Routes Profiled</div>
+      <div id="ov-routes"></div>
+    </div>
+
+    <!-- Top suggestions -->
+    <div class="card">
+      <div class="card-title" style="margin-bottom:14px">
+        Top Suggestions
+        <button onclick="window.location.hash='suggestions'" style="margin-left:auto;background:none;border:1px solid var(--border);color:var(--text2);border-radius:var(--radius-sm);padding:3px 12px;cursor:pointer;font-size:.72rem">View all →</button>
+      </div>
+      <div id="ov-suggestions"></div>
+    </div>
+
+  </div><!-- /page-overview -->
+
+
+  <!-- ══ PAGE: VITALS ══════════════════════════════════════════ -->
+  <div class="page-content" id="page-vitals">
+
+    <!-- Route selector -->
+    <div class="route-tabs" id="vitals-tabs"></div>
+
+    <div class="grid-2 section-gap" style="grid-template-columns:1fr 320px">
+
+      <!-- Bars -->
+      <div class="card">
+        <div class="card-title">
+          Core Web Vitals
+          <div id="vitals-meta" style="display:flex;gap:8px;flex-wrap:wrap;margin-left:8px"></div>
+        </div>
+        <div id="vitals-bars"></div>
+        <div style="margin-top:16px;display:flex;align-items:center;gap:10px">
+          <span style="font-size:.75rem;color:var(--text3)">Performance score:</span>
+          <div id="vitals-score"></div>
+        </div>
+      </div>
+
+      <!-- Re-renders -->
+      <div class="card">
+        <div class="card-title">Component Re-renders</div>
+        <div id="vitals-rerenders"></div>
+      </div>
+    </div>
+
+    <!-- Chart: all routes comparison -->
+    <div class="card section-gap">
+      <div class="card-title">All Routes — LCP / FCP / TTFB Comparison</div>
+      <div style="height:240px;position:relative">
+        <canvas id="vitals-chart"></canvas>
+      </div>
+    </div>
+
+    <!-- Errors -->
+    <div class="card section-gap">
+      <div class="card-title">JS Errors &amp; Console Warnings</div>
+      <div id="vitals-errors"></div>
+    </div>
+
+    <!-- Screenshots -->
+    <div class="card">
+      <div class="card-title">Screenshots</div>
+      <div class="filmstrip" id="vitals-filmstrip"></div>
+    </div>
+
+  </div><!-- /page-vitals -->
+
+
+  <!-- ══ PAGE: ISSUES ══════════════════════════════════════════ -->
+  <div class="page-content" id="page-issues">
+
+    <div class="filter-bar" id="issues-filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn fc" data-filter="critical">🔴 Critical</button>
+      <button class="filter-btn fw" data-filter="warning">🟠 Warning</button>
+      <button class="filter-btn fi" data-filter="info">🔵 Info</button>
+    </div>
+
+    <div class="card">
+      <div id="issues-table"></div>
+      <div id="issues-pagination"></div>
+    </div>
+
+  </div><!-- /page-issues -->
+
+
+  <!-- ══ PAGE: SUGGESTIONS ═════════════════════════════════════ -->
+  <div class="page-content" id="page-suggestions">
+
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+      <div class="filter-bar" id="sug-filters" style="margin-bottom:0">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn fc" data-filter="critical">🔴 Critical</button>
+        <button class="filter-btn fw" data-filter="warning">🟠 Warning</button>
+        <button class="filter-btn fi" data-filter="info">🔵 Info</button>
+      </div>
+      <div id="sug-counts" style="display:flex;gap:8px;margin-left:auto;flex-wrap:wrap"></div>
+    </div>
+
+    <div id="sug-list"></div>
+    <div id="sug-pagination"></div>
+
+  </div><!-- /page-suggestions -->
+
+
+  <!-- ══ PAGE: HISTORY ══════════════════════════════════════════ -->
+  <div class="page-content" id="page-history">
+
+    <!-- Trend chart -->
+    <div class="card section-gap">
+      <div class="card-title">Score Trend — my-react-app</div>
+      <div style="height:200px;position:relative">
+        <canvas id="hist-chart"></canvas>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="card">
+      <div class="card-title"> All Runs</div>
+      <div id="hist-table"></div>
+      <div id="hist-pagination"></div>
+    </div>
+
+  </div><!-- /page-history -->
+
+</div><!-- /main -->
+
+<!-- Lightbox -->
+<div id="lightbox">
+  <button id="lb-close">✕</button>
+  <img src="" alt="screenshot" />
+  <div id="lb-caption"></div>
+</div>
+
+<!-- Scripts -->
+<script type="module" src="/src/main.js"></script>
+
+</body>
+</html>

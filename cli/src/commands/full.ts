@@ -11,18 +11,7 @@
 //   4. RuleEngine       → combines both reports into suggestions
 //   5. ReportCompiler   → merges everything into finalreport.json
 //   6. Upload           → sends the report to the backend API
-//
-// HOW IMPORTS WORK:
-// The CLI imports core modules directly as TypeScript classes.
-// No shell commands, no spawning child processes, no ts-node
-// inside ts-node. Everything runs in the same Node.js process,
-// which means objects are passed between steps in memory —
-// fast, clean, and no disk reads between steps.
-//
-// The core folder is 2 levels up from cli/src/commands/:
-//   cli/src/commands/full.ts
-//   → ../../..  = react-tool root
-//   → ../../../core = core folder
+//                          and opens the dashboard to that report
 // ─────────────────────────────────────────────────────────────
 
 import { Command } from "commander";
@@ -45,14 +34,7 @@ import {
 } from "../ui";
 
 // ── Core imports ──────────────────────────────────────────────
-// These are the actual classes from the core folder.
-// We use require() with a resolved path so they work whether
-// the CLI is run from its own folder or from the project root.
-
 function getCoreModule(relativePath: string) {
-  // __dirname = cli/src/commands/
-  // 3 levels up = react-tool root
-  // then into core/
   return require(
     path.resolve(__dirname, "..", "..", "..", "core", relativePath),
   );
@@ -104,21 +86,19 @@ export function registerFullCommand(program: Command): void {
       "Backend API URL to upload to",
       "http://localhost:3000",
     )
-    // ✅ Single --api-key option (defined BEFORE .action)
     .option(
       "--api-key <key>",
       "API key for backend authentication (overrides REACT_DOCTOR_API_KEY env var)",
       process.env.REACT_DOCTOR_API_KEY || "react-doctor-secret-key-change-this",
     )
     .option("--no-banner", "Skip the banner")
-    // ✅ .action() comes LAST, with no trailing semicolon/comment
     .action(async (projectPath: string, options) => {
       await runFullCommand(projectPath, options);
     });
 }
+
 // ─────────────────────────────────────────────────────────────
 // MAIN RUNNER
-// Exported so other commands (analyze --full) can call it too.
 // ─────────────────────────────────────────────────────────────
 
 export async function runFullCommand(
@@ -149,10 +129,6 @@ export async function runFullCommand(
   }
 
   // ── Determine device configuration ──────────────────────────
-  // --desktop and --mobile are independent flags.
-  // If neither is passed, desktop is the default.
-  // If only --mobile is passed, only mobile runs.
-  // If both are passed, both run in one pass.
   const wantDesktop = options.desktop || (!options.desktop && !options.mobile);
   const wantMobile = options.mobile ?? false;
 
@@ -180,8 +156,6 @@ export async function runFullCommand(
   printInfo("Network", throttleLabel);
 
   // ── Output directory ───────────────────────────────────────
-  // Reports are saved inside the user's project in a hidden
-  // .react-doctor/ folder — easy to find, easy to gitignore.
   const outputDir = path.join(resolvedPath, ".react-doctor");
   fs.mkdirSync(outputDir, { recursive: true });
 
@@ -275,7 +249,6 @@ export async function runFullCommand(
       ),
     );
 
-    // Print results for each route
     for (const [key, report] of Object.entries(runtimeReports)) {
       const [route, device] = key.includes("::")
         ? key.split("::")
@@ -285,7 +258,6 @@ export async function runFullCommand(
       console.log(
         `  ${chalk.bold(route)} ${chalk.gray(`[${device}]`)}  Score: ${scoreBadge(report.performanceScore)}`,
       );
-      // ── Device / CPU / Network line ──────────────────────────
       console.log(
         `  ${chalk.gray("Device:")} ${device}  ` +
           `${chalk.gray("CPU:")} ${report.cpuThrottling ?? cpuLabel}x  ` +
@@ -346,7 +318,6 @@ export async function runFullCommand(
   } catch (err: any) {
     profilingSpin.fail(chalk.red("Runtime profiling failed"));
     console.log(chalk.red(`\n  ${err.message}\n`));
-    // Profiling failure is not fatal — rule engine can still run on static data
   }
 
   // ════════════════════════════════════════════════════════════
@@ -452,103 +423,178 @@ export async function runFullCommand(
   }
 
   // ════════════════════════════════════════════════════════════
-  // OPTIONAL — UPLOAD TO BACKEND API
+  // OPTIONAL — UPLOAD TO BACKEND API (WITH SCREENSHOTS)
   // ════════════════════════════════════════════════════════════
 
   if (options.upload && finalReport) {
-  printSection("Uploading to Backend");
+    printSection("Uploading to Backend");
 
-  const uploadSpin = spinner(`Connecting to ${options.apiUrl}...`);
-  
-  try {
-    // Ensure apiUrl has a default
-    const apiUrl = options.apiUrl ?? "http://localhost:3000";
-    
-    // 1. Check if backend is already running
+    const uploadSpin = spinner(`Connecting to ${options.apiUrl}...`);
+
     try {
-      await axios.get(`${apiUrl}/health`, { timeout: 2000 });
-      uploadSpin.text = "Backend detected. Preparing upload...";
-    } catch (err) {
-      // 2. If not running, start it automatically
-      
-      // Determine the project root directory (where cli/ and backend/ are siblings)
-      const projectRoot = path.resolve(__dirname, "..", "..", "..");
-      
-      // Backend is a sibling folder to cli at projectRoot
-      const backendRoot = path.resolve(projectRoot, "backend");
-      
-      // Check for compiled JS first (for installed packages)
-      const backendDist = path.join(backendRoot, "dist", "index.js");
-      // Check for TS source (for local dev)
-      const backendSrc = path.join(backendRoot, "src", "index.ts");
+      const apiUrl = options.apiUrl ?? "http://localhost:3000";
 
-      let command: string;
-      let args: string[];
+      // 1. Check if backend is already running
+      try {
+        await axios.get(`${apiUrl}/health`, { timeout: 2000 });
+        uploadSpin.text = "Backend detected. Preparing upload...";
+      } catch (err) {
+        // 2. If not running, start it automatically
+        const projectRoot = path.resolve(__dirname, "..", "..", "..");
+        const backendRoot = path.resolve(projectRoot, "backend");
+        const backendDist = path.join(backendRoot, "dist", "index.js");
+        const backendSrc = path.join(backendRoot, "src", "index.ts");
 
-      if (fs.existsSync(backendDist)) {
-        command = "node";
-        args = [backendDist];
-      } else if (fs.existsSync(backendSrc)) {
-        command = "npx";
-        args = ["ts-node", backendSrc];
-      } else {
-        throw new Error(`Cannot find backend at: ${backendRoot}. Ensure 'backend' folder exists next to 'cli'.`);
+        let command: string;
+        let args: string[];
+
+        if (fs.existsSync(backendDist)) {
+          command = "node";
+          args = [backendDist];
+        } else if (fs.existsSync(backendSrc)) {
+          command = "npx";
+          args = ["ts-node", backendSrc];
+        } else {
+          throw new Error(
+            `Cannot find backend at: ${backendRoot}. Ensure 'backend' folder exists next to 'cli'.`,
+          );
+        }
+
+        uploadSpin.text =
+          "Backend not found. Starting local server automatically...";
+
+        const port = new URL(apiUrl).port || "3000";
+        const backendDataDir = path.join(outputDir, "backend-data");
+        fs.mkdirSync(backendDataDir, { recursive: true });
+
+        spawn(command, args, {
+          stdio: "inherit",
+          env: {
+            ...process.env,
+            API_KEY: options.apiKey || "react-doctor-secret-key-change-this",
+            PORT: port,
+            DB_PATH: path.join(backendDataDir, "reports.db"),
+          },
+          cwd: backendRoot,
+        });
+
+        // 3. Wait for backend to be ready (up to 15s)
+        let isReady = false;
+        let retries = 0;
+        while (!isReady && retries < 15) {
+          try {
+            await axios.get(`${apiUrl}/health`, { timeout: 1000 });
+            isReady = true;
+          } catch {
+            await new Promise((r) => setTimeout(r, 1000));
+            retries++;
+          }
+        }
+
+        if (!isReady)
+          throw new Error("Backend failed to start after 15 seconds.");
+        uploadSpin.text = "Backend started successfully!";
       }
 
-      uploadSpin.text = "Backend not found. Starting local server automatically...";
+      // ── 4. Read and encode screenshots ──────────────────────
+      uploadSpin.text = "Processing screenshots...";
+      const screenshots: any[] = [];
+      const runtime = finalReport.runtime || {};
 
-      // Extract port safely
-      const port = new URL(apiUrl).port || "3000";
-
-      // Spawn the backend process
-      // Create backend data directory in the target project
-      const backendDataDir = path.join(outputDir, "backend-data");
-      fs.mkdirSync(backendDataDir, { recursive: true });
-
-      const backendProcess = spawn(command, args, {
-        stdio: "inherit",
-        env: {
-          ...process.env,
-          API_KEY: options.apiKey || "react-doctor-secret-key-change-this",
-          PORT: port,
-          DB_PATH: path.join(backendDataDir, "reports.db"),
-        },
-        cwd: backendRoot
-      });
-
-      // 3. Wait for backend to be ready
-      let isReady = false;
-      let retries = 0;
-      while (!isReady && retries < 15) {
-        try {
-          await axios.get(`${apiUrl}/health`, { timeout: 1000 });
-          isReady = true;
-        } catch {
-          await new Promise((r) => setTimeout(r, 1000));
-          retries++;
+      for (const [routeKey, routeData] of Object.entries(runtime)) {
+        if ((routeData as any).screenshots && (routeData as any).screenshots.length > 0) {
+          for (const screenshot of (routeData as any).screenshots) {
+            try {
+              // Check if this is a file path or already a data URL
+              if (screenshot.dataUrl && !screenshot.dataUrl.startsWith('data:')) {
+                // It's a file path - read and encode it
+                const screenshotPath = path.join(outputDir, screenshot.dataUrl);
+                if (fs.existsSync(screenshotPath)) {
+                  const imageBuffer = fs.readFileSync(screenshotPath);
+                  const base64Image = imageBuffer.toString('base64');
+                  screenshots.push({
+                    route: routeKey,
+                    label: screenshot.label || 'screenshot',
+                    takenAt: screenshot.takenAt || 0,
+                    dataUrl: `data:image/png;base64,${base64Image}`,
+                  });
+                } else {
+                  // File doesn't exist - store as placeholder
+                  console.log(chalk.yellow(`  ⚠️ Screenshot not found: ${screenshotPath}`));
+                  screenshots.push({
+                    route: routeKey,
+                    label: screenshot.label || 'screenshot',
+                    takenAt: screenshot.takenAt || 0,
+                    dataUrl: null,
+                  });
+                }
+              } else if (screenshot.dataUrl && screenshot.dataUrl.startsWith('data:')) {
+                // Already a data URL - use it directly
+                screenshots.push({
+                  route: routeKey,
+                  label: screenshot.label || 'screenshot',
+                  takenAt: screenshot.takenAt || 0,
+                  dataUrl: screenshot.dataUrl,
+                });
+              }
+            } catch (err: any) {
+              console.log(chalk.yellow(`  ⚠️ Failed to process screenshot: ${err.message}`));
+            }
+          }
         }
       }
 
-      if (!isReady) throw new Error("Backend failed to start after 15 seconds.");
-      uploadSpin.text = "Backend started successfully!";
+      // ── 5. Prepare upload data with screenshots ─────────────
+      const uploadData = {
+        ...finalReport,
+        screenshots: screenshots,
+      };
+
+      uploadSpin.text = `Uploading report and ${screenshots.length} screenshots...`;
+
+      // ── 6. Perform the upload ──────────────────────────────
+      const response = await axios.post(
+        `${apiUrl}/api/reports/upload`,
+        uploadData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key":
+              options.apiKey || "react-doctor-secret-key-change-this",
+          } as Record<string, string>,
+          timeout: 30000, // Longer timeout for images
+        },
+      );
+
+      const reportId = response.data?.id;
+      const uploadedCount = response.data?.screenshots || 0;
+      uploadSpin.succeed(
+        chalk.green(`Report uploaded successfully (${uploadedCount} screenshots)`)
+      );
+
+      // 7. Open the dashboard directly to this report
+      if (reportId) {
+        const dashboardUrl = `${apiUrl}/report/${reportId}`;
+        printInfo("Opening dashboard", dashboardUrl);
+
+        const openCmd: [string, string[]] =
+          process.platform === "win32"
+            ? ["cmd", ["/c", "start", "", dashboardUrl]]
+            : process.platform === "darwin"
+              ? ["open", [dashboardUrl]]
+              : ["xdg-open", [dashboardUrl]];
+
+        spawn(openCmd[0], openCmd[1], {
+          stdio: "ignore",
+          detached: true,
+        }).unref();
+      }
+    } catch (err: any) {
+      uploadSpin.fail(chalk.yellow("Upload failed — report saved locally"));
+      console.log(chalk.gray(`  ${err.message}`));
     }
-
-    // 4. Perform the actual upload
-    uploadSpin.text = "Uploading report...";
-    await axios.post(`${apiUrl}/api/reports/upload`, finalReport, {
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": options.apiKey || "react-doctor-secret-key-change-this",
-      } as Record<string, string>,
-      timeout: 10000,
-    });
-
-    uploadSpin.succeed(chalk.green("Report uploaded successfully"));
-  } catch (err: any) {
-    uploadSpin.fail(chalk.yellow("Upload failed — report saved locally"));
-    console.log(chalk.gray(`  ${err.message}`));
   }
-}
+
   // ════════════════════════════════════════════════════════════
   // FINAL SUMMARY
   // ════════════════════════════════════════════════════════════

@@ -439,3 +439,48 @@ body {
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+/* ── Support link — topbar ────────────────────────────────── */
+.support-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 170, 50, 0.35);
+  background: rgba(255, 170, 50, 0.08);
+  color: #ffaa32;
+  font-size: .75rem;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: .02em;
+  transition: background .2s, border-color .2s, color .2s;
+  white-space: nowrap;
+  margin-right: 12px;
+}
+.support-link:hover {
+  background: rgba(255, 170, 50, 0.18);
+  border-color: rgba(255, 170, 50, 0.6);
+  color: #ffc85a;
+}
+
+/* ── Support link — sidebar footer ────────────────────────── */
+.sidebar-support {
+  display: block;
+  text-align: center;
+  margin: 0 12px 10px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 170, 50, 0.25);
+  background: rgba(255, 170, 50, 0.06);
+  color: #ffaa32;
+  font-size: .72rem;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: .02em;
+  transition: background .2s, border-color .2s;
+}
+.sidebar-support:hover {
+  background: rgba(255, 170, 50, 0.15);
+  border-color: rgba(255, 170, 50, 0.5);
+}

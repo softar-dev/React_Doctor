@@ -1,0 +1,34 @@
+{
+  "name": "react-doctor-cli-dev",
+  "version": "1.0.0",
+  "description": "React performance analyzer — static analysis + runtime profiling + smart suggestions",
+  "main": "dist/index.js",
+  "bin": {
+    "react-doctor": "./bin/react-doctor.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepare": "tsc"
+  },
+  "keywords": [
+    "react",
+    "performance",
+    "profiler",
+    "cli",
+    "analyzer"
+  ],
+  "author": "Ozma",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "chalk": "^4.1.2",
+    "commander": "^12.0.0",
+    "ora": "^5.4.1",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/babel__traverse": "^7.28.0",
+    "@types/node": "^20.0.0"
+  }
+}

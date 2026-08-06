@@ -1,30 +1,30 @@
 
 # 🩺 React Doctor
 
-> **Diagnose, analyze, and optimize your React applications** — static code analysis + runtime performance profiling + intelligent suggestions + interactive dashboard.
+**A TypeScript CLI that diagnoses React performance issues through static code analysis and real browser profiling.**
 
 [![npm version](https://img.shields.io/npm/v/react-doctor-cli-dev.svg?style=flat-square)](https://www.npmjs.com/package/react-doctor-cli-dev)
-[![npm downloads](https://img.shields.io/npm/dt/react-doctor-cli-dev.svg?style=flat-square)](https://www.npmjs.com/package/react-doctor-cli-dev)
+[![npm downloads](https://badgen.net/npm/dt/react-doctor-cli-dev)](https://www.npmjs.com/package/react-doctor-cli-dev)
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg?style=flat-square)](https://opensource.org/licenses/ISC)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-18+-61DAFB?style=flat-square&logo=react)](https://react.dev/)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green?style=flat-square&logo=node.js)](https://nodejs.org/)
 
 ---
 
-## 📋 Table of Contents
+> 🌍 **3,000+ downloads across 25+ countries** — including the United States, Germany, United Kingdom, China, France, and 20+ more
 
-- [🚀 Quick Start](#-quick-start)
-- [✨ Features](#-features)
-- [📊 Dashboard](#-dashboard)
-- [📦 Installation](#-installation)
-- [🎯 Usage](#-usage)
-- [⚙️ Options Reference](#️-options-reference)
-- [📁 Project Structure](#-project-structure)
-- [🧪 Example Output](#-example-output)
-- [🛠 Development](#-development)
-- [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
+---
+
+## 🔗 Links
+
+|                                 |                                                                                             |
+| ------------------------------- | ------------------------------------------------------------------------------------------- |
+| 🌐**Website & Docs**      | [react-doctor-cli.web.app](https://react-doctor-cli.web.app)                                 |
+| 📦**npm Package**         | [npmjs.com/package/react-doctor-cli-dev](https://www.npmjs.com/package/react-doctor-cli-dev) |
+| 🐙**GitHub**              | [github.com/softar-dev/React_Doctor](https://github.com/softar-dev/React_Doctor)             |
+| ☕**Support the project** | [react-doctor-cli.web.app/support](https://react-doctor-cli.web.app/support)                 |
+| 🐛**Bug Reports**         | [GitHub Issues](https://github.com/softar-dev/React_Doctor/issues)                           |
+| 💬**Contact**             | Open an issue on GitHub or reach out via the website                                        |
 
 ---
 
@@ -34,11 +34,27 @@
 # Install globally
 npm install -g react-doctor-cli-dev
 
-# Run a full diagnostic with dashboard upload
+# Run a full diagnostic and open the dashboard
 react-doctor full ./my-react-app --upload
-
-# The dashboard will open automatically at http://localhost:3000/report/1
 ```
+
+The dashboard opens automatically at `http://localhost:3000/report/{id}` — no manual setup required.
+
+---
+
+## 📋 Table of Contents
+
+- [✨ Features](#-features)
+- [📊 Dashboard](#-dashboard)
+- [📦 Installation](#-installation)
+- [🎯 Usage](#-usage)
+- [⚙️ Options Reference](#️-options-reference)
+- [📁 Project Structure](#-project-structure)
+- [🧪 Example Output](#-example-output)
+- [🛠 Development](#-development)
+- [🤝 Contributing](#-contributing)
+- [☕ Support](#-support)
+- [📄 License](#-license)
 
 ---
 
@@ -63,7 +79,7 @@ react-doctor full ./my-react-app --upload
 
 ### 🧠 Intelligent Rule Engine
 
-- **25+ built-in rules** combining static + runtime insights
+- **25 built-in rules** combining static + runtime insights
 - Cross rules that fire only when both conditions are met
 - Context-aware suggestions with severity levels (critical/warning/info)
 - Affected component identification & fix recommendations
@@ -86,7 +102,6 @@ react-doctor full ./my-react-app --upload
 - Auto-start backend server when `--upload` is used
 - Secure API key authentication (`x-api-key` header)
 - SQLite-backed database for historical tracking
-- **Screenshots uploaded as base64** to the backend
 
 ### 🛠 Developer Experience
 
@@ -94,7 +109,6 @@ react-doctor full ./my-react-app --upload
 - Beautiful terminal output with spinners, colors, and badges
 - Works with any React project (Vite, CRA, Next.js, etc.)
 - Cross-platform: Windows, macOS, Linux
-- **Live dashboard** with real-time data
 
 ---
 
@@ -127,7 +141,6 @@ When you run `react-doctor full ./my-app --upload`, the dashboard automatically 
 ### Via npm (Recommended)
 
 ```bash
-# Install globally
 npm install -g react-doctor-cli-dev
 
 # Verify installation
@@ -137,60 +150,62 @@ react-doctor --version
 ### Via npx (No Installation)
 
 ```bash
-# Run without installing globally
 npx react-doctor-cli-dev full ./my-app --upload
 ```
+
+**Requirements:** Node.js 18+ · Google Chrome · A React project with `package.json`
 
 ---
 
 ## 🎯 Usage
 
-### Full Diagnostic (All-in-One)
+### Full Diagnostic (Recommended)
 
 ```bash
-# Basic usage (desktop only)
+# Desktop only (default)
 react-doctor full ./my-react-app
 
-# Profile on mobile viewport
+# Mobile viewport
 react-doctor full ./my-react-app --mobile
 
-# Profile on both desktop + mobile
+# Both desktop + mobile
 react-doctor full ./my-react-app --desktop --mobile
 
-# Simulate slow Android device (4× CPU + Slow 4G)
+# Simulate slow Android device
 react-doctor full ./my-react-app --cpu 4 --throttle slow4g
 
-# Upload results to dashboard (RECOMMENDED)
+# Run + upload + open dashboard automatically
 react-doctor full ./my-react-app --upload
+
+# All flags combined
+react-doctor full ./my-react-app --desktop --mobile --cpu 4 --throttle slow4g --upload
 ```
 
-### Static Analysis Only (No Browser Required)
+### Static Analysis Only (Fast, No Browser)
 
 ```bash
-# Quick code scan
 react-doctor analyze ./my-react-app
 
-# Include runtime profiling in analysis
+# Include runtime + rules
 react-doctor analyze ./my-react-app --full
 ```
 
 ### Runtime Profiling Only
 
 ```bash
-# Profile desktop performance
 react-doctor profile ./my-react-app
 
-# Profile with network throttling
-react-doctor profile ./my-react-app --throttle 3g
+# Mobile + slow network
+react-doctor profile ./my-react-app --mobile --throttle 3g
 ```
 
-### Dashboard Only
+### Open Dashboard
 
 ```bash
 # Open dashboard (auto-starts backend if needed)
 react-doctor dashboard
 
-# Use custom port
+# Use a custom port
 react-doctor dashboard --port 4000
 ```
 
@@ -198,35 +213,28 @@ react-doctor dashboard --port 4000
 
 ## ⚙️ Options Reference
 
-### Global Options
+### `full` Command
 
-| Flag              | Description           | Default |
-| ----------------- | --------------------- | ------- |
-| `-V, --version` | Output version number | —      |
-| `-h, --help`    | Display help          | —      |
+| Flag                    | Description                                                | Default                      |
+| ----------------------- | ---------------------------------------------------------- | ---------------------------- |
+| `[projectPath]`       | Path to React project                                      | `process.cwd()`            |
+| `--desktop`           | Profile on desktop viewport (1280×720)                    | `true` (if no device flag) |
+| `--mobile`            | Profile on mobile viewport (390×844)                      | `false`                    |
+| `--cpu <rate>`        | CPU throttle:`1` (real), `4` (mobile), `6` (low-end) | `1`                        |
+| `--throttle <preset>` | Network:`none`, `slow4g`, `3g`                       | `none`                     |
+| `--upload`            | Upload report + open dashboard                             | `false`                    |
+| `--api-url <url>`     | Backend API URL                                            | `http://localhost:3000`    |
+| `--api-key <key>`     | API key for backend auth                                   | default key                  |
+| `--no-banner`         | Skip the startup banner                                    | `false`                    |
 
-### `full` Command Options
-
-| Flag                    | Description                                                | Default                                 |
-| ----------------------- | ---------------------------------------------------------- | --------------------------------------- |
-| `[projectPath]`       | Path to React project                                      | `process.cwd()`                       |
-| `--desktop`           | Profile on desktop viewport (1280×720)                    | `true` (if no device flag)            |
-| `--mobile`            | Profile on mobile viewport (390×844)                      | `false`                               |
-| `--cpu <rate>`        | CPU throttle:`1` (real), `4` (mobile), `6` (low-end) | `1`                                   |
-| `--throttle <preset>` | Network:`none`, `slow4g`, `3g`                       | `none`                                |
-| `--upload`            | Upload report to backend dashboard                         | `false`                               |
-| `--api-url <url>`     | Backend API URL                                            | `http://localhost:3000`               |
-| `--api-key <key>`     | API key for backend auth                                   | `react-doctor-secret-key-change-this` |
-| `--no-banner`         | Skip the startup banner                                    | `false`                               |
-
-### `analyze` Command Options
+### `analyze` Command
 
 | Flag              | Description                         | Default           |
 | ----------------- | ----------------------------------- | ----------------- |
 | `[projectPath]` | Path to React project               | `process.cwd()` |
 | `--full`        | Include runtime + rules in analysis | `false`         |
 
-### `profile` Command Options
+### `profile` Command
 
 | Flag                         | Description            | Default           |
 | ---------------------------- | ---------------------- | ----------------- |
@@ -234,7 +242,7 @@ react-doctor dashboard --port 4000
 | `--desktop` / `--mobile` | Viewport to profile    | `desktop`       |
 | `--cpu` / `--throttle`   | Performance simulation | `1` / `none`  |
 
-### `dashboard` Command Options
+### `dashboard` Command
 
 | Flag              | Description            | Default  |
 | ----------------- | ---------------------- | -------- |
@@ -243,8 +251,6 @@ react-doctor dashboard --port 4000
 ---
 
 ## 🔐 Backend Authentication
-
-When using `--upload`, secure your reports with an API key:
 
 ```bash
 # Via CLI flag
@@ -255,8 +261,7 @@ export REACT_DOCTOR_API_KEY=my-secret-key
 react-doctor full ./app --upload
 ```
 
-**Backend expects**: `x-api-key: <your-key>` header
-**Default key**: `react-doctor-secret-key-change-this` (change for production!)
+> ⚠️ Change the default API key before deploying to a shared or public environment.
 
 ---
 
@@ -266,43 +271,29 @@ react-doctor full ./app --upload
 React_Doctor/
 ├── cli/                           # Command-line interface
 │   ├── src/
-│   │   ├── commands/              # full.ts, analyze.ts, profile.ts, install.ts
+│   │   ├── commands/              # full.ts, analyze.ts, profile.ts, dashboard.ts
 │   │   ├── ui.ts                  # Terminal UI helpers (spinners, colors)
+│   │   ├── uploader.ts            # Shared upload + browser-open logic
 │   │   └── index.ts               # CLI entry point
-│   ├── dist/                      # Compiled output
 │   └── package.json
 │
-├── backend/                       # Express API + SQLite dashboard
+├── backend/                       # Express API + SQLite
 │   ├── src/
 │   │   ├── routes/reports.ts      # Upload & query endpoints
 │   │   ├── middleware/auth.ts     # API key validation
 │   │   ├── db.ts                  # SQLite setup
-│   │   └── index.ts               # Server entry
+│   │   └── index.ts               # Server entry + static dashboard serving
 │   ├── public/                    # Built dashboard (served statically)
-│   │   ├── index.html
-│   │   ├── assets/
-│   │   ├── favicon.svg
-│   │   └── icons.svg
-│   ├── data/                      # SQLite database & screenshots
 │   └── package.json
 │
-├── dashboard/                     # React dashboard source
-│   ├── src/
-│   │   ├── pages.js
-│   │   ├── api.js
-│   │   ├── utils.js
-│   │   └── main.js
-│   ├── public/
-│   └── package.json
-│
-├── core/                          # Shared analysis engines
-│   ├── static-ana/                # Babel-based code scanner
-│   ├── runtime/                   # Puppeteer profiler + metrics
-│   ├── rule-engine/               # Suggestion generator
+├── core/                          # Analysis engines
+│   ├── static-ana/                # Babel-based AST scanner (9 detectors)
+│   ├── runtime/                   # Puppeteer profiler + Web Vitals
+│   ├── rule-engine/               # 25-rule suggestion engine
 │   └── report-compiler/           # Final report merger
 │
 ├── shared/                        # TypeScript types & schemas
-├── package.json                   # Root config
+├── package.json
 └── README.md
 ```
 
@@ -333,25 +324,23 @@ React_Doctor/
 
   ── Step 2 / 4 — Runtime Profiler ────
   ✔ Profiling complete — 6 route/device combination(s)
-    / [desktop]  Score: 94/100  Excellent
-    / [mobile]   Score: 87/100  Good
-    ...
+    / [desktop]  Score: 94/100
+    / [mobile]   Score: 87/100
 
   ── Step 3 / 4 — Rule Engine ─────────
   ✔ Rule Engine complete — 14 suggestion(s) generated
     ❌  Unmemoized component is re-rendering excessively [ProductCard]
     ⚠️   React commits are exceeding 16ms budget
-    ...
 
   ── Step 4 / 4 — Report Compiler ─────
   ✔ Final report compiled
-    ·  Overall score     91/100  Excellent
-    ●  Report saved      ./.react-doctor/finalreport.json
+    ●  Overall score      91/100
+    ●  Report saved       ./.react-doctor/finalreport.json
 
   ── Uploading to Backend ─────────────
-  ✔ Backend started successfully!
+  ✔ Backend started successfully
   ✔ Report uploaded successfully (2 screenshots)
-  📊 Opening dashboard: http://localhost:3000/report/1
+    Opening dashboard  http://localhost:3000/report/1
 
   ✅  Full diagnostic finished.
 ```
@@ -360,75 +349,57 @@ React_Doctor/
 
 ## 🛠 Development
 
-### Prerequisites
-
-- Node.js 18+
-- npm 10+
-- Git
-
 ### Setup
 
 ```bash
-# Clone the repository
 git clone https://github.com/softar-dev/React_Doctor.git
 cd React_Doctor
-
-# Install dependencies
 npm install
-
-# Build all packages
 npm run build
 ```
 
 ### Scripts
 
-| Command                     | Description                     |
-| --------------------------- | ------------------------------- |
-| `npm run build`           | Build CLI + backend + dashboard |
-| `npm run build:cli`       | Build CLI only                  |
-| `npm run build:backend`   | Build backend only              |
-| `npm run build:dashboard` | Build dashboard only            |
-| `npm run dev:cli`         | Run CLI in watch mode           |
-| `npm run dev:backend`     | Run backend with nodemon        |
-| `npm run dev:dashboard`   | Run dashboard with Vite         |
+| Command                   | Description              |
+| ------------------------- | ------------------------ |
+| `npm run build`         | Build CLI + backend      |
+| `npm run build:cli`     | Build CLI only           |
+| `npm run build:backend` | Build backend only       |
+| `npm run dev:backend`   | Run backend with nodemon |
 
 ### Testing the Upload Flow Locally
 
 ```bash
-# Terminal 1: Start backend manually
+# Terminal 1
 cd backend && npm run dev
 
-# Terminal 2: Run CLI with upload
-npx ts-node cli/src/index.ts full ./my-app \
-  --upload \
-  --api-key react-doctor-secret-key-change-this \
-  --api-url http://localhost:3000
+# Terminal 2
+react-doctor full ./my-app --upload --api-key react-doctor-secret-key-change-this
 ```
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Here's how to get started:
-
 1. **Fork** the repository
-2. **Create a feature branch**: `git checkout -b feat/amazing-feature`
-3. **Commit your changes**: `git commit -m 'feat: add amazing feature'`
-4. **Push to the branch**: `git push origin feat/amazing-feature`
+2. **Create a branch**: `git checkout -b feat/your-feature`
+3. **Commit**: `git commit -m 'feat: add your feature'`
+4. **Push**: `git push origin feat/your-feature`
 5. **Open a Pull Request**
 
-### Guidelines
+Use [Conventional Commits](https://www.conventionalcommits.org/) for commit messages.
+Report bugs via [GitHub Issues](https://github.com/softar-dev/React_Doctor/issues) — include Node version, OS, React version, and steps to reproduce.
 
-- Follow existing code style (Prettier + ESLint)
-- Add tests for new functionality
-- Update documentation for user-facing changes
-- Use [Conventional Commits](https://www.conventionalcommits.org/) for commit messages
+---
 
-### Reporting Issues
+## ☕ Support
 
-- Use the [GitHub Issues](https://github.com/softar-dev/React_Doctor/issues) tab
-- Include: Node version, OS, React version, and steps to reproduce
-- Attach logs or screenshots when helpful
+React Doctor is completely free and open source. If it saved you time:
+
+- ⭐ **Star the repo** — helps other developers discover it
+- ☕ **[Support the project](https://react-doctor-cli.web.app/support)** — Bitcoin donations welcome, any amount helps cover domain and hosting costs
+- 🐛 **[Report a bug](https://github.com/softar-dev/React_Doctor/issues)** — contributions are the best support
+- 💬 **Spread the word** — share it with your team or on social media
 
 ---
 
@@ -440,54 +411,24 @@ Distributed under the **ISC License**. See [`LICENSE`](LICENSE) for more informa
 
 ## 🙏 Acknowledgments
 
-- [Puppeteer](https://pptr.dev/) — Headless Chrome automation
-- [Babel](https://babeljs.io/) — JavaScript compiler & AST parsing
-- [Express](https://expressjs.com/) — Backend framework
-- [better-sqlite3](https://github.com/WiseLibs/better-sqlite3) — Fast SQLite bindings
-- [Chart.js](https://www.chartjs.org/) — Dashboard charts
-- [Vite](https://vitejs.dev/) — Dashboard build tool
-- [Chalk](https://github.com/chalk/chalk) — Terminal string styling
-- [Commander](https://github.com/tj/commander.js) — CLI framework
-
----
-
-## 📬 Support
-
-- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/softar-dev/React_Doctor/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/softar-dev/React_Doctor/discussions)
-- ✉️ **Contact**: Open an issue or reach out via GitHub
-
----
-
-> **Made with ❤️**
-> *Helping React developers build faster, cleaner, smarter apps.* 🚀
+[Puppeteer](https://pptr.dev/) · [Babel](https://babeljs.io/) · [Express](https://expressjs.com/) · [better-sqlite3](https://github.com/WiseLibs/better-sqlite3) · [Chart.js](https://www.chartjs.org/) · [Vite](https://vitejs.dev/) · [Chalk](https://github.com/chalk/chalk) · [Commander](https://github.com/tj/commander.js)
 
 ---
 
 ## 📊 Quick Reference
 
 ```bash
-# Install
 npm install -g react-doctor-cli-dev
 
-# Full diagnostic with dashboard
-react-doctor full ./my-app --upload
-
-# Full diagnostic with all options
-react-doctor full ./my-app --desktop --mobile --cpu 4 --throttle slow4g --upload
-
-# Static analysis only
-react-doctor analyze ./my-app
-
-# Runtime profiling only
-react-doctor profile ./my-app --mobile
-
-# Open dashboard
-react-doctor dashboard
-
-# Version
+react-doctor full ./my-app --upload                              # Full run + dashboard
+react-doctor full ./my-app --desktop --mobile --cpu 4 --upload  # All devices + upload
+react-doctor analyze ./my-app                                    # Static only
+react-doctor profile ./my-app --mobile --throttle slow4g        # Mobile profiling
+react-doctor dashboard                                           # Open dashboard
 react-doctor --version
-
-# Help
 react-doctor --help
 ```
+
+---
+
+*Made with ❤️ · Helping React developers build faster, cleaner, smarter apps.*

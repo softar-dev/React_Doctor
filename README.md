@@ -2,6 +2,10 @@
 
 **A TypeScript CLI that diagnoses React performance issues through static code analysis and real browser profiling.**
 
+Most React performance tools work in isolation — ESLint catches code smells, Lighthouse measures runtime metrics, React DevTools shows re-renders — but none of them talk to each other. React Doctor correlates static code patterns with real browser profiling data, so it only flags something like a missing `React.memo()` when it's actually corroborated by measured re-render behavior — not just because the pattern exists.
+
+> *Not affiliated with [react.doctor](https://www.react.doctor/) — a different, unrelated project.*
+
 [![npm version](https://img.shields.io/npm/v/react-doctor-cli-dev.svg?style=flat-square)](https://www.npmjs.com/package/react-doctor-cli-dev)
 [![npm downloads](https://badgen.net/npm/dt/react-doctor-cli-dev)](https://www.npmjs.com/package/react-doctor-cli-dev)
 [![GitHub stars](https://img.shields.io/github/stars/softar-dev/React_Doctor?style=social)](https://github.com/softar-dev/React_Doctor)
@@ -9,23 +13,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green?style=flat-square&logo=node.js)](https://nodejs.org/)
-
----
-
-> 🌍 **3,000+ downloads across 25+ countries** — Trusted by developers in the United States, Germany, United Kingdom, China, France, Japan, Canada, India, and 17+ more  
-> ⚡ **Zero configuration** — Works with any React project (Vite, CRA, Next.js, Remix, etc.)
-
----
-
-## 🎯 What is React Doctor?
-
-React Doctor is your **automated performance consultant**. It combines:
-- 🔍 **Static Code Analysis** — Detects anti-patterns (missing memoization, prop drilling, large components)
-- ⚡ **Runtime Profiling** — Real browser profiling with Core Web Vitals, React render metrics, and screenshots
-- 🧠 **Smart Rule Engine** — 25 intelligent rules that combine both analysis types for actionable insights
-- 📊 **Interactive Dashboard** — Beautiful reports with trends, comparisons, and recommendations
-
-**No configuration needed.** Just run it and get instant insights.
 
 ---
 
@@ -45,6 +32,21 @@ The dashboard opens automatically at `http://localhost:3000/report/{id}` — no 
 # Or use npx (no installation)
 npx react-doctor-cli-dev full ./my-app --upload
 ```
+
+<!-- 📸 Add a dashboard screenshot or GIF here before publishing — this is the single highest-impact addition to this README. -->
+<!-- ![React Doctor dashboard](./docs/dashboard.png) -->
+
+---
+
+## 🎯 What is React Doctor?
+
+React Doctor is your **automated performance consultant**. It combines:
+- 🔍 **Static Code Analysis** — Detects anti-patterns (missing memoization, prop drilling, large components)
+- ⚡ **Runtime Profiling** — Real browser profiling with Core Web Vitals, React render metrics, and screenshots
+- 🧠 **Smart Rule Engine** — 25 rules that combine both analysis types for actionable insights
+- 📊 **Interactive Dashboard** — Reports with trends, comparisons, and recommendations
+
+**No configuration needed.** Just run it and get instant insights.
 
 ---
 
@@ -82,6 +84,7 @@ npx react-doctor-cli-dev full ./my-app --upload
 
 ### 🧠 Intelligent Rule Engine
 - **25 built-in performance rules** combining static + runtime data
+- Cross rules fire only when a static pattern *and* its runtime evidence agree — e.g. a component missing `memo()` that's also measured re-rendering 5+ times in a real session
 - Context-aware suggestions with severity levels (critical/warning/info)
 - Affected component identification with direct file links
 - Fix recommendations with code examples
@@ -94,7 +97,7 @@ npx react-doctor-cli-dev full ./my-app --upload
 - **Component Re-render Analysis** — see which components are re-rendering excessively
 - **Screenshot Filmstrip** — timeline of page load with timing labels
 - **Filterable Issues** — sort by severity (critical → info)
-- **Historical Tracking** — trend charts showing score improvements over time
+- **Historical Tracking** — trend charts showing score changes over time
 - **Dark Theme** — easy on the eyes during long analysis sessions
 
 ### 📈 Report Generation & Upload
@@ -125,7 +128,7 @@ When you run `react-doctor full ./my-app --upload`, the dashboard automatically 
 | **Web Vitals** | Detailed metrics per route/device, component re-render counts, screenshots |
 | **Code Issues** | All static analysis findings with severity filters and pagination |
 | **Suggestions** | Actionable recommendations with severity levels and fix examples |
-| **History** | Score trends, historical runs, performance improvements over time |
+| **History** | Score trends, historical runs, performance changes over time |
 
 ### Key Features:
 - ✅ Responsive design — works on desktop and mobile
@@ -163,15 +166,17 @@ npx react-doctor-cli-dev full ./my-app --upload
 
 ```bash
 npm install --save-dev react-doctor-cli-dev
+```
 
-# Add to package.json
+```json
 {
   "scripts": {
     "diagnose": "react-doctor full . --upload"
   }
 }
+```
 
-# Run
+```bash
 npm run diagnose
 ```
 
@@ -360,23 +365,6 @@ react-doctor full ./app --upload
 
 ---
 
-## 🔄 React Doctor vs. Alternatives
-
-| Feature | React Doctor | Lighthouse | WebPageTest | Perfume.js |
-|---------|--------------|-----------|-------------|-----------|
-| **CLI Tool** | ✅ | ❌ | ❌ | ❌ |
-| **React-Specific** | ✅ | ❌ | ❌ | ✅ |
-| **Interactive Dashboard** | ✅ | ❌ | ✅ | ❌ |
-| **Static Code Analysis** | ✅ | ❌ | ❌ | ❌ |
-| **Memoization Detection** | ✅ | ❌ | ❌ | ❌ |
-| **Component Re-render Tracking** | ✅ | ❌ | ❌ | ✅ |
-| **Free & Open Source** | ✅ | ✅ | ❌ | ✅ |
-| **No Configuration** | ✅ | ✅ | ❌ | ❌ |
-| **Multi-device Testing** | ✅ | ✅ | ✅ | ❌ |
-| **CI/CD Ready** | ✅ | ✅ | ✅ | ✅ |
-
----
-
 ## 📁 Project Structure
 
 ```
@@ -394,7 +382,7 @@ React_Doctor/
 │   └── package.json
 │
 ├── backend/                          # Express API + SQLite
-│   ├���─ src/
+│   ├── src/
 │   │   ├── routes/reports.ts        # Upload & query endpoints
 │   │   ├── middleware/auth.ts       # API key validation
 │   │   ├── db.ts                    # SQLite database setup
@@ -533,8 +521,6 @@ Built with ❤️ using:
 - [**Chart.js**](https://www.chartjs.org/) — Data visualization
 - [**React**](https://react.dev/) — UI framework
 
-Special thanks to everyone who has tested, reported bugs, and contributed ideas!
-
 ---
 
 ## 📊 Quick Reference
@@ -564,29 +550,15 @@ react-doctor --help
 
 ---
 
-## 🌟 Who's Using React Doctor?
-
-We're proud to be used by developers and teams around the world:
-
-- 🌍 **25+ countries** with 3,000+ npm downloads
-- 🚀 **Development teams** optimizing performance at scale
-- 🏢 **Companies** using React Doctor in CI/CD pipelines
-- 👥 **Open source projects** improving their performance scores
-
-[Add your project or company](https://github.com/softar-dev/React_Doctor/discussions/1)
-
----
-
 ## 🚀 Roadmap
 
-Features coming soon:
+Features under consideration:
 
 - [ ] Next.js App Router support
 - [ ] Vue.js support
 - [ ] Custom rule creation
 - [ ] GitHub Actions integration
 - [ ] Slack notifications
-- [ ] Team dashboards with role-based access
 - [ ] Performance budgets & thresholds
 - [ ] Automated PR comments with suggestions
 
@@ -594,6 +566,6 @@ Features coming soon:
 
 ---
 
-*Made with ❤️ by the React Doctor team · Helping React developers build faster, cleaner, smarter apps.*
+*Made with ❤️ · Helping React developers build faster, cleaner, smarter apps.*
 
 **[⬆ Back to top](#-react-doctor)**

@@ -1,6 +1,6 @@
 {
   "name": "react-doctor-cli-dev",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "React performance analyzer with static analysis, runtime profiling, rule engine, and dashboard upload",
   "main": "index.js",
   "type": "commonjs",
@@ -10,20 +10,28 @@
   "scripts": {},
   "keywords": [
     "react",
-  "react-performance",
-  "react-performance-analyzer",
-  "react-analyzer",
-  "react-profiler",
-  "static-analysis",
-  "runtime-analysis",
-  "web-vitals",
-  "performance",
-  "performance-analysis",
-  "cli",
-  "developer-tools"
+    "react-performance",
+    "react-performance-analyzer",
+    "react-analyzer",
+    "react-profiler",
+    "static-analysis",
+    "runtime-analysis",
+    "web-vitals",
+    "performance",
+    "performance-analysis",
+    "cli",
+    "developer-tools"
   ],
   "author": "Ozma",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/softar-dev/React_Doctor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/softar-dev/React_Doctor/issues"
+  },
+  "homepage": "https://react-doctor-cli.web.app",
   "dependencies": {
     "@babel/parser": "^7.29.0",
     "@babel/traverse": "^7.29.0",

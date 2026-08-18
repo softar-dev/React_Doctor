@@ -12,6 +12,7 @@ import {
   formatMs, formatCls, formatDate, relativeTime,
   buildScoreRing, buildVitalRow,
   openLightbox, closeLightbox,
+  escapeHtml,
 } from './utils.js';
 
 // ── Normalize API data to match expected structure ──────────
@@ -646,12 +647,12 @@ function buildSuggestionCard(s) {
       <div class="sug-icon ${s.severity}">${icon}</div>
       <div class="sug-body">
         <div class="sug-title">
-          ${s.title || 'Untitled suggestion'}
+          ${escapeHtml(s.title) || 'Untitled suggestion'}
           <span class="badge ${s.severity}">${s.severity}</span>
         </div>
-        <div class="sug-desc">${s.description || 'No description'}</div>
-        <div class="sug-fix">${s.fix || 'No fix provided'}</div>
-        ${s.affectedComponent ? `<div class="sug-component">${s.affectedComponent}</div>` : ""}
+        <div class="sug-desc">${escapeHtml(s.description) || 'No description'}</div>
+        <div class="sug-fix">${escapeHtml(s.fix) || 'No fix provided'}</div>
+        ${s.affectedComponent ? `<div class="sug-component">${escapeHtml(s.affectedComponent)}</div>` : ""}
       </div>
     </div>`;
 }

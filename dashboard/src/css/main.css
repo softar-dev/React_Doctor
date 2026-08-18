@@ -324,6 +324,11 @@ body {
   color: var(--accent);
   line-height: 1.5;
   word-break: break-word;
+  /* Fix text is often a numbered list separated by \n (see
+     rules.json). Without this, all steps run together on one line —
+     preserve the author's line breaks while still collapsing
+     incidental runs of whitespace. */
+  white-space: pre-line;
 }
 .sug-component { font-size: 0.7rem; color: var(--text3); margin-top: 6px; font-family: 'JetBrains Mono', monospace; }
 

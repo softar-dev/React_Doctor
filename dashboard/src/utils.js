@@ -2,6 +2,36 @@
 // js/utils.js — pure helper functions used across all pages
 // ─────────────────────────────────────────────────────────────
 
+// Escapes text before it's interpolated into an innerHTML template.
+//
+// WHY THIS EXISTS:
+// Suggestion text (title/description/fix) can legitimately contain
+// literal HTML-looking snippets — e.g. a rule's fix text saying
+// "preload with <link rel='preload' as='image'>" or "render-blocking
+// resources in <head>". When that string is dropped straight into an
+// innerHTML template (see buildSuggestionCard in pages.js), the
+// browser parses <link> and <head> as REAL markup instead of
+// displaying them as text, so they silently disappear from the
+// rendered page — the exact bug this fixes.
+//
+// Escaping also closes off the same code path as an XSS vector: even
+// though suggestion text currently only comes from our own
+// rules.json, any future rule (or dynamic message content) that
+// echoes back scanned source, a component name, or a file path could
+// otherwise inject arbitrary markup into the dashboard.
+//
+// Only escape values headed into innerHTML — DOM APIs that already
+// use `.textContent` (see most of this codebase) don't need this,
+// since textContent never parses its input as HTML.
+export function escapeHtml(value) {
+  if (value === null || value === undefined) return "";
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
 export function scoreColor(score) {
   if (score >= 90) return "var(--green)";
   if (score >= 75) return "var(--blue)";

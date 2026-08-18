@@ -27,21 +27,55 @@
 import { RuleDefinition, EvaluationContext } from "./types";
 
 /**
+ * Which reports were actually produced for this analysis run.
+ *
+ * This is separate from whether the *context* has runtime/static
+ * fields — buildContext() always fills in zero/empty defaults when a
+ * report is missing so that condition expressions don't throw. That
+ * convenience is exactly what causes false positives (e.g.
+ * `performanceScore < 50` reading a fabricated 0) unless we also
+ * track — and check — whether the report genuinely existed.
+ */
+export interface ReportAvailability {
+  hasStatic:  boolean;
+  hasRuntime: boolean;
+}
+
+/**
  * Evaluates a single rule against the current context.
  *
  * Returns true if the rule should fire (i.e. the problem exists).
- * Returns false if the condition is not met or throws an error.
+ * Returns false if the condition is not met, a required report is
+ * missing, or the condition throws an error.
  *
  * For "cross" rules: BOTH the static AND runtime conditions must
- * be true. If either is false, the rule does not fire.
+ * be true, AND both reports must be present. If either is false or
+ * missing, the rule does not fire.
  *
- * For "static" rules:  only condition.static is evaluated.
- * For "runtime" rules: only condition.runtime is evaluated.
+ * For "static" rules:  only condition.static is evaluated, and only
+ *                       if a static report was provided.
+ * For "runtime" rules: only condition.runtime is evaluated, and only
+ *                       if a runtime report was provided.
  */
 export function evaluateRule(
-  rule:    RuleDefinition,
-  context: EvaluationContext,
+  rule:        RuleDefinition,
+  context:     EvaluationContext,
+  reportsAvailable: ReportAvailability,
 ): boolean {
+  // ── Category gate ──────────────────────────────────────────
+  // Skip the rule entirely if it needs a report that wasn't run.
+  // This must happen BEFORE any condition is evaluated: the context
+  // always has zero/empty defaults for a missing report, and those
+  // defaults can accidentally satisfy a condition (e.g. an empty
+  // `errors` array making `errorCount > 0` false is fine, but
+  // `performanceScore` defaulting to 0 makes `performanceScore < 50`
+  // TRUE — a fabricated finding on data that was never collected).
+  if (rule.category === "runtime" && !reportsAvailable.hasRuntime) return false;
+  if (rule.category === "static"  && !reportsAvailable.hasStatic)  return false;
+  if (rule.category === "cross"   && (!reportsAvailable.hasRuntime || !reportsAvailable.hasStatic)) {
+    return false;
+  }
+
   try {
     // Evaluate the runtime condition if this rule has one
     if (rule.condition.runtime !== undefined) {
@@ -122,10 +156,12 @@ function evaluateExpression(
  *
  * @param rules   — all rule definitions from rules.json
  * @param context — the assembled evaluation context
+ * @param reportsAvailable — which reports were actually produced this run
  */
 export function evaluateAllRules(
-  rules:   RuleDefinition[],
-  context: EvaluationContext,
+  rules:            RuleDefinition[],
+  context:          EvaluationContext,
+  reportsAvailable: ReportAvailability,
 ): RuleDefinition[] {
-  return rules.filter(rule => evaluateRule(rule, context));
+  return rules.filter(rule => evaluateRule(rule, context, reportsAvailable));
 }

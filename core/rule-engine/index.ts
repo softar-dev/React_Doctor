@@ -71,7 +71,16 @@ export class RuleEngine {
       console.log("   Running static-only rules (no runtime data)...");
 
       const context    = buildContext(staticReport, null);
-      const firedRules = evaluateAllRules(rules, context);
+      // hasRuntime: false — "runtime" and "cross" rules are skipped below,
+      // since their conditions would otherwise evaluate against fabricated
+      // zero-defaults (e.g. performanceScore: 0) and fire false positives.
+      const skippedCount = rules.filter(r => r.category !== "static").length;
+      console.log(`   Skipping ${skippedCount} runtime/cross rule(s) — no runtime data available`);
+
+      const firedRules = evaluateAllRules(rules, context, {
+        hasStatic:  staticReport !== null,
+        hasRuntime: false,
+      });
       const suggestions = buildAllSuggestions(firedRules, context);
 
       results.push(
@@ -92,8 +101,15 @@ export class RuleEngine {
         // Build the evaluation context from both reports
         const context = buildContext(staticReport, runtimeReport);
 
-        // Find all rules whose conditions are true
-        const firedRules = evaluateAllRules(rules, context);
+        // Find all rules whose conditions are true. Pass explicit
+        // report-presence flags so "runtime"/"static"/"cross" rules
+        // requiring a report that wasn't actually run (e.g. `profile`
+        // without a preceding `analyze`) are skipped rather than
+        // evaluated against zero-value defaults.
+        const firedRules = evaluateAllRules(rules, context, {
+          hasStatic:  staticReport   !== null,
+          hasRuntime: runtimeReport  !== null,
+        });
         console.log(`   Rules fired: ${firedRules.length} / ${rules.length}`);
 
         // Convert fired rules into Suggestion objects

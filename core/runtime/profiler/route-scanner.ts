@@ -5,6 +5,38 @@ import * as traverseLib from "@babel/traverse";
 
 const traverse: Function = (traverseLib as any).default ?? (traverseLib as any);
 
+/**
+ * Whether a route string extracted from source is safe to hand to the
+ * profiler as a literal URL path (e.g. `page.goto(baseUrl + route)`).
+ *
+ * React Router allows several path forms that are NOT real, navigable
+ * URLs on their own:
+ *   - "*"            catch-all / not-found route (React Router v5/v6)
+ *   - "/foo/*"       nested catch-all
+ *   - "/user/:id"    dynamic segment (v5 JSX form) — the object-config
+ *                    (v6) branch below already filtered these via the
+ *                    ":" check, but the JSX branch had no equivalent
+ *                    filter at all, so a v5 <Route path="/user/:id" />
+ *                    or a v5 <Route path="*" /> passed straight through
+ *                    and was later handed to Puppeteer's page.navigate(),
+ *                    which correctly rejects it ("Cannot navigate to
+ *                    invalid URL") — this is the exact crash seen when
+ *                    profiling a project with a catch-all 404 route,
+ *                    an extremely common React Router idiom.
+ *   - "/user/*id"    v6 named wildcard segment
+ *
+ * Only static paths (no ":" params, no "*" wildcard segments) can be
+ * profiled directly. Dynamic/catch-all routes would need a concrete
+ * example URL to be meaningful, which this scanner has no way to infer
+ * from a route declaration alone.
+ */
+function isNavigableRoute(route: string): boolean {
+  if (!route) return false;
+  if (route.includes("*")) return false;   // catch-all / wildcard segments
+  if (route.includes(":")) return false;   // dynamic params, e.g. /user/:id
+  return true;
+}
+
 export class RouteScanner {
   static async scanForRoutes(projectPath: string): Promise<string[]> {
     const routes: string[] = ["/"];
@@ -43,7 +75,10 @@ export class RouteScanner {
                 "value" in pathAttr &&
                 pathAttr.value?.type === "StringLiteral"
               ) {
-                routes.push(pathAttr.value.value);
+                const routePath = pathAttr.value.value;
+                if (isNavigableRoute(routePath)) {
+                  routes.push(routePath);
+                }
               }
             }
           },
@@ -58,8 +93,7 @@ export class RouteScanner {
             );
             if (pathProp) {
               const routePath = pathProp.value.value;
-              // Skip dynamic segments like /docs/:id — only add static base routes
-              if (!routePath.includes(":")) {
+              if (isNavigableRoute(routePath)) {
                 routes.push(routePath);
               }
             }

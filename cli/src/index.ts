@@ -14,7 +14,7 @@ const program = new Command();
 program
   .name("react-doctor")
   .description("React performance analyzer — static analysis + runtime profiling + smart suggestions")
-  .version("1.1.2")
+  .version("1.2.1")
 // ── Register commands ─────────────────────────────────────────
 registerFullCommand(program);       // react-doctor full
 registerAnalyzeCommand(program);    // react-doctor analyze

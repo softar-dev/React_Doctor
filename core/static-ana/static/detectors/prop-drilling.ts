@@ -1,7 +1,7 @@
 import traverse from '@babel/traverse';
 import { File, isFunctionDeclaration, isArrowFunctionExpression, isObjectProperty, isIdentifier } from '@babel/types';
 import { ComponentIssue } from '../../../../shared/src/types';
-import { generateIssueId } from '../helpers';
+import { generateIssueId, getParentComponentName } from '../helpers';
 
 /**
  * Detect potential prop drilling (props passed through without being used)
@@ -48,9 +48,17 @@ export function detectPropDrilling(ast: File, filePath: string): ComponentIssue[
         if (totalRefs > 0 && totalRefs === jsxRefs) {
           const line = node.loc?.start.line || 0;
 
+          // node.id?.name only exists for `function Foo() {}` declarations.
+          // For `const Foo = (props) => {}` — by far the more common React
+          // pattern — the function node itself is anonymous; the name lives
+          // on the enclosing VariableDeclarator instead. getParentComponentName
+          // walks up the tree and checks both cases, so it resolves correctly
+          // either way instead of silently falling back to 'UnknownComponent'.
+          const componentName = getParentComponentName(path);
+
           issues.push({
             id: generateIssueId('prop-drilling', filePath, line),
-            component: (node as any).id?.name || 'UnknownComponent',
+            component: componentName,
             file: filePath,
             line,
             severity: 'info',

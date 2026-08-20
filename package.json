@@ -1,22 +1,42 @@
 {
   "name": "react-doctor-cli-dev",
-  "version": "1.1.2",
+  "version": "1.2.1",
   "description": "React performance analyzer with static analysis, runtime profiling, rule engine, and dashboard upload",
   "main": "index.js",
   "type": "commonjs",
   "bin": {
     "react-doctor": "./cli/bin/react-doctor.js"
   },
-  "scripts": {},
+  "scripts": {
+    "build:cli": "tsc -p cli/tsconfig.json",
+    "build:dashboard": "npm --prefix dashboard install && npm --prefix dashboard run build",
+    "build": "npm run build:cli && npm run build:dashboard",
+    "prepublishOnly": "npm run build"
+  },
   "keywords": [
     "react",
+    "react-performance",
+    "react-performance-analyzer",
+    "react-analyzer",
+    "react-profiler",
+    "static-analysis",
+    "runtime-analysis",
+    "web-vitals",
     "performance",
-    "profiler",
+    "performance-analysis",
     "cli",
-    "analyzer"
+    "developer-tools"
   ],
   "author": "Ozma",
-  "license": "ISC",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/softar-dev/React_Doctor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/softar-dev/React_Doctor/issues"
+  },
+  "homepage": "https://react-doctor-cli.web.app",
   "dependencies": {
     "@babel/parser": "^7.29.0",
     "@babel/traverse": "^7.29.0",

@@ -1,6 +1,6 @@
 {
   "name": "react-doctor-cli-dev",
-  "version": "1.0.0",
+  "version": "1.1.6",
   "description": "React performance analyzer — static analysis + runtime profiling + smart suggestions",
   "main": "dist/index.js",
   "bin": {

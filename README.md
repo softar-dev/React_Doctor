@@ -13,7 +13,7 @@ Most React performance tools work in isolation — ESLint catches code smells, L
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green?style=flat-square&logo=node.js)](https://nodejs.org/)
-
+![React Doctor Demo](https://github.com/user-attachments/assets/55261f3b-85e5-497d-861d-7e1e65f2e325)
 ---
 
 ## 🚀 Quick Start

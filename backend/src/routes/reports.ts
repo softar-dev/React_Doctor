@@ -35,11 +35,11 @@
 // ─────────────────────────────────────────────────────────────
 
 import { Router, Request, Response, RequestHandler } from "express";
-import path from "path";
 import fs from "fs";
 import db from "../db";
 import { screenshotsDir } from "../db";
 import { requireApiKey } from "../middleware/auth";
+import { resolveInside, toSafeName } from "../safePath";
 
 const router = Router();
 
@@ -123,10 +123,12 @@ router.get("/:id/screenshots", (req: Request, res: Response) => {
           if (route.screenshots && Array.isArray(route.screenshots)) {
             for (const screenshot of route.screenshots) {
               if (screenshot.dataUrl && screenshot.dataUrl.startsWith('/screenshots/')) {
-                const filename = screenshot.dataUrl.replace('/screenshots/', '');
-                const filePath = path.join(screenshotsDir, filename);
-                
-                if (fs.existsSync(filePath)) {
+                const filename = screenshot.dataUrl.slice('/screenshots/'.length);
+                // Stored data is not trusted: refuse anything that resolves
+                // outside the screenshots folder (e.g. "../../.env").
+                const filePath = resolveInside(screenshotsDir, filename);
+
+                if (filePath && fs.existsSync(filePath)) {
                   try {
                     const imageBuffer = fs.readFileSync(filePath);
                     const base64Image = imageBuffer.toString('base64');
@@ -316,25 +318,25 @@ function extractScreenshots(
 
     if (Array.isArray(routeClone.screenshots)) {
       routeClone.screenshots = routeClone.screenshots.map((shot: any) => {
-        // Check if it's a base64 data URL
-        if (shot.dataUrl && shot.dataUrl.startsWith("data:image/png;base64,")) {
+        if (!shot || typeof shot !== "object") return { dataUrl: null };
+
+        // Only a base64 PNG is accepted from the client.
+        if (typeof shot.dataUrl === "string" && shot.dataUrl.startsWith("data:image/png;base64,")) {
           const base64 = shot.dataUrl.replace("data:image/png;base64,", "");
           const buffer = Buffer.from(base64, "base64");
 
-          const safeRoute = routeKey.replace(/[/:]/g, "-").replace(/^-+/, "");
-          const safeLabel = shot.label.replace(/[^a-z0-9]/gi, "-");
-          const tempPath = `__PENDING__${safeRoute}__${safeLabel}`;
+          const label = typeof shot.label === "string" && shot.label ? shot.label : "screenshot";
+          const tempPath = `__PENDING__${toSafeName(routeKey)}__${toSafeName(label, "screenshot")}`;
 
-          pending.push({ routeKey, label: shot.label, buffer, tempPath });
+          pending.push({ routeKey, label, buffer, tempPath });
 
-          return { ...shot, dataUrl: tempPath };
-        } else if (shot.dataUrl && shot.dataUrl.startsWith('/screenshots/')) {
-          // Already a path - keep it
-          return shot;
-        } else {
-          // No valid dataUrl - keep as is or set to null
-          return { ...shot, dataUrl: null };
+          return { ...shot, label, dataUrl: tempPath };
         }
+
+        // Anything else (including a "/screenshots/..." path) is dropped.
+        // Only the server creates those paths, in saveScreenshots below;
+        // letting a client name one is what made path traversal possible.
+        return { ...shot, dataUrl: null };
       });
     }
 
@@ -365,10 +367,13 @@ function saveScreenshots(
   }
 
   for (const shot of pending) {
-    const safeRoute = shot.routeKey.replace(/[/:]/g, "-").replace(/^-+/, "");
-    const safeLabel = shot.label.replace(/[^a-z0-9]/gi, "-");
-    const filename = `${reportId}-${safeRoute}-${safeLabel}.png`;
-    const fullPath = path.join(screenshotsDir, filename);
+    const filename = `${reportId}-${toSafeName(shot.routeKey)}-${toSafeName(shot.label, "screenshot")}.png`;
+    const fullPath = resolveInside(screenshotsDir, filename);
+
+    if (!fullPath) {
+      console.warn(`Refused to save screenshot outside screenshots dir: ${filename}`);
+      continue;
+    }
 
     try {
       fs.writeFileSync(fullPath, shot.buffer);
